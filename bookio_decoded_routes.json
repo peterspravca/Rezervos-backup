@@ -1,0 +1,212 @@
+[
+  {
+    "c": "api",
+    "a": "messages",
+    "u": "/api/i18n"
+  },
+  {
+    "c": "api",
+    "a": "enums",
+    "u": "/api/enums"
+  },
+  {
+    "c": "api",
+    "a": "plugins",
+    "u": "/api/v1/plugins"
+  },
+  {
+    "c": "api",
+    "a": "roles",
+    "u": "/api/roles"
+  },
+  {
+    "c": "api",
+    "a": "nonce",
+    "u": "/api/nonce"
+  },
+  {
+    "c": "api",
+    "a": "locales",
+    "u": "/api/locales"
+  },
+  {
+    "c": "api",
+    "a": "facilityCategories",
+    "u": "/api/v1/plugins-by-business"
+  },
+  {
+    "c": "api",
+    "a": "timeZones",
+    "u": "/api/v1/time-zones"
+  },
+  {
+    "c": "api",
+    "a": "countries",
+    "u": "/api/v1/countries"
+  },
+  {
+    "c": "api",
+    "a": "cities",
+    "u": "/api/v1/cities"
+  },
+  {
+    "c": "api",
+    "a": "contractFree",
+    "u": "/api/v1/contract"
+  },
+  {
+    "c": "api",
+    "a": "intervalEnum",
+    "u": "/api/interval-selector"
+  },
+  {
+    "c": "api",
+    "a": "serviceEnums",
+    "u": "/api/service-enums"
+  },
+  {
+    "c": "api",
+    "a": "courseEnums",
+    "u": "/api/course-enums"
+  },
+  {
+    "c": "api",
+    "a": "currencies",
+    "u": "/api/currencies"
+  },
+  {
+    "c": "api",
+    "a": "listEnums",
+    "u": "/api/list-enums"
+  },
+  {
+    "c": "api",
+    "a": "logJsError",
+    "u": "/api/js-error"
+  },
+  {
+    "c": "reservation",
+    "a": "exportICalCourseReservation",
+    "u": "/reservation/__FACILITY__/export-ical-course-r/__ID__"
+  },
+  {
+    "c": "reservation",
+    "a": "exportICalReservation",
+    "u": "/reservation/__FACILITY__/export-ical-r/__ID__"
+  },
+  {
+    "c": "reservation",
+    "a": "exportICalCourse",
+    "u": "/reservation/__FACILITY__/export-ical-course/__ID__"
+  },
+  {
+    "c": "reservation",
+    "a": "exportICal",
+    "u": "/reservation/__FACILITY__/export-ical/__ID__"
+  },
+  {
+    "c": "reservation",
+    "a": "cancelReservation",
+    "u": "/reservation/cancelReservation/__ID__"
+  },
+  {
+    "c": "reservation",
+    "a": "showForm",
+    "u": "/reservation/showForm/__ID__"
+  },
+  {
+    "c": "widget",
+    "a": "fail",
+    "u": "/__FACILITY__/widget/fail"
+  },
+  {
+    "c": "widget",
+    "a": "services",
+    "u": "/widget/api/services"
+  },
+  {
+    "c": "widget",
+    "a": "workers",
+    "u": "/widget/api/workers"
+  },
+  {
+    "c": "widget",
+    "a": "success",
+    "u": "/__FACILITY__/widget/success"
+  },
+  {
+    "c": "widget",
+    "a": "createRequest",
+    "u": "/widget/api/createRequest"
+  },
+  {
+    "c": "widget",
+    "a": "categories",
+    "u": "/widget/api/categories"
+  },
+  {
+    "c": "widget",
+    "a": "getCompany",
+    "u": "/widget/api/company"
+  },
+  {
+    "c": "widget",
+    "a": "terms",
+    "u": "/widget/api/terms"
+  },
+  {
+    "c": "widget",
+    "a": "paymentRedirect",
+    "u": "/__FACILITY__/widget/pay/__HASH__"
+  },
+  {
+    "c": "widget",
+    "a": "allowedTimes",
+    "u": "/widget/api/allowedTimes"
+  },
+  {
+    "c": "widget",
+    "a": "allowedDays",
+    "u": "/widget/api/allowedDays"
+  },
+  {
+    "c": "widget",
+    "a": "createReservation",
+    "u": "/widget/api/createReservation"
+  },
+  {
+    "c": "widget",
+    "a": "checkValid",
+    "u": "/widget/api/checkValid"
+  },
+  {
+    "c": "widget",
+    "a": "getRatings",
+    "u": "/widget/api/ratings"
+  },
+  {
+    "c": "widget",
+    "a": "specificFields",
+    "u": "/widget/api/specific-fields"
+  },
+  {
+    "c": "widget",
+    "a": "nextServices",
+    "u": "/widget/api/next-services"
+  },
+  {
+    "c": "widget",
+    "a": "createWaitingListPosition",
+    "u": "/widget/api/create-wl"
+  },
+  {
+    "c": "widget",
+    "a": "validateDiscountCoupon",
+    "u": "/widget/api/validate-discount-coupon"
+  },
+  {
+    "c": "widget",
+    "a": "index",
+    "u": "/__FACILITY__/widget"
+  }
+]

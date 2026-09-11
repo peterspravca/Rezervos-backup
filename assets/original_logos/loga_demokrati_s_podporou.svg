@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="320" viewBox="0 0 1600 320">
+  <rect width="1600" height="320" rx="24" fill="#ffffff"/>
+  <image href="demokrati.svg" x="30" y="25" width="480" height="270" preserveAspectRatio="xMidYMid meet"/>
+  <line x1="535" y1="55" x2="535" y2="265" stroke="#d8d8e0" stroke-width="4"/>
+  <image href="progresivne_slovensko.svg" x="575" y="65" width="290" height="190" preserveAspectRatio="xMidYMid meet"/>
+  <image href="sas.svg" x="925" y="65" width="250" height="190" preserveAspectRatio="xMidYMid meet"/>
+  <image href="kdh.svg" x="1250" y="65" width="300" height="190" preserveAspectRatio="xMidYMid meet"/>
+</svg>

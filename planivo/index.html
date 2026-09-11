@@ -1,0 +1,2225 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Language" content="sk">
+    <meta name="language" content="Slovak">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Planivo.sk – Kompletný audit, porovnanie a analýza | Rezervos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap&subset=latin,latin-ext" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-body: #0a0e17;
+            --bg-card: rgba(17, 24, 39, 0.88);
+            --bg-card-hover: rgba(26, 36, 56, 0.95);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-active: rgba(99, 102, 241, 0.4);
+            
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --primary-glow: rgba(99, 102, 241, 0.35);
+            
+            --planivo-blue: #2563eb;
+            --planivo-light: #60a5fa;
+            
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f43f5e;
+            --accent-cyan: #06b6d4;
+            --accent-purple: #a855f7;
+            
+            --text-main: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            line-height: 1.55;
+            font-size: 15px;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 10%, rgba(37, 99, 235, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 25%, rgba(99, 102, 241, 0.1) 0%, transparent 45%),
+                radial-gradient(circle at 50% 80%, rgba(13, 148, 136, 0.08) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        /* Top Header */
+        header.top-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            background: rgba(10, 14, 23, 0.85);
+            border-bottom: 1px solid var(--border);
+            padding: 10px 20px;
+        }
+
+        .header-inner {
+            max-width: 1560px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .brand-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .brand-logo {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #2563eb, #6366f1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        .brand-title {
+            font-weight: 800;
+            font-size: 1.15rem;
+            letter-spacing: -0.5px;
+            color: #fff;
+        }
+
+        .brand-subtitle {
+            font-size: 0.72rem;
+            color: var(--planivo-light);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: rgba(37, 99, 235, 0.15);
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 6px;
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 440px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            background: rgba(17, 24, 39, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 8px 14px 8px 36px;
+            color: #fff;
+            font-size: 0.85rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--planivo-light);
+            background: rgba(26, 36, 56, 0.9);
+            box-shadow: 0 0 15px rgba(37, 99, 235, 0.25);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-link-btn {
+            padding: 7px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.02);
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-link-btn:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-link-btn.highlight {
+            background: rgba(37, 99, 235, 0.15);
+            color: var(--planivo-light);
+            border-color: rgba(37, 99, 235, 0.4);
+        }
+
+        .nav-link-btn.highlight:hover {
+            background: rgba(37, 99, 235, 0.25);
+            box-shadow: 0 0 12px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Responsive Mobile Header */
+        @media (max-width: 820px) {
+            .nav-link-btn .nav-btn-text {
+                display: none;
+            }
+            .nav-link-btn {
+                padding: 8px 11px;
+                font-size: 0.95rem;
+            }
+            .search-container {
+                max-width: 160px;
+            }
+            .brand-subtitle {
+                display: none;
+            }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1560px;
+            margin: 0 auto;
+            padding: 24px 20px 80px;
+        }
+
+        /* Module Navigation Pills */
+        .mod-nav-bar {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 12px;
+            margin-bottom: 30px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+        }
+
+        .mod-pill {
+            white-space: nowrap;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .mod-pill:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .mod-pill.pill-star {
+            background: rgba(245, 158, 11, 0.12);
+            color: #fbbf24;
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        /* Hero Target Section */
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(99, 102, 241, 0.1) 50%, rgba(15, 23, 42, 0.8) 100%);
+            border: 1px solid rgba(37, 99, 235, 0.3);
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-banner::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.2) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-title {
+            font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+            font-weight: 800;
+            letter-spacing: -0.8px;
+            color: #fff;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .hero-badge {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            vertical-align: middle;
+        }
+
+        .hero-desc {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            max-width: 900px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .target-bar {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border);
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+        }
+
+        .target-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .target-item strong {
+            color: #fff;
+        }
+
+        /* Audit Module Cards */
+        .audit-section {
+            margin-bottom: 45px;
+            scroll-margin-top: 80px;
+        }
+
+        .section-headline {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .section-headline-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-num-badge {
+            background: rgba(37, 99, 235, 0.15);
+            color: var(--planivo-light);
+            border: 1px solid rgba(37, 99, 235, 0.3);
+            font-size: 0.8rem;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .section-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -0.3px;
+        }
+
+        .section-route {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            background: rgba(0, 0, 0, 0.3);
+            padding: 3px 8px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+
+        .audit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 18px;
+        }
+
+        .glass-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            transition: all 0.25s ease;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .glass-card:hover {
+            border-color: var(--border-active);
+            background: var(--bg-card-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+        }
+
+        .card-inner {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .card-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feature-bullet {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            margin-bottom: 10px;
+            line-height: 1.45;
+        }
+
+        .feature-bullet i {
+            margin-top: 3px;
+            font-size: 0.85rem;
+            color: var(--planivo-light);
+        }
+
+        .pros-cons-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        @media (max-width: 500px) {
+            .pros-cons-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pros-box, .cons-box {
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+        }
+
+        .pros-box {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .pros-box h5 {
+            color: var(--accent-green);
+            font-weight: 700;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .cons-box {
+            background: rgba(244, 63, 94, 0.08);
+            border: 1px solid rgba(244, 63, 94, 0.2);
+        }
+
+        .cons-box h5 {
+            color: var(--accent-rose);
+            font-weight: 700;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .pros-box ul, .cons-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .pros-box li, .cons-box li {
+            margin-bottom: 4px;
+            line-height: 1.35;
+            color: #cbd5e1;
+        }
+
+        /* Screenshot Preview Box */
+        .preview-shot-container {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            margin-top: 12px;
+            background: #000;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .preview-shot-container:hover {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .preview-shot-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s;
+        }
+
+        .preview-shot-container:hover img {
+            transform: scale(1.02);
+        }
+
+        .shot-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+            padding: 10px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: #cbd5e1;
+        }
+
+        .shot-zoom-tag {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: #fff;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Comparison Tables */
+        .table-scroll-wrapper {
+            overflow-x: auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            margin-top: 20px;
+        }
+
+        .comp-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+            min-width: 650px;
+        }
+
+        .comp-table th {
+            text-align: left;
+            padding: 14px 18px;
+            background: rgba(15, 23, 42, 0.95);
+            color: #fff;
+            font-weight: 700;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comp-table td {
+            padding: 14px 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #cbd5e1;
+            vertical-align: middle;
+        }
+
+        .comp-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .comp-table td.col-planivo {
+            background: rgba(37, 99, 235, 0.05);
+            color: #93c5fd;
+        }
+
+        .comp-table td.col-rezervos {
+            background: rgba(13, 148, 136, 0.08);
+            font-weight: 600;
+            color: #2dd4bf;
+        }
+
+        /* Pricing Tiers */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .price-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .price-card.featured {
+            border-color: rgba(37, 99, 235, 0.6);
+            background: linear-gradient(180deg, rgba(37, 99, 235, 0.1) 0%, rgba(17, 24, 39, 0.9) 100%);
+            box-shadow: 0 0 30px rgba(37, 99, 235, 0.2);
+        }
+
+        .price-badge-pop {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .price-amount {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #fff;
+            margin: 12px 0 4px;
+        }
+
+        .price-period {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .price-limits {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 0.8rem;
+            color: #cbd5e1;
+            margin-bottom: 16px;
+        }
+
+        .price-features-list {
+            list-style: none;
+            font-size: 0.82rem;
+            color: #cbd5e1;
+        }
+
+        .price-features-list li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Lightbox Modal */
+        .lightbox-modal {
+            display: none;
+            position: fixed;
+            z-index: 99999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .lightbox-modal.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 95%;
+            max-height: 92vh;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+            object-fit: contain;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            color: #fff;
+            font-size: 32px;
+            font-weight: bold;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(244, 63, 94, 0.8);
+            transform: scale(1.1);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 30px 20px;
+            text-align: center;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            background: rgba(10, 14, 23, 0.95);
+        }
+
+        .pill {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .pill-blue { background: rgba(37, 99, 235, 0.15); color: #60a5fa; }
+        .pill-green { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+        .pill-amber { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+        .pill-purple { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
+        .pill-rose { background: rgba(244, 63, 94, 0.15); color: #fb7185; }
+        .pill-cyan { background: rgba(6, 182, 212, 0.15); color: #22d3ee; }
+    </style>
+</head>
+<body>
+<a href="../prehlad/index.html" style="position:fixed;bottom:20px;right:20px;z-index:99999;display:inline-flex;align-items:center;gap:8px;background:#111827;color:#60a5fa;border:1px solid #2d3748;border-radius:10px;padding:10px 16px;font:700 13px/1.2 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.4);">&larr; Späť na Prehľad</a>
+
+    <!-- Sticky Header -->
+    <header class="top-header">
+        <div class="header-inner">
+            <a href="#" class="brand-group">
+                <div class="brand-logo">
+                    <i class="fa-solid fa-calendar-check"></i>
+                </div>
+                <div>
+                    <div class="brand-title">Planivo.sk Audit</div>
+                    <span class="brand-subtitle">vs Rezervos</span>
+                </div>
+            </a>
+
+            <div class="search-container">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" class="search-input" id="moduleSearch" placeholder="Hľadať funkciu, modul, cenník..." oninput="filterModules(this.value)">
+            </div>
+
+            <div class="nav-links">
+                <a href="../konkurencia/index.html" class="nav-link-btn" style="background: rgba(99, 102, 241, 0.2); color: #818cf8; border-color: rgba(99, 102, 241, 0.4);" title="Prejsť na Audit Booqme.app"><i class="fa-solid fa-arrow-left"></i> <span class="nav-btn-text">Audit Booqme</span></a>
+                <a href="#lepsie-ako-my" class="nav-link-btn highlight" title="Čo má Planivo lepšie?"><i class="fa-solid fa-star"></i> <span class="nav-btn-text">Čo majú lepšie?</span></a>
+                <a href="#porovnanie-rezervos" class="nav-link-btn highlight" style="background: rgba(13, 148, 136, 0.2); color: #2dd4bf; border-color: rgba(13, 148, 136, 0.4);" title="Zhodnotenie pre Rezervos"><i class="fa-solid fa-rocket"></i> <span class="nav-btn-text">Náš Náskok</span></a>
+                <a href="#tarify" class="nav-link-btn" title="Cenník Planivo"><i class="fa-solid fa-tags"></i> <span class="nav-btn-text">Cenník</span></a>
+                <a href="#matrix" class="nav-link-btn" title="Porovnávacia Matrica"><i class="fa-solid fa-scale-balanced"></i> <span class="nav-btn-text">Matrica</span></a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Quick Module Nav Pills -->
+        <div class="mod-nav-bar">
+            <a href="#executive-summary" class="mod-pill pill-star" style="background: rgba(99, 102, 241, 0.2); color: #818cf8; border-color: rgba(99, 102, 241, 0.4);"><i class="fa-solid fa-scale-balanced"></i> EXEKUTÍVNY SÚHRN</a>
+            <a href="#lepsie-ako-my" class="mod-pill pill-star"><i class="fa-solid fa-star"></i> ČO MAJÚ LEPŠIE</a>
+            <a href="#porovnanie-rezervos" class="mod-pill pill-star" style="background: rgba(13, 148, 136, 0.2); color: #2dd4bf; border-color: rgba(13, 148, 136, 0.4);"><i class="fa-solid fa-rocket"></i> ZHODNOTENIE PRE REZERVOS</a>
+            <a href="#mod-1" class="mod-pill"><i class="fa-solid fa-chart-pie"></i> 1. Dashboard</a>
+            <a href="#mod-2" class="mod-pill"><i class="fa-solid fa-calendar-days"></i> 2. Kalendár</a>
+            <a href="#mod-3" class="mod-pill"><i class="fa-solid fa-list-check"></i> 3. Rezervácie</a>
+            <a href="#mod-4" class="mod-pill"><i class="fa-solid fa-chart-line"></i> 4. Štatistiky</a>
+            <a href="#mod-5" class="mod-pill"><i class="fa-solid fa-users"></i> 5. Zákazníci (CRM)</a>
+            <a href="#mod-6" class="mod-pill"><i class="fa-solid fa-star-half-stroke"></i> 6. Recenzie</a>
+            <a href="#mod-7" class="mod-pill"><i class="fa-solid fa-ban"></i> 7. Blacklist</a>
+            <a href="#mod-8" class="mod-pill"><i class="fa-solid fa-scissors"></i> 8. Služby & Buffer</a>
+            <a href="#mod-9" class="mod-pill"><i class="fa-solid fa-user-group"></i> 9. Zamestnanci</a>
+            <a href="#mod-10" class="mod-pill"><i class="fa-solid fa-user-clock"></i> 10. Blokovanie času</a>
+            <a href="#mod-11" class="mod-pill"><i class="fa-solid fa-sliders"></i> 11. Nastavenia</a>
+            <a href="#mod-12" class="mod-pill"><i class="fa-solid fa-credit-card"></i> 12. Predplatné (Cenník)</a>
+            <a href="#mod-13" class="mod-pill"><i class="fa-solid fa-code"></i> 13. Web Widget</a>
+            <a href="#mod-14" class="mod-pill"><i class="fa-solid fa-comments"></i> 14. SMS Engine & Kampane</a>
+            <a href="#mod-15" class="mod-pill"><i class="fa-solid fa-globe"></i> 15. Verejný formulár</a>
+            <a href="#matrix" class="mod-pill"><i class="fa-solid fa-scale-balanced"></i> Veľká Matrica</a>
+        </div>
+
+        <!-- HERO SECTION -->
+        <section class="hero-banner">
+            <h1 class="hero-title">
+                Hĺbkový Audit & Analýza: Planivo.sk <span class="hero-badge">Marec 2026</span>
+            </h1>
+            <p class="hero-desc">
+                Kompletná reverzná analýza a benchmark slovenského rezervačného systému <strong>Planivo.sk</strong> (testované na reálnom salónnom účte <em>Kadernícky servis s. r. o.</em>). Detailná dokumentácia 15 modulov, presné snímky obrazoviek, rozbor cien SMS a predplatného a strategické porovnanie s <strong>Rezervos / VoľnéKreslo</strong>.
+            </p>
+
+            <div class="target-bar">
+                <div class="target-item">
+                    <i class="fa-solid fa-link" style="color: var(--planivo-light);"></i>
+                    <span>Cieľ: <strong>https://planivo.sk</strong></span>
+                </div>
+                <div class="target-item">
+                    <i class="fa-solid fa-user-shield" style="color: var(--accent-green);"></i>
+                    <span>Auditovaný účet: <strong>kadernictvo@hotapobv.eu</strong></span>
+                </div>
+                <div class="target-item">
+                    <i class="fa-solid fa-database" style="color: var(--accent-amber);"></i>
+                    <span>Zozbierané dáta: <strong>27 screenshotov, 15 modulov, live test rezervácie</strong></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXECUTIVE COMPARISON SUMMARY: ČO MAJÚ LEPŠIE ONI VS. V ČOM MÁME DRVIVÝ NÁSKOK MY -->
+        <section class="audit-section" id="executive-summary" style="margin-bottom: 40px;">
+            <div style="background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(17, 24, 39, 0.98) 100%); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 24px; padding: 24px; box-shadow: 0 15px 40px rgba(0,0,0,0.6);">
+                <div style="text-align: center; max-width: 900px; margin: 0 auto 24px;">
+                    <div class="pill pill-cyan" style="font-size: 0.8rem; margin-bottom: 8px;"><i class="fa-solid fa-scale-balanced"></i> MANAŽÉRSKE ZHODNOTENIE</div>
+                    <h2 style="font-size: clamp(1.4rem, 4vw, 2.1rem); font-weight: 900; color: #fff; letter-spacing: -0.5px;">
+                        Exekutívny Súhrn: V Čom Sme Lepší My vs. Čo Majú Lepšie Oni
+                    </h2>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 6px;">
+                        Jasné, otvorené a objektívne porovnanie oboch systémov. Žiadne omáčky – čisté fakty, technické rozdiely a biznisová realita pre slovenský salón.
+                    </p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr; gap: 20px;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+                        
+                        <!-- COLUMN 1: ŠIKOVNÉ UI DETAILY PLANIVO A REALITA V REZERVOS -->
+                        <div style="background: rgba(37, 99, 235, 0.06); border: 1px solid rgba(37, 99, 235, 0.35); border-radius: 18px; padding: 20px; display: flex; flex-direction: column;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; border-bottom: 1px solid rgba(37, 99, 235, 0.2); padding-bottom: 12px;">
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <div style="width: 34px; height: 34px; border-radius: 8px; background: #2563eb; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1rem;">
+                                        <i class="fa-solid fa-lightbulb"></i>
+                                    </div>
+                                    <h3 style="font-size: 1.15rem; font-weight: 800; color: #fff;">UI Detaily Planivo (a Realita v Rezervos)</h3>
+                                </div>
+                                <span class="pill pill-blue">Inšpirácia & Porovnanie</span>
+                            </div>
+
+                            <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; font-size: 0.85rem; color: #cbd5e1;">
+                                <li style="display: flex; align-items: flex-start; gap: 10px;">
+                                    <i class="fa-solid fa-ban" style="color: #60a5fa; margin-top: 3px;"></i>
+                                    <div>
+                                        <strong>Blokovanie klientov (Blacklist):</strong> Planivo má samostatnú podstránku na plošné vyradenie čísla. 
+                                        <div style="font-size: 0.78rem; color: #34d399; margin-top: 3px; font-weight: 600;">
+                                            <i class="fa-solid fa-check-double"></i> Rezervos to má v jadre vyriešené lepšie: V <code>dashboard-kontakty.php</code> a <code>api/customer_trust.php</code> má salón vlastné blokovanie klienta (<code>blocked_customers</code>) trvalo aj na mesiace, hodnotenie dochvíľnosti (1-5★) a privátne poznámky. Zámerne však klienta neblokujeme plošne v iných salónoch siete, pretože ak si nesadol s jedným majiteľom, inde môže byť bezproblémovým stálym zákazníkom!
+                                        </div>
+                                    </div>
+                                </li>
+                                <li style="display: flex; align-items: flex-start; gap: 10px;">
+                                    <i class="fa-solid fa-bolt" style="color: #60a5fa; margin-top: 3px;"></i>
+                                    <div>
+                                        <strong>Rýchly status termínu v kalendári:</strong> Vyskakovací pop-up na 1 klik priamo na slote (Vybavená, Mešká, No-Show). Šikovný UI detail na inšpiráciu (Rezervos má kompletné stavy aj Kanban nástenku v <code>dashboard-tabula.php</code>).
+                                    </div>
+                                </li>
+                                <li style="display: flex; align-items: flex-start; gap: 10px;">
+                                    <i class="fa-solid fa-mobile-screen" style="color: #60a5fa; margin-top: 3px;"></i>
+                                    <div>
+                                        <strong>Čistý 3-krokový verejný proces:</strong> Minimalistický postup (Služba &rarr; Dátum a čas &rarr; Kontakt). Skvelá inšpirácia pre odľahčenie nášho mobilného rezervačného lievika.
+                                    </div>
+                                </li>
+                                <li style="display: flex; align-items: flex-start; gap: 10px;">
+                                    <i class="fa-solid fa-code" style="color: #60a5fa; margin-top: 3px;"></i>
+                                    <div>
+                                        <strong>Web Widget konfigurátor:</strong> Planivo má color picker na tlačidlo. 
+                                        <div style="font-size: 0.78rem; color: #34d399; margin-top: 3px; font-weight: 600;">
+                                            <i class="fa-solid fa-check-double"></i> Rezervos widget už dávno má: V <code>dashboard-rozsirenia.php</code> generuje iframe kód na 1 klik a navyše má <strong>živý iCal odber kalendára pre Google, Apple a Outlook</strong>, čo Planivo vôbec neponúka!
+                                        </div>
+                                    </div>
+                                </li>
+                                <li style="display: flex; align-items: flex-start; gap: 10px;">
+                                    <i class="fa-solid fa-chart-pie" style="color: #60a5fa; margin-top: 3px;"></i>
+                                    <div>
+                                        <strong>Grafická vizualizácia lojality:</strong> Planivo má len pasívny farebný donut graf Noví vs. Vracajúci sa. 
+                                        <div style="font-size: 0.78rem; color: #34d399; margin-top: 3px; font-weight: 600;">
+                                            <i class="fa-solid fa-check-double"></i> V Rezervos máme akčnú CRM segmentáciu: V <code>dashboard-marketing.php</code> systém klientov triedi na Noví (1×), Vracajúci sa (2–4×), Verní (5×+) a podľa útraty – s možnosťou okamžitej kampane na 1 klik.
+                                        </div>
+                                    </div>
+                                </li>
+                                <li style="display: flex; align-items: flex-start; gap: 10px;">
+                                    <i class="fa-solid fa-comments" style="color: #60a5fa; margin-top: 3px;"></i>
+                                    <div>
+                                        <strong>Hromadné správy a SMS:</strong> Planivo má len jednoduché plošné SMS bez filtrov.
+                                        <div style="font-size: 0.78rem; color: #34d399; margin-top: 3px; font-weight: 600;">
+                                            <i class="fa-solid fa-check-double"></i> Rezervos má ucelený Marketing Hub: Cielenie podľa návštev, útraty, menín i narodenín, AI copywriter, vlastné meno odosielateľa SMS do 11 znakov a veľkoobchodné SMS balíčky.
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- COLUMN 2: V ČOM MÁ REZERVOS DRVIVÝ NÁSKOK -->
+                        <div style="background: rgba(16, 185, 129, 0.06); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 18px; padding: 20px; display: flex; flex-direction: column;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; border-bottom: 1px solid rgba(16, 185, 129, 0.2); padding-bottom: 12px;">
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <div style="width: 34px; height: 34px; border-radius: 8px; background: #10b981; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1rem;">
+                                        <i class="fa-solid fa-rocket"></i>
+                                    </div>
+                                    <h3 style="font-size: 1.15rem; font-weight: 800; color: #fff;">V čom má Rezervos DRVIVÝ NÁSKOK</h3>
+                                </div>
+                                <span class="pill pill-green">Strategická Prevaha</span>
+                            </div>
+
+                            <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; font-size: 0.85rem; color: #cbd5e1;">
+                                <li style="display: flex; align-items: flex-start; gap: 10px;">
+                                    <i class="fa-solid fa-crosshairs" style="color: #34d399; margin-top: 3px;"></i>
+                                    <div><strong>Kreslo Hunter & Last Minute radar:</strong> Automatické obsadzovanie zrušených termínov čakajúcimi klientmi. V Planivo uvoľnený termín ostáva prázdny a salón prerába.</div>
+                                </li>
+                                <li style="display: flex; align-items: flex-start; gap: 10px;">
+                                    <i class="fa-solid fa-gift" style="color: #34d399; margin-top: 3px;"></i>
+                                    <div><strong>E-shop Poukážok & Permanentky (0% poplatok):</strong> Okamžitý predaj darčekových poukážok a balíčkov s QR Pay by square priamo na účet salónu. Planivo nemá poukážky vôbec!</div>
+                                </li>
+                                <li style="display: flex; align-items: flex-start; gap: 10px;">
+                                    <i class="fa-solid fa-hourglass-half" style="color: #34d399; margin-top: 3px;"></i>
+                                    <div><strong>Duálny Buffer Time (PRED aj PO) + Skupiny:</strong> Možnosť nastaviť čas na prípravu kresla pred príchodom klienta aj upratovanie po ňom + kapacita workshopov. Planivo má len pauzu po službe.</div>
+                                </li>
+                                <li style="display: flex; align-items: flex-start; gap: 10px;">
+                                    <i class="fa-solid fa-utensils" style="color: #34d399; margin-top: 3px;"></i>
+                                    <div><strong>Obedňajšia prestávka v rozvrhoch personálu:</strong> Automatické rešpektovanie obeda v týždennom pláne. V Planivo musí personál každý deň manuálne zadávať blokácie.</div>
+                                </li>
+                                <li style="display: flex; align-items: flex-start; gap: 10px;">
+                                    <i class="fa-solid fa-user-injured" style="color: #34d399; margin-top: 3px;"></i>
+                                    <div><strong>Presun klientov pri PN na voľného kolegu:</strong> Záchrana tržieb pri ochorení kaderníčky – okamžitý presun na kolegyňu. V Planivo hrozí iba storno a strata klienta.</div>
+                                </li>
+                                <li style="display: flex; align-items: flex-start; gap: 10px;">
+                                    <i class="fa-solid fa-clock-rotate-left" style="color: #34d399; margin-top: 3px;"></i>
+                                    <div><strong>Automatický nočný Win-Back Engine:</strong> Autopilot po 60–90 dňoch neaktivity sám reaktivuje spiaceho klienta (so 180d ochranou proti spamu). Planivo nemá žiadny cron.</div>
+                                </li>
+                                <li style="display: flex; align-items: flex-start; gap: 10px;">
+                                    <i class="fa-solid fa-star" style="color: #34d399; margin-top: 3px;"></i>
+                                    <div><strong>Google Recenzie Booster:</strong> Priame presmerovanie 5★ hodnotení na Google Firemný Profil (Google Mapy), čo prináša nových klientov zo SEO. Planivo recenzie zamyká u seba.</div>
+                                </li>
+                                <li style="display: flex; align-items: flex-start; gap: 10px;">
+                                    <i class="fa-solid fa-chair" style="color: #34d399; margin-top: 3px;"></i>
+                                    <div><strong>Marketplace VoľnéKreslo:</strong> Integrovaná burza salónov a prenájmu kresiel pre barberov a kaderníkov. Planivo je iba uzavretý kalendár.</div>
+                                </li>
+                                <li style="display: flex; align-items: flex-start; gap: 10px;">
+                                    <i class="fa-solid fa-comment-sms" style="color: #34d399; margin-top: 3px;"></i>
+                                    <div><strong>Úspora 50% na SMS notifikáciách (GSM-7):</strong> Planivo neodstraňuje diakritiku, takže 1 SMS stojí 0.14 € – 0.21 €. Rezervos oreže mäkčene a správa stojí len 0.045 € – 0.05 € na celých 160 znakov.</div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SPECIAL SECTION: ŠIKOVNÉ UI DETAILY PLANIVO VS. SKUTOČNÁ REALITA V REZERVOS -->
+        <section class="audit-section" id="lepsie-ako-my" style="background: rgba(37, 99, 235, 0.05); border: 1px solid rgba(37, 99, 235, 0.3); border-radius: 20px; padding: 20px; margin-bottom: 50px;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                <div style="width: 36px; height: 36px; border-radius: 10px; background: #2563eb; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.1rem;">
+                    <i class="fa-solid fa-lightbulb"></i>
+                </div>
+                <div>
+                    <h2 style="font-size: clamp(1.3rem, 4vw, 1.8rem); font-weight: 800; color: #fff;">Šikovné UI Detaily Planivo vs. Skutočná Realita v Rezervos</h2>
+                    <div style="font-size: 0.8rem; color: #60a5fa; font-weight: 600;">Hĺbkový rozbor: Kde má Planivo pekné UI pozlátko a čo má Rezervos v skutočnosti v kóde vyriešené podstatne hlbšie</div>
+                </div>
+            </div>
+
+            <p style="font-size: 0.88rem; color: #cbd5e1; margin-bottom: 20px; line-height: 1.5;">
+                Po hĺbkovom audite oboch systémov bez unáhlených záverov uvádzame <strong>6 oblastí, kde Planivo ukazuje šikovné prvky ergonómie</strong> a porovnávame ich s reálnym stavom nášho kódu:
+            </p>
+
+            <div style="display: grid; grid-template-columns: 1fr; gap: 14px;">
+                <!-- Card 1: Blacklist -->
+                <div class="glass-card card-inner" style="border-left: 4px solid #2563eb;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                        <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">1. Blokovanie zákazníkov: Blacklist Planivo vs. Systém dôvery v Rezervos</h4>
+                        <span class="pill pill-blue">Planivo vs. Rezervos</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.45;">
+                        Planivo má vyhradenú obrazovku <code>/dashboard/blacklist</code>, kde personál zablokuje telefónne číslo alebo e-mail klienta, ktorý neprišiel na termín. Zákazník je plošne odrezaný z celého rezervačného systému.
+                    </p>
+                    <div style="margin-top: 10px; padding: 10px 12px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; font-size: 0.82rem; color: #cbd5e1;">
+                        <strong style="color: #34d399;"><i class="fa-solid fa-check-double"></i> Rezervos blokovanie v kóde reálne má a robí ho férovejšie:</strong> 
+                        V <code>dashboard-kontakty.php</code> a <code>api/customer_trust.php</code> má každá prevádzka tlačidlo <strong>Zablokovať zákazníka</strong> (trvalo alebo na X mesiacov do tabuľky <code>blocked_customers</code>) a <code>book_appointment.php</code> takémuto klientovi automaticky zamedzí online rezerváciu. <strong>Zásadný a vedomý rozdiel:</strong> Rezervos klienta neblokuje plošne v celej sieti VoľnéKreslo. To, že si klient osobnostne nesadol s jedným majiteľom, neznamená, že nemôže byť bezproblémovým stálym zákazníkom u iného barbera! Rezervos navyše umožňuje hodnotiť dochvíľnosť (1–5★), písať privátne poznámky a nahlásiť závažný incident na podporu (<code>incident_reports</code>).
+                    </div>
+                </div>
+
+                <!-- Card 2: 3-step UX -->
+                <div class="glass-card card-inner" style="border-left: 4px solid #10b981;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                        <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">2. Čistý 3-krokový verejný rezervačný formulár pre klienta</h4>
+                        <span class="pill pill-green">UX Zážitok</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.45;">
+                        Verejná stránka prevádzky Planivo (<code>/book/...</code>) má moderný minimalistický flow. Klient si v 1. kroku zvolí službu, v 2. kroku klikne na dátum a okamžite vidí mriežku voľných časov, a v 3. kroku vyplní len Meno, Telefón a E-mail. Celá rezervácia trvá do 30 sekúnd. Veľmi pekná inšpirácia pre odľahčenie nášho mobilného krokovania.
+                    </p>
+                </div>
+
+                <!-- Card 3: Quick status pop-up -->
+                <div class="glass-card card-inner" style="border-left: 4px solid #f59e0b;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                        <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">3. Rýchle prepínanie stavov termínu priamo na časovej osi kalendára</h4>
+                        <span class="pill pill-amber">Ergonómia</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.45;">
+                        V kalendári Planivo po kliknutí na termín vyskočí kompaktný pop-up s okamžitými tlačidlami (Vybavená, Mešká, No-Show, Zrušená). Kaderníčka nemusí otvárať celý modál. V Rezervos máme správu stavov v modáli a v Kanban nástenke (<code>dashboard-tabula.php</code>), no takýto 1-klik status priamo na slote je výborný ergonomický detail.
+                    </p>
+                </div>
+
+                <!-- Card 4: Web Widget -->
+                <div class="glass-card card-inner" style="border-left: 4px solid #a855f7;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                        <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">4. Web Widget: Planivo color picker vs. Rezervos Iframe + iCal odber kalendára</h4>
+                        <span class="pill pill-purple">Web Integrácia</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.45;">
+                        Planivo má v <code>/dashboard/widget</code> vizuálny výber farby plávajúceho tlačidla a živé demo.
+                    </p>
+                    <div style="margin-top: 10px; padding: 10px 12px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; font-size: 0.82rem; color: #cbd5e1;">
+                        <strong style="color: #34d399;"><i class="fa-solid fa-check-double"></i> Rezervos widget už v systéme má a navyše ponúka iCal odber:</strong> 
+                        V <code>dashboard-rozsirenia.php</code> máme generátor embed kódu (<code>&lt;iframe src="...&amp;embed=1"&gt;</code>) s prispôsobiteľnou šírkou a výškou. Navyše Rezervos ponúka <strong>priamy iCal odber kalendára pre Google, Apple, Samsung a Outlook Kalendár</strong> (per zamestnanec aj celá prevádzka), čo Planivo vôbec neponúka!
+                    </div>
+                </div>
+
+                <!-- Card 5: Loyalty Donut vs. CRM Segmentation -->
+                <div class="glass-card card-inner" style="border-left: 4px solid #06b6d4;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                        <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">5. Analytika lojality: Planivo pasívny donut graf vs. Akčná CRM segmentácia Rezervos</h4>
+                        <span class="pill pill-cyan">Analytika & CRM</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.45;">
+                        Planivo v module <code>/dashboard/stats</code> zobrazuje farebný koláčový graf: percentuálny pomer nových zákazníkov voči vracajúcim sa. Je to vizuálne pekný, no čisto pasívny graf (nedá sa naň kliknúť ani s dátami pracovať).
+                    </p>
+                    <div style="margin-top: 10px; padding: 10px 12px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; font-size: 0.82rem; color: #cbd5e1;">
+                        <strong style="color: #34d399;"><i class="fa-solid fa-check-double"></i> Rezervos to má v jadre a oveľa prepracovanejšie:</strong> 
+                        V <code>dashboard-marketing.php</code> máme dynamické počítadlá a akčnú segmentáciu na <strong>Noví (1×)</strong>, <strong>Vracajúci sa (2–4×)</strong> a <strong>Verní štamgasti (5×+)</strong>, plus podľa výšky útraty (&lt;30 €, 30–100 €, 100 €+). Majiteľ salónu v Rezervos na skupinu klikne a systém mu okamžite umožní poslať cielenú e-mailovú či SMS ponuku na 1 klik.
+                    </div>
+                </div>
+
+                <!-- Card 6: Bulk SMS vs Marketing Hub -->
+                <div class="glass-card card-inner" style="border-left: 4px solid #ec4899;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                        <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">6. Hromadné kampane: Planivo plošné SMS vs. Cielený Marketing Hub Rezervos</h4>
+                        <span class="pill pill-rose">Marketing</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.45;">
+                        Planivo má v <code>/dashboard/sms</code> jednoduché textové pole na odoslanie plošnej SMS celej databáze zákazníkov bez možnosti filtrovania.
+                    </p>
+                    <div style="margin-top: 10px; padding: 10px 12px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; font-size: 0.82rem; color: #cbd5e1;">
+                        <strong style="color: #34d399;"><i class="fa-solid fa-check-double"></i> Rezervos Marketing Hub je o generáciu ďalej:</strong> 
+                        V <code>dashboard-marketing.php</code> viete kampaň zacieliť na konkrétne segmenty, využiť <strong>AI copywritera (4 štýly textu)</strong>, posielať priania k dnešným meninám a narodeninám so zľavovým kódom, a cez <code>api/wallet.php</code> si aktivovať <strong>vlastné meno odosielateľa SMS (do 11 znakov)</strong> s nákupom veľkoobchodných SMS balíčkov za polovičné ceny vďaka GSM-7 filtru!
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 1: DASHBOARD -->
+        <section class="audit-section" id="mod-1" data-search="dashboard prehlad nastenka kpi trzby navstevnost">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">01</span>
+                    <h2 class="section-title">Hlavná Nástenka (Dashboard)</h2>
+                </div>
+                <span class="section-route">/dashboard</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-chart-pie" style="color: #60a5fa;"></i> Prehľad dňa a metrik</div>
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div>Karty dnešných termínov, celkový počet rezervácií, mesačné tržby a rýchle tlačidlá na pridanie termínu a zákazníka.</div>
+                    </div>
+
+                    <div class="pros-cons-grid">
+                        <div class="pros-box">
+                            <h5><i class="fa-solid fa-thumbs-up"></i> Silné stránky</h5>
+                            <ul>
+                                <li>Veľmi prehľadný a vzdušný dizajn</li>
+                                <li>Okamžité počítadlo dnešných termínov</li>
+                            </ul>
+                        </div>
+                        <div class="cons-box">
+                            <h5><i class="fa-solid fa-thumbs-down"></i> Slabiny</h5>
+                            <ul>
+                                <li>Chýba Kanban nástenka interných úloh salónu (upratovanie, nákup farieb)</li>
+                                <li>Žiadne prepojenie na VoľnéKreslo marketplace</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/01_dashboard.png')">
+                        <img src="screenshots/01_dashboard.png" alt="Dashboard Planivo">
+                        <div class="shot-overlay">
+                            <span>Prehľad nástenky Planivo.sk</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 2: KALENDÁR -->
+        <section class="audit-section" id="mod-2" data-search="kalendar tyzdenny denny zobrazenie terminy sloty">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">02</span>
+                    <h2 class="section-title">Plánovací Kalendár & Rozvrhy</h2>
+                </div>
+                <span class="section-route">/dashboard/calendar</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-calendar-days" style="color: #3b82f6;"></i> Denný a týždenný rozvrh</div>
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div>Časová os s farebným odlíšením zamestnancov, možnosť zobrazenia po dňoch a týždňoch a rýchle pridanie rezervácie kliknutím do voľného slotu.</div>
+                    </div>
+
+                    <div style="margin-top: 14px; padding: 10px 12px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; font-size: 0.8rem; color: #cbd5e1;">
+                        <strong style="color: #34d399;"><i class="fa-solid fa-utensils"></i> Rezervos je popredu:</strong> V Rezervos má personál v kalendári priamo integrovanú <strong>Obedňajšiu prestávku</strong> a pri absencii kolegu (PN) systém umožňuje okamžitý presun rezervácie na voľného kolegu bez straty klienta!
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/02_calendar.png')">
+                        <img src="screenshots/02_calendar.png" alt="Kalendár Planivo">
+                        <div class="shot-overlay">
+                            <span>Týždenné rozvrhy a rezervácie</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 3: REZERVÁCIE -->
+        <section class="audit-section" id="mod-3" data-search="rezervacie zoznam bookings stavy filter export">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">03</span>
+                    <h2 class="section-title">Správa Rezervácií & Zoznam</h2>
+                </div>
+                <span class="section-route">/dashboard/bookings</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-list-check" style="color: #10b981;"></i> Tabuľka rezervácií s filtrami</div>
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div>Filtrovanie podľa dátumu, zamestnanca, stavu (Čaká na potvrdenie, Potvrdená, Vybavená, Zrušená). Možnosť exportu do CSV / Excelu.</div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/03_bookings.png')">
+                        <img src="screenshots/03_bookings.png" alt="Rezervácie">
+                        <div class="shot-overlay">
+                            <span>Prehľad rezervácií a stavy</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 4: ŠTATISTIKY -->
+        <section class="audit-section" id="mod-4" data-search="statistika grafy trzby analytika vytazenost">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">04</span>
+                    <h2 class="section-title">Štatistiky & Finančná Analytika</h2>
+                </div>
+                <span class="section-route">/dashboard/stats</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-chart-line" style="color: #a855f7;"></i> Analytika Lojality: Pasívny graf vs. Akčná segmentácia</div>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 14px;">
+                        Planivo má v štatistikách pekný grafický krúžok, ale Rezervos má v jadre podstatne prepracovanejší a hlavne <strong>akčný CRM systém</strong>:
+                    </p>
+
+                    <div class="table-scroll-wrapper" style="margin-top: 0; margin-bottom: 14px;">
+                        <table class="comp-table">
+                            <thead>
+                                <tr>
+                                    <th>Parameter lojality</th>
+                                    <th>Planivo.sk</th>
+                                    <th>Rezervos (dashboard-marketing.php)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Úrovne návštevnosti</strong></td>
+                                    <td>Iba 2 skupiny: Noví vs. Vracajúci sa</td>
+                                    <td><span class="pill pill-green">3 presné úrovne: Noví (1×), Vracajúci sa (2–4×), Verní (5×+)</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Segmentácia útraty</strong></td>
+                                    <td><span class="pill pill-rose">Žiadna</span> (iba priemerná tržba)</td>
+                                    <td><span class="pill pill-green">Nízka (&lt;30 €), Stredná (30–100 €), Vysoká (100 €+)</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Oslávenci & Meniny</strong></td>
+                                    <td><span class="pill pill-rose">Chýba</span></td>
+                                    <td><span class="pill pill-green">Dnešné meniny + narodeniny na 1 klik</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Možnosť okamžitej akcie</strong></td>
+                                    <td><span class="pill pill-amber">0 – pasívny graf</span> (nedá sa kliknúť)</td>
+                                    <td><span class="pill pill-green">1 klik = okamžité odoslanie cielenej SMS/e-mailu danej skupine</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div style="padding: 12px 14px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 10px; font-size: 0.83rem; color: #cbd5e1; line-height: 1.45;">
+                        <strong style="color: #34d399;"><i class="fa-solid fa-bullseye"></i> Prečo má Rezervos obrovský náskok:</strong>
+                        V Planivo sa majiteľ salónu na graf iba bezmocne pozerá. V Rezervos klikne na tlačidlo <code>Vracajúci sa (2-4×)</code> a systém mu okamžite vyfiltruje presný zoznam týchto zákazníkov, ktorým vie na jedno kliknutie poslať špeciálnu ponuku na 3. alebo 5. strihanie, aby sa z nich stali celoživotní štamgasti!
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/04_stats.png')">
+                        <img src="screenshots/04_stats.png" alt="Štatistiky Planivo">
+                        <div class="shot-overlay">
+                            <span>Mesačné tržby a pasívny donut graf lojality v Planivo</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 5: ZÁKAZNÍCI CRM -->
+        <section class="audit-section" id="mod-5" data-search="zakaznici crm klienti historia kontakty poznamky">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">05</span>
+                    <h2 class="section-title">Zákazníci (CRM Databáza)</h2>
+                </div>
+                <span class="section-route">/dashboard/customers</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-users" style="color: #ec4899;"></i> Kartotéka klientov</div>
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div>Evidencia telefónnych čísel, e-mailov, počtu návštev, celkovej útraty a interných poznámok k zákazníkovi.</div>
+                    </div>
+
+                    <div style="margin-top: 14px; padding: 10px 12px; background: rgba(168, 85, 247, 0.08); border: 1px solid rgba(168, 85, 247, 0.25); border-radius: 8px; font-size: 0.8rem; color: #cbd5e1;">
+                        <strong style="color: #c084fc;"><i class="fa-solid fa-clock-rotate-left"></i> Rezervos je popredu:</strong> Rezervos má v CRM integrovaný <strong>Automatický Win-Back Engine</strong> (nočný cron po 60–90 dňoch), ktorý spiacim zákazníkom automaticky posiela ponuku na návrat. Planivo žiadnu automatickú reaktiváciu nemá!
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/05_customers.png')">
+                        <img src="screenshots/05_customers.png" alt="Zákazníci">
+                        <div class="shot-overlay">
+                            <span>Zoznam zákazníkov a kontakty</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 6: RECENZIE -->
+        <section class="audit-section" id="mod-6" data-search="recenzie hodnotenia hviezdicky google feedback">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">06</span>
+                    <h2 class="section-title">Hodnotenia & Recenzie</h2>
+                </div>
+                <span class="section-route">/dashboard/reviews</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-star-half-stroke" style="color: #f59e0b;"></i> Zber spätnej väzby</div>
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div>Klienti po absolvovaní termínu zanechávajú 1–5 hviezdičiek a slovný komentár.</div>
+                    </div>
+
+                    <div style="margin-top: 14px; padding: 10px 12px; background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 8px; font-size: 0.8rem; color: #cbd5e1;">
+                        <strong style="color: #38bdf8;"><i class="fa-solid fa-google"></i> Rezervos má obrovský náskok:</strong> Recenzie v Planivo končia v uzavretom internom systéme, kde ich vidí len majiteľ. Rezervos má <strong>Google Reviews Booster</strong> – spokojných klientov automaticky presmeruje na Google Firemný Profil (Google Maps), čo salónu reálne prináša desiatky nových zákazníkov!
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/06_reviews.png')">
+                        <img src="screenshots/06_reviews.png" alt="Recenzie">
+                        <div class="shot-overlay">
+                            <span>Interné hodnotenia od zákazníkov</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 7: BLACKLIST -->
+        <section class="audit-section" id="mod-7" data-search="blacklist blokovanie neziaduci zakaznici stop">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">07</span>
+                    <h2 class="section-title">Čierna Listina (Blacklist)</h2>
+                </div>
+                <span class="section-route">/dashboard/blacklist</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-ban" style="color: #f43f5e;"></i> Blokovanie problematických klientov</div>
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div>Evidencia telefónov a e-mailov osôb so zákazom rezervácie. Zabraňuje falošným objednávkam a chráni pracovný čas personálu.</div>
+                    </div>
+
+                    <div style="margin-top: 14px; padding: 10px 12px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; font-size: 0.8rem; color: #cbd5e1;">
+                        <strong style="color: #34d399;"><i class="fa-solid fa-scale-balanced"></i> Filozofia Rezervos – Prečo globálny Blacklist nechceme:</strong> 
+                        V Planivo systém klienta natvrdo odreže. V sieti salónov (alebo v marketplace VoľnéKreslo) to takto nechceme: to, že si klient osobnostne nesadol s jedným konkrétnym majiteľom, neznamená, že nemôže byť bezproblémovým a stálym klientom v inom salóne či u iného kolegu! Rezervos preto rieši hodnotenie zákazníka <strong>diskrétnymi internými poznámkami a hodnotením na úrovni prevádzky</strong>, nie plošným zákazom.
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/07_blacklist.png')">
+                        <img src="screenshots/07_blacklist.png" alt="Blacklist">
+                        <div class="shot-overlay">
+                            <span>Zoznam zablokovaných klientov</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 8: SLUŽBY & CENNÍK -->
+        <section class="audit-section" id="mod-8" data-search="sluzby cennik kategorie cas trvanie buffer prestavka cena doplnky permanentky poukazky">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">08</span>
+                    <h2 class="section-title">Služby, Cenník & Buffer Time</h2>
+                </div>
+                <span class="section-route">/dashboard/services</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-scissors" style="color: #14b8a6;"></i> Kompletné porovnanie parametrov služieb</div>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 14px;">
+                        Prešli sme všetky formuláre a polia pri vytváraní a úprave služieb v Planivo.sk a porovnali ich s ponukou Rezervos:
+                    </p>
+
+                    <div class="table-scroll-wrapper" style="margin-top: 0;">
+                        <table class="comp-table">
+                            <thead>
+                                <tr>
+                                    <th>Parameter služby</th>
+                                    <th>Planivo.sk</th>
+                                    <th>Rezervos</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Základné polia</strong></td>
+                                    <td>Názov, popis, kategória, cena v €, trvanie</td>
+                                    <td>Názov, popis, kategória, cena, trvanie, ikona/farba</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Buffer Time (prestávka)</strong></td>
+                                    <td><span class="pill pill-amber">Iba PO službe</span> (5–60 min)</td>
+                                    <td><span class="pill pill-green">Duálny buffer (PRED aj PO)</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Skupinová kapacita</strong></td>
+                                    <td><span class="pill pill-rose">1 klient na slot</span> (žiadna kapacita)</td>
+                                    <td><span class="pill pill-green">Skupinové kapacity & workshopy</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Varianty / Príplatky</strong></td>
+                                    <td><span class="pill pill-rose">Nie</span> (nutné založiť novú službu)</td>
+                                    <td><span class="pill pill-green">Doplnkové služby a varianty</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Permanentky & Balíky</strong></td>
+                                    <td><span class="pill pill-rose">Absolútne chýba</span></td>
+                                    <td><span class="pill pill-green">Kreditné a vstupné permanentky</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Darčekové poukážky</strong></td>
+                                    <td><span class="pill pill-rose">Nulová podpora</span></td>
+                                    <td><span class="pill pill-green">0% QR Pay by square na službu</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Last Minute zľavnenie</strong></td>
+                                    <td><span class="pill pill-rose">Nie</span> (fixný cenník)</td>
+                                    <td><span class="pill pill-green">Kreslo Hunter & dynamické zľavy</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Väzba na kreslo / vybavenie</strong></td>
+                                    <td>Iba väzba na zamestnanca</td>
+                                    <td><span class="pill pill-green">Väzba na zamestnanca + kreslo</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div style="margin-top: 14px; padding: 10px 12px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; font-size: 0.8rem; color: #cbd5e1;">
+                        <strong style="color: #34d399;"><i class="fa-solid fa-hourglass-half"></i> Rezervos jednoznačne dominuje:</strong> Kým v Planivo kaderníčka nemá ako vyčleniť 10 minút na prípravu kresla <em>pred</em> príchodom klienta (chýba pred-buffer) a nemôže predávať permanentky ani darčekové poukážky, Rezervos rieši celý monetizačný lievik salónu na 100%.
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner" style="display: flex; flex-direction: column; gap: 14px;">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/08_services.png')">
+                        <img src="screenshots/08_services.png" alt="Zoznam služieb Planivo">
+                        <div class="shot-overlay">
+                            <span>Zoznam služieb a kategórií</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/08b_service_modal.png')">
+                        <img src="screenshots/08b_service_modal.png" alt="Služby modál">
+                        <div class="shot-overlay">
+                            <span>Detail formulára: Trvanie a prestávka PO službe</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 9: ZAMESTNANCI -->
+        <section class="audit-section" id="mod-9" data-search="zamestnanci tim pracovnici rozvrhy prava">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">09</span>
+                    <h2 class="section-title">Tím, Zamestnanci & Rozvrhy</h2>
+                </div>
+                <span class="section-route">/dashboard/employees</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-user-group" style="color: #3b82f6;"></i> Profily personálu a pracovný čas</div>
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div>Priradenie služieb konkrétnym zamestnancom, telefónne kontakty, e-mailové prihlásenie a týždenná pracovná doba.</div>
+                    </div>
+
+                    <div style="margin-top: 14px; padding: 10px 12px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; font-size: 0.8rem; color: #cbd5e1;">
+                        <strong style="color: #34d399;"><i class="fa-solid fa-utensils"></i> Rezervos je popredu:</strong> Rezervos v <code>dashboard-tym.php</code> umožňuje priame nastavenie <strong>Obedňajšej prestávky</strong> pre každý deň a pri nečakanej PN umožňuje <strong>okamžitý presun zákazníkov na voľného kolegu</strong>!
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/09b_employee_modal.png')">
+                        <img src="screenshots/09b_employee_modal.png" alt="Zamestnanci modál">
+                        <div class="shot-overlay">
+                            <span>Úprava zamestnanca a pracovné hodiny</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 10: BLOKOVANIE ČASU -->
+        <section class="audit-section" id="mod-10" data-search="blokovanie casu volno dovolenka pauza">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">10</span>
+                    <h2 class="section-title">Blokovanie Času (Dovolenky / Pauzy)</h2>
+                </div>
+                <span class="section-route">/dashboard/blocked-times</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-user-clock" style="color: #f59e0b;"></i> Blokovanie času: Planivo vs. Rezervos</div>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 14px;">
+                        Túto funkcionalitu máme v <strong>Rezervos plnohodnotne vyriešenú</strong> a navyše posunutú na oveľa vyššiu úroveň ergonómie:
+                    </p>
+
+                    <div class="table-scroll-wrapper" style="margin-top: 0; margin-bottom: 14px;">
+                        <table class="comp-table">
+                            <thead>
+                                <tr>
+                                    <th>Funkcia blokovania</th>
+                                    <th>Planivo.sk (/dashboard/blocked-times)</th>
+                                    <th>Rezervos (dashboard-tym.php)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Dovolenky a voľno</strong></td>
+                                    <td>Formulár: Názov, zamestnanec, Od – Do</td>
+                                    <td><span class="pill pill-green">Plná podpora: Typ (Dovolenka / PN / Iné), Od – Do, poznámka</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Obedňajšie prestávky</strong></td>
+                                    <td><span class="pill pill-rose">Otravné ručné zadávanie</span> (nutné nahadzovať cez blokácie)</td>
+                                    <td><span class="pill pill-green">Automatická voľba v rozvrhu</span> (každý týždeň beží na autopilota)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Záchrana termínov pri PN</strong></td>
+                                    <td><span class="pill pill-rose">Iba storno</span> (salón prichádza o peniaze a klienta)</td>
+                                    <td><span class="pill pill-green">Okamžitý presun na voľného kolegu</span> v salóne bez straty tržby</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div style="padding: 12px 14px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 10px; font-size: 0.83rem; color: #cbd5e1; line-height: 1.45;">
+                        <strong style="color: #34d399;"><i class="fa-solid fa-check-double"></i> Rezervos to má vyriešené v jadre:</strong>
+                        V <code>dashboard-tym.php</code> má každý pracovník dedikovanú sekciu <strong>Dovolenky a PN</strong>, kde sa blokujú neprítomnosti. Obrovský rozdiel je však v tom, že kým v Planivo pri PN musíte klientom termíny zrušiť, Rezervos vám umožní termín <strong>prehodiť na kolegyňu</strong>, ktorá má vtedy voľno!
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/10_blocked_times.png')">
+                        <img src="screenshots/10_blocked_times.png" alt="Blokovaný čas Planivo">
+                        <div class="shot-overlay">
+                            <span>Obrazovka blokovania časov v Planivo.sk</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 11: NASTAVENIA -->
+        <section class="audit-section" id="mod-11" data-search="nastavenia prevadzka profil notifikacie otvaracie hodiny pravidla storno predstih winback booster">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">11</span>
+                    <h2 class="section-title">Nastavenia Prevádzky & Notifikácií</h2>
+                </div>
+                <span class="section-route">/dashboard/settings</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-sliders" style="color: #6366f1;"></i> Hĺbkový audit všetkých konfiguračných volieb</div>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 14px;">
+                        Podrobne sme preskúmali a otestovali kompletnú konfiguráciu salónu v Planivo (obrazovky 11 a 11b) a porovnali ju s nastaveniami Rezervos:
+                    </p>
+
+                    <div class="table-scroll-wrapper" style="margin-top: 0;">
+                        <table class="comp-table">
+                            <thead>
+                                <tr>
+                                    <th>Kategória nastavenia</th>
+                                    <th>Planivo.sk</th>
+                                    <th>Rezervos</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Profil salónu & Fakturácia</strong></td>
+                                    <td>Názov, typ podnikania, telefón, email, web, IČO, DIČ, IČ DPH</td>
+                                    <td>Názov, zameranie, kontakty, fakturačné údaje + IBAN pre Pay by square</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Otváracie hodiny & Obedy</strong></td>
+                                    <td>Iba globálne otváracie hodiny salónu (bez obedňajšej pauzy)</td>
+                                    <td><span class="pill pill-green">Týždenné hodiny + priame obedňajšie pauzy</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Predstih rezervácie</strong></td>
+                                    <td>Minimálny predstih (napr. 1–24 hod) & Maximálny predstih (napr. 30–90 dní)</td>
+                                    <td>Flexibilné min/max limity rezervácie vopred</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Stornovacie pravidlá</strong></td>
+                                    <td>Povoliť zrušenie klientom + časový limit (napr. min. 12 hod vopred)</td>
+                                    <td>Nastaviteľné storno okno + automatické uvoľnenie pre Kreslo Hunter</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Schvaľovanie termínov</strong></td>
+                                    <td>Voľba: Automatické potvrdenie vs. Manuálne schválenie personálom</td>
+                                    <td>Automatické vs. manuálne schvaľovanie s okamžitou notifikáciou</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Zobrazenie cien vo formulári</strong></td>
+                                    <td>Prepínač (Zobraziť / skryť ceny služieb klientom)</td>
+                                    <td>Zobrazenie cien, akciových zliav aj Last Minute badgeov</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>SMS notifikácie pre klientov</strong></td>
+                                    <td>Čas odoslania pripomienky (napr. 24h vopred), bez diakritického filtra</td>
+                                    <td><span class="pill pill-green">Inteligentný GSM-7 filter (šetrí 50% SMS)</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Google Reviews Booster</strong></td>
+                                    <td><span class="pill pill-rose">Úplne chýba</span> (recenzie sú uzamknuté v Planivo)</td>
+                                    <td><span class="pill pill-green">Automatický redirect 5★ na Google Mapy</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Win-Back automatizácia</strong></td>
+                                    <td><span class="pill pill-rose">Úplne chýba</span> (žiadny automatický re-engagement)</td>
+                                    <td><span class="pill pill-green">Nastavenie cronu 60–90 dní neaktivity</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>VoľnéKreslo Marketplace</strong></td>
+                                    <td><span class="pill pill-rose">Nulová podpora</span></td>
+                                    <td><span class="pill pill-green">Konfigurácia prenájmu kresla / stola</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div style="margin-top: 14px; padding: 10px 12px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; font-size: 0.8rem; color: #cbd5e1;">
+                        <strong style="color: #34d399;"><i class="fa-solid fa-check-double"></i> Záver nastavení:</strong> Planivo má dobre spracované základné parametre rezervácií (predstih a storno), avšak nemá <strong>žiadne nastavenia pre akvizíciu recenzií na Google, žiadny re-engagement spiacich klientov (Win-Back) a žiadne nastavenie obedov ani prenájmu kresiel</strong>.
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner" style="display: flex; flex-direction: column; gap: 14px;">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/11_settings.png')">
+                        <img src="screenshots/11_settings.png" alt="Nastavenia profilu Planivo">
+                        <div class="shot-overlay">
+                            <span>Horná časť: Profil prevádzky, adresa a otváracie hodiny</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/11b_settings_scrolled.png')">
+                        <img src="screenshots/11b_settings_scrolled.png" alt="Nastavenia pravidiel Planivo">
+                        <div class="shot-overlay">
+                            <span>Spodná časť: Rezervačné pravidlá, storno, predstih a notifikácie</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 12: PREDPLATNÉ / CENNÍK -->
+        <section class="audit-section" id="tarify" data-search="cennik predplatne free plus pro baliky ceny planivo">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">12</span>
+                    <h2 class="section-title">Cenník a Predplatné Planivo.sk</h2>
+                </div>
+                <span class="section-route">/dashboard/subscription</span>
+            </div>
+
+            <div class="pricing-grid">
+                <!-- FREE -->
+                <div class="price-card">
+                    <div style="font-size: 0.75rem; font-weight: 800; color: #94a3b8; text-transform: uppercase;">Základ</div>
+                    <h3 style="font-size: 1.3rem; color: #fff; margin-top: 2px;">Balík FREE</h3>
+                    <div class="price-amount">0.00 €</div>
+                    <div class="price-period">zadarmo navždy</div>
+                    <div class="price-limits">
+                        <div><i class="fa-solid fa-user"></i> <strong>1 zamestnanec</strong></div>
+                        <div><i class="fa-solid fa-ticket"></i> <strong>Max. 30 rezervácií mesačne</strong></div>
+                    </div>
+                    <ul class="price-features-list">
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Online rezervačný formulár</li>
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> E-mailové notifikácie</li>
+                        <li><i class="fa-solid fa-xmark" style="color: #f43f5e;"></i> Bez SMS pripomienok</li>
+                        <li><i class="fa-solid fa-xmark" style="color: #f43f5e;"></i> Bez hromadných SMS</li>
+                    </ul>
+                </div>
+
+                <!-- PLUS -->
+                <div class="price-card featured">
+                    <div class="price-badge-pop">Najobľúbenejší</div>
+                    <div style="font-size: 0.75rem; font-weight: 800; color: #60a5fa; text-transform: uppercase;">Štandard</div>
+                    <h3 style="font-size: 1.3rem; color: #fff; margin-top: 2px;">Balík PLUS</h3>
+                    <div class="price-amount">19.00 €</div>
+                    <div class="price-period">mesačne bez DPH</div>
+                    <div class="price-limits">
+                        <div><i class="fa-solid fa-users"></i> <strong>Až 3 zamestnanci</strong></div>
+                        <div><i class="fa-solid fa-infinity"></i> <strong>Neobmedzene rezervácií</strong></div>
+                    </div>
+                    <ul class="price-features-list">
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Všetko z balíka FREE</li>
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Automatické SMS pripomienky</li>
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Web widget na vlastnú stránku</li>
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Základné štatistiky</li>
+                    </ul>
+                </div>
+
+                <!-- PRO -->
+                <div class="price-card">
+                    <div style="font-size: 0.75rem; font-weight: 800; color: #a855f7; text-transform: uppercase;">Profi</div>
+                    <h3 style="font-size: 1.3rem; color: #fff; margin-top: 2px;">Balík PRO</h3>
+                    <div class="price-amount">29.00 €</div>
+                    <div class="price-period">mesačne bez DPH</div>
+                    <div class="price-limits">
+                        <div><i class="fa-solid fa-infinity"></i> <strong>Neobmedzene zamestnancov</strong></div>
+                        <div><i class="fa-solid fa-infinity"></i> <strong>Neobmedzene rezervácií</strong></div>
+                    </div>
+                    <ul class="price-features-list">
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Všetko z balíka PLUS</li>
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Hromadné marketingové SMS</li>
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Pokročilá finančná analytika</li>
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Prioritná zákaznícka podpora</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <div class="preview-shot-container" onclick="openLightbox('screenshots/12_subscription.png')">
+                    <img src="screenshots/12_subscription.png" alt="Cenník Planivo">
+                    <div class="shot-overlay">
+                        <span>Oficiálne balíky predplatného v administrácii Planivo.sk</span>
+                        <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 13: WEB WIDGET -->
+        <section class="audit-section" id="mod-13" data-search="widget iframe vlozenie na web kod tlacitko ical synchronizacia">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">13</span>
+                    <h2 class="section-title">Web Rezervačný Widget & Integrácie</h2>
+                </div>
+                <span class="section-route">/dashboard/widget</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-code" style="color: #ec4899;"></i> Porovnanie Web Widgetu a Integrácií</div>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 14px;">
+                        Planivo ponúka konfigurátor plávajúceho tlačidla, no Rezervos v <code>dashboard-rozsirenia.php</code> pokrýva oveľa širšie spektrum praktických integrácií:
+                    </p>
+
+                    <div class="table-scroll-wrapper" style="margin-top: 0; margin-bottom: 14px;">
+                        <table class="comp-table">
+                            <thead>
+                                <tr>
+                                    <th>Funkcia integrácie</th>
+                                    <th>Planivo.sk (/dashboard/widget)</th>
+                                    <th>Rezervos (dashboard-rozsirenia.php)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Iframe vloženie na web</strong></td>
+                                    <td>1-riadkový HTML skript</td>
+                                    <td><span class="pill pill-green">Univerzálny responsívny iframe kód</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Vizuálny Color Picker</strong></td>
+                                    <td><span class="pill pill-green">Áno, výber farby tlačidla</span></td>
+                                    <td>Čisté zobrazenie formulára prevádzky</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Prispôsobenie rozmerov</strong></td>
+                                    <td>Fixné plávajúce okno</td>
+                                    <td><span class="pill pill-green">Plne nastaviteľná šírka aj výška</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>iCal odber do Kalendárov</strong></td>
+                                    <td><span class="pill pill-rose">Úplne chýba</span></td>
+                                    <td><span class="pill pill-green">Google, Apple, Outlook, Samsung kalendár</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Per-zamestnanec odber</strong></td>
+                                    <td><span class="pill pill-rose">Nie</span></td>
+                                    <td><span class="pill pill-green">Vlastný token pre celú firmu aj jednotlivcov</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div style="padding: 10px 12px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; font-size: 0.8rem; color: #cbd5e1;">
+                        <strong style="color: #34d399;"><i class="fa-solid fa-check-double"></i> Rezervos je popredu v synchronizácii:</strong> 
+                        Kým v Planivo má majiteľ salónu len kód na web, v Rezervos si každý barber či kaderníčka hodí iCal odkaz do svojho iPhonu alebo Androidu a všetky rezervácie sa mu okamžite samé synchronizujú do osobného kalendára!
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/13_widget.png')">
+                        <img src="screenshots/13_widget.png" alt="Widget Planivo">
+                        <div class="shot-overlay">
+                            <span>Konfigurátor rezervačného widgetu v Planivo</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 14: HROMADNÉ SPRÁVY, SMS ENGINE & MARKETING HUB -->
+        <section class="audit-section" id="mod-14" data-search="hromadne sms marketing spravy kampane segmentacia ai copywriter sender id kredity kalkulacka premenne sablony alias credit 70 znakov ucs-2 gsm-7 diakritika">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">14</span>
+                    <h2 class="section-title">SMS Engine, Hromadné Správy & Marketing Hub</h2>
+                </div>
+                <span class="section-route">/dashboard/sms vs dashboard-marketing.php &amp; api/wallet.php</span>
+            </div>
+
+            <!-- Top Grid: Interactive Calculator + Planivo Screenshot -->
+            <div class="audit-grid" style="margin-bottom: 20px;">
+                <!-- Left: Calculator -->
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-calculator" style="color: var(--accent-cyan);"></i> Živá kalkulačka dĺžky a ceny SMS v Planivo</div>
+                    
+                    <div style="margin-bottom: 12px;">
+                        <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 4px;">Vyberte šablónu z Planivo:</label>
+                        <select id="smsTemplateSelect" onchange="applySmsTemplate(this.value)" style="width: 100%; background: #0f172a; border: 1px solid var(--border); color: #fff; padding: 8px 10px; border-radius: 8px; font-size: 0.82rem;">
+                            <option value="pripomienka">Pripomienka: Pripomíname Váš termín zajtra o {cas} v salóne {salon}. Tešíme sa na Vás!</option>
+                            <option value="potvrdenie">Potvrdenie: Vaša rezervácia na {sluzba} dňa {datum} o {cas} bola úspešne potvrdená.</option>
+                            <option value="zmena">Zmena termínu: Váš termín bol presunutý na {datum} o {cas}.</option>
+                            <option value="storno">Storno: Vaša rezervácia dňa {datum} bola zrušená.</option>
+                        </select>
+                    </div>
+
+                    <textarea id="liveSmsInput" class="calc-textarea" oninput="recalcSms()" style="width: 100%; min-height: 85px; background: #0f172a; border: 1px solid var(--border); color: #fff; padding: 10px; border-radius: 8px; font-size: 0.85rem; font-family: inherit; resize: vertical;"></textarea>
+
+                    <div style="display: flex; gap: 8px; margin-top: 8px;">
+                        <button onclick="stripAccentsLive()" style="background: rgba(99, 102, 241, 0.2); border: 1px solid var(--primary); color: #818cf8; padding: 6px 12px; border-radius: 8px; font-size: 0.78rem; font-weight: 700; cursor: pointer;">
+                            <i class="fa-solid fa-spell-check"></i> Odstrániť diakritiku (Úspora 50%)
+                        </button>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 14px 0;">
+                        <div style="background: rgba(0,0,0,0.3); padding: 8px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 0.7rem; color: var(--text-muted);">Znaky</div>
+                            <div id="valChars" style="font-size: 1.1rem; font-weight: 800; color: #fff;">0</div>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.3); padding: 8px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 0.7rem; color: var(--text-muted);">Kódovanie</div>
+                            <div id="valEncoding" style="font-size: 0.8rem; font-weight: 800; color: #f43f5e;">UCS-2</div>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.3); padding: 8px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 0.7rem; color: var(--text-muted);">Časti SMS</div>
+                            <div id="valParts" style="font-size: 1.1rem; font-weight: 800; color: #fbbf24;">1</div>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.3); padding: 8px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 0.7rem; color: var(--text-muted);">Cena Planivo</div>
+                            <div id="valCost" style="font-size: 1.1rem; font-weight: 800; color: #34d399;">0.07 €</div>
+                        </div>
+                    </div>
+
+                    <div style="background: rgba(244, 63, 94, 0.08); border: 1px solid rgba(244, 63, 94, 0.25); border-radius: 10px; padding: 10px; font-size: 0.78rem; color: #cbd5e1; line-height: 1.4;">
+                        <strong style="color: #fb7185;"><i class="fa-solid fa-triangle-exclamation"></i> Pasca diakritiky v SMS:</strong> V predvolených SMS šablónach Planivo sú mäkčene a dĺžne (<em>„Tešíme sa na Vás“</em>). Systém kvôli písmenám <code>í, š, á</code> prepne správu do UCS-2 a limit padne zo 160 na <strong>70 znakov</strong>. Salón tak za každú pripomienku zaplatí <strong>0.14 €</strong> namiesto 0.07 €!
+                    </div>
+                </div>
+
+                <!-- Right: Screenshot -->
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-comments" style="color: #60a5fa;"></i> Rozhranie Hromadných SMS Planivo</div>
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/14_bulk_sms.png')">
+                        <img src="screenshots/14_bulk_sms.png" alt="Hromadné SMS Planivo">
+                        <div class="shot-overlay">
+                            <span>Rozhranie hromadných SMS správ v Planivo.sk</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 12px; font-size: 0.82rem; color: var(--text-secondary); line-height: 1.45;">
+                        Planivo má len jedno textové pole bez filtrov a bez možnosti výberu Alphanumeric ID. Odosielateľ je natvrdo <em>Planivo</em> a správy idú plošne celému adresáru.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom: Comparison Table -->
+            <div class="glass-card card-inner">
+                <div class="card-title"><i class="fa-solid fa-rocket" style="color: #38bdf8;"></i> Porovnanie: Cielený Marketing Hub Rezervos vs. Plošné SMS Planivo</div>
+                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 14px;">
+                    Planivo ponúka len jednoduché textové pole na odoslanie SMS celej databáze. Rezervos má v <code>dashboard-marketing.php</code> a <code>api/wallet.php</code> vybudovaný skutočný marketingový autopilot:
+                </p>
+
+                <div class="table-scroll-wrapper" style="margin-top: 0; margin-bottom: 14px;">
+                    <table class="comp-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter marketingu</th>
+                                <th>Planivo.sk (/dashboard/sms)</th>
+                                <th>Rezervos (dashboard-marketing.php)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Segmentácia príjemcov</strong></td>
+                                <td><span class="pill pill-rose">Žiadna</span> (iba plošne všetkým)</td>
+                                <td><span class="pill pill-green">Noví (1×), Vracajúci sa (2–4×), Verní (5×+), útrata, pohlavie</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>AI Copywriter / Asistent</strong></td>
+                                <td><span class="pill pill-rose">Chýba</span></td>
+                                <td><span class="pill pill-green">4 štýly: Gramatika, Profesionálne, Priateľsky, Skrátiť</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Vlastné meno odosielateľa SMS</strong></td>
+                                <td>Fixné generické "Planivo"</td>
+                                <td><span class="pill pill-green">Vlastné Alphanumeric ID (do 11 znakov, napr. BARBER-BA)</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ochrana pred predražením SMS</strong></td>
+                                <td><span class="pill pill-rose">Neodstraňuje diakritiku</span> (70 zn. = 0.14 €)</td>
+                                <td><span class="pill pill-green">GSM-7 filter (160 zn. správa za 0.045 – 0.050 €)</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Automatizácia Meniny & Narodeniny</strong></td>
+                                <td><span class="pill pill-rose">Nulová</span></td>
+                                <td><span class="pill pill-green">Dnešní oslávenci na 1 klik so zľavovým kódom</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Nočný Win-Back autopilot</strong></td>
+                                <td><span class="pill pill-rose">Chýba</span></td>
+                                <td><span class="pill pill-green">Automatická reaktivácia po 60–90 dňoch</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="padding: 10px 12px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; font-size: 0.8rem; color: #cbd5e1;">
+                    <strong style="color: #34d399;"><i class="fa-solid fa-bullseye"></i> Zásadný rozdiel pre salón:</strong> 
+                    Plošné SMS v Planivo sú drahé (kvôli diakritike 0.14 € / ks) a otravujú klientov, ktorých sa ponuka netýka. V Rezervos oslovíte presne tých, ktorí u vás boli len 1× a chcete ich pritiahnuť späť, alebo pošlete darček oslávencovi k dnešným meninám za zlomkovú cenu.
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 15: VEREJNÁ REZERVÁCIA -->
+        <section class="audit-section" id="mod-15" data-search="verejna stranka rezervacia klient postup flow krok">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">15</span>
+                    <h2 class="section-title">Verejný Rezervačný Proces (Z pohľadu klienta)</h2>
+                </div>
+                <span class="section-route">/book/kadernickyservis-s-r-o-...</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-mobile-screen-button" style="color: #10b981;"></i> Krok za krokom k termínu</div>
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div>Úspešne otestovaný kompletný proces vytvorenia rezervácie: výber služby -> výber voľného času -> zadanie mena a telefónu -> okamžité potvrdenie na obrazovke a zápis do kalendára salónu.</div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/15_public_booking_page.png')">
+                        <img src="screenshots/15_public_booking_page.png" alt="Verejná stránka Planivo">
+                        <div class="shot-overlay">
+                            <span>Verejná vstupná stránka salónu pre klientov</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: MASTER POROVNÁVACIA MATRICA -->
+        <section class="audit-section" id="matrix" style="margin-top: 50px;">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge"><i class="fa-solid fa-scale-balanced"></i></span>
+                    <h2 class="section-title">Veľká Porovnávacia Matrica: Planivo.sk vs. Rezervos</h2>
+                </div>
+            </div>
+
+            <div class="table-scroll-wrapper">
+                <table class="comp-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">Funkcia / Oblasť</th>
+                            <th style="width: 37%;">Planivo.sk</th>
+                            <th style="width: 38%;">Rezervos / VoľnéKreslo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Cena za SMS pripomienku</strong></td>
+                            <td class="col-planivo">0.07 € za 70 znakov (predvolená diakritika skracuje SMS)</td>
+                            <td class="col-rezervos"><strong>0.045 € – 0.050 € + Automatické odstránenie diakritiky (160 zn.)</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Obsadzovanie uvoľnených termínov</strong></td>
+                            <td class="col-planivo">Žiadny radar ani waitlist (uvoľnený termín ostáva prázdny)</td>
+                            <td class="col-rezervos"><strong>Aktívny radar Kreslo Hunter (lov uvoľnených kresiel) + Last Minute zľavy</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Darčekové poukážky & Vouchery</strong></td>
+                            <td class="col-planivo">Vôbec neponúka predaj poukážok ani eshop</td>
+                            <td class="col-rezervos"><strong>Verejný eshop poukážok s QR platbou na účet salónu (0% poplatok) + Permanentky</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Buffer Time & Prestávky</strong></td>
+                            <td class="col-planivo">Iba pauza PO službe, nulová skupinová kapacita</td>
+                            <td class="col-rezervos"><strong>Duálny Buffer Time (čas PRED aj PO službe) + Skupinová kapacita termínov</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Obedňajšia prestávka personálu</strong></td>
+                            <td class="col-planivo">Nutné ručne zadávať do blokovaných časov každý deň</td>
+                            <td class="col-rezervos"><strong>Priama voľba „Obedňajšia prestávka“ v rozvrhu (dashboard-tym.php) s auto-blokovaním</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Výpadok personálu (PN / Dovolenka)</strong></td>
+                            <td class="col-planivo">Termíny sa musia stornovať, hrozí strata tržieb</td>
+                            <td class="col-rezervos"><strong>Okamžitý presun rezervácie na dostupného kolegu v salóne bez straty tržby</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Reaktivácia spiacich klientov (Win-Back)</strong></td>
+                            <td class="col-planivo">Chýba nočný autopilot, nutné manuálne SMS kampane</td>
+                            <td class="col-rezervos"><strong>Automatický nočný Win-Back Engine (60–90 dní cron) na pozadí so 180d ochranou</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Google Recenzie (Google Business)</strong></td>
+                            <td class="col-planivo">Iba interné hviezdičky na podstránke Planivo</td>
+                            <td class="col-rezervos"><strong>Priamy auto-redirect 5★ recenzií na Google Firemný Profil (Google Maps)</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Trhovisko prenájmu kresiel</strong></td>
+                            <td class="col-planivo">Vôbec neexistuje</td>
+                            <td class="col-rezervos"><strong>Marketplace VoľnéKreslo: Verejná burza voľných kresiel pre kaderníkov</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Zabezpečenie účtu</strong></td>
+                            <td class="col-planivo">Iba bežné heslo</td>
+                            <td class="col-rezervos"><strong>2FA dvojfaktorové overenie účtu pre maximálnu bezpečnosť dát</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Blacklist & Blokovanie klientov</strong></td>
+                            <td class="col-planivo">Rigidný plošný zákaz celého tel./emailu (poškodzuje sieť)</td>
+                            <td class="col-rezervos"><strong>Plnohodnotné blokovanie na úrovni prevádzky (dashboard-kontakty.php) + hodnotenie dochvíľnosti (1–5★) a incidenty (klienta zámerne neblokuje plošne v iných salónoch siete)</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Lojalita klientov & CRM segmentácia</strong></td>
+                            <td class="col-planivo">Pasívny donut graf (iba 2 skupiny, nedá sa naň kliknúť)</td>
+                            <td class="col-rezervos"><strong>Akčná CRM segmentácia: Noví (1×), Vracajúci sa (2–4×), Verní (5×+) a útrata (&lt;30, 30–100, 100+ €) s 1-klikom na cielenú kampaň</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Web Widget & Synchronizácia</strong></td>
+                            <td class="col-planivo">Iba iframe kód s color pickerom tlačidla (bez kalendára)</td>
+                            <td class="col-rezervos"><strong>Univerzálny embed iframe + Živý iCal odber do Google, Apple a Outlook Kalendára (per zamestnanec aj celá firma)</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hromadné kampane & SMS</strong></td>
+                            <td class="col-planivo">Plošné SMS celej databáze bez filtrov, bez AI, bez vlastného mena</td>
+                            <td class="col-rezervos"><strong>Cielený Marketing Hub (filtre lojality, meniny, narodeniny), AI copywriter, vlastné meno odosielateľa SMS do 11 znakov</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SECTION: POROVNANIE S REZERVOS – V ČOM JE REZERVOS POPREDU -->
+        <section class="audit-section" id="porovnanie-rezervos" style="margin-top: 60px; padding: 28px 20px; background: linear-gradient(180deg, rgba(13, 148, 136, 0.08) 0%, rgba(15, 23, 42, 0.95) 100%); border: 1px solid rgba(13, 148, 136, 0.35); border-radius: 24px;">
+            <div class="section-headline" style="border-bottom-color: rgba(13, 148, 136, 0.3);">
+                <div class="section-headline-title">
+                    <span class="section-num-badge" style="background: rgba(13, 148, 136, 0.2); color: #2dd4bf; border-color: rgba(13, 148, 136, 0.4);"><i class="fa-solid fa-flag-checkered"></i></span>
+                    <div>
+                        <h2 class="section-title" style="color: #fff;">Zhodnotenie pre Rezervos: V čom máme drvivý náskok</h2>
+                        <div style="font-size: 0.82rem; color: #2dd4bf; font-weight: 600;">Strategická prevaha nášho systému oproti Planivo.sk</div>
+                    </div>
+                </div>
+                <span class="section-route" style="border-color: rgba(13, 148, 136, 0.3); color: #2dd4bf;">Benchmark 2026</span>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-top: 20px;">
+                <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 12px; padding: 16px;">
+                    <strong style="color: #c084fc; font-size: 0.95rem;"><i class="fa-solid fa-clock-rotate-left"></i> Automatický Win-Back Engine (Autopilot):</strong>
+                    <p style="font-size: 0.83rem; color: #cbd5e1; margin-top: 6px;">Rezervos má v jadre spustený nočný cron, ktorý po 60–90 dňoch nečinnosti sám osloví spiacich zákazníkov s ponukou na objednanie (s ochranou proti spamu na 180 dní). V Planivo musí majiteľ na všetko myslieť a posielať drahé SMS ručne!</p>
+                </div>
+
+                <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(236, 72, 153, 0.4); border-radius: 12px; padding: 16px;">
+                    <strong style="color: #f472b6; font-size: 0.95rem;"><i class="fa-solid fa-gift"></i> Vlastný Eshop Poukážok & Permanentky:</strong>
+                    <p style="font-size: 0.83rem; color: #cbd5e1; margin-top: 6px;">Každý salón na Rezervos predáva darčekové poukazy priamo cez okamžitý Pay by square QR kód na svoj účet (0% poplatok z obratu salónu) a predáva balíky služieb (Permanentky). Planivo poukážky ani permanentky vôbec neponúka!</p>
+                </div>
+
+                <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 12px; padding: 16px;">
+                    <strong style="color: #38bdf8; font-size: 0.95rem;"><i class="fa-solid fa-crosshairs"></i> Kreslo Hunter & Last Minute Radar:</strong>
+                    <p style="font-size: 0.83rem; color: #cbd5e1; margin-top: 6px;">Keď niekto v Rezervos zruší termín, náš systém automaticky aktivuje radar Kreslo Hunter a Last Minute výpredaj, aby stoličku okamžite obsadil iný záujemca. V Planivo uvoľnený termín ostane prázdny.</p>
+                </div>
+
+                <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 12px; padding: 16px;">
+                    <strong style="color: #34d399; font-size: 0.95rem;"><i class="fa-solid fa-utensils"></i> Duálny Buffer Time, Obed & Presun pri PN:</strong>
+                    <p style="font-size: 0.83rem; color: #cbd5e1; margin-top: 6px;">Rezervos umožňuje nastaviť čas na prípravu PRED aj upratovanie PO službe, garantuje zamestnancovi obedňajšiu pauzu a pri ochorení personálu umožní presunúť termíny na kolegu, takže salón nepríde o tržbu.</p>
+                </div>
+
+                <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border); border-radius: 12px; padding: 16px;">
+                    <strong style="color: #2dd4bf; font-size: 0.95rem;"><i class="fa-solid fa-chair"></i> Marketplace VoľnéKreslo:</strong>
+                    <p style="font-size: 0.83rem; color: #cbd5e1; margin-top: 6px;">Unikátne prepojenie s burzou kresiel a práce pre kaderníkov a holičov na Slovensku. Planivo je len uzavretý kalendár.</p>
+                </div>
+
+                <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border); border-radius: 12px; padding: 16px;">
+                    <strong style="color: #2dd4bf; font-size: 0.95rem;"><i class="fa-solid fa-google"></i> Google Recenzie Booster:</strong>
+                    <p style="font-size: 0.83rem; color: #cbd5e1; margin-top: 6px;">Premena spokojných klientov na 5-hviezdičkové hodnotenia priamo na Google Mapách, čo zvyšuje SEO a prirodzený prílev zákazníkov z okolia.</p>
+                </div>
+
+                <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 12px; padding: 16px;">
+                    <strong style="color: #fbbf24; font-size: 0.95rem;"><i class="fa-solid fa-comment-sms"></i> Úspora 50% na SMS notifikáciách:</strong>
+                    <p style="font-size: 0.83rem; color: #cbd5e1; margin-top: 6px;">Planivo účtuje 0.07 € a kvôli diakritike delí text na 70-znakové časti (1 správa stojí 0.14 € – 0.21 €). Rezervos s automatickým GSM-7 filtrom oreže dĺžne/mäkčene a správa stojí len 0.045 € – 0.05 € na celých 160 znakov.</p>
+                </div>
+
+                <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(14, 165, 233, 0.4); border-radius: 12px; padding: 16px;">
+                    <strong style="color: #38bdf8; font-size: 0.95rem;"><i class="fa-solid fa-chart-pie"></i> Akčná Segmentácia Zákazníkov (Noví, Vracajúci sa, Verní):</strong>
+                    <p style="font-size: 0.83rem; color: #cbd5e1; margin-top: 6px;">Kým Planivo má len mŕtvy graf na pozeranie, Rezervos v <code>dashboard-marketing.php</code> zákazníkov reálne delí do 3 úrovní lojality (1×, 2–4×, 5×+) a 3 úrovní útraty – s možnosťou poslať vybranej skupine cielenú ponuku na 1 klik!</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox-modal" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightboxImg" class="lightbox-content" src="" alt="Screenshot">
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div style="max-width: 1560px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+            <div style="text-align: left;">
+                <div style="color: #fff; font-weight: 800; font-size: 0.95rem;">Rezervos / VoľnéKreslo</div>
+                <div>Master Competitor Intelligence – Planivo.sk audit.</div>
+            </div>
+            <div style="display: flex; gap: 16px;">
+                <a href="../konkurencia/index.html" style="color: var(--planivo-light); text-decoration: none;">Booqme Audit</a>
+                <a href="../porovnanie-cennikov.html" style="color: var(--planivo-light); text-decoration: none;">Cenníky</a>
+                <a href="../biznisplan.html" style="color: var(--planivo-light); text-decoration: none;">Biznis plán</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        function openLightbox(src) {
+            document.getElementById('lightboxImg').src = src;
+            document.getElementById('lightbox').classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        // Search Filter
+        function filterModules(query) {
+            const q = query.toLowerCase().trim();
+            const sections = document.querySelectorAll('.audit-section');
+            sections.forEach(sec => {
+                if (!q) {
+                    sec.style.display = 'block';
+                    return;
+                }
+                const kw = (sec.getAttribute('data-search') || '') + ' ' + sec.innerText.toLowerCase();
+                sec.style.display = kw.includes(q) ? 'block' : 'none';
+            });
+        }
+
+        // SMS Live Calculator
+        const smsTemplates = {
+            pripomienka: "Pripomíname Váš termín zajtra o {cas} v salóne {salon}. Tešíme sa na Vás!",
+            potvrdenie: "Vaša rezervácia na {sluzba} dňa {datum} o {cas} bola úspešne potvrdená.",
+            zmena: "Váš termín bol presunutý na {datum} o {cas}.",
+            storno: "Vaša rezervácia dňa {datum} bola zrušená."
+        };
+
+        const gsmRegex = /^[@£$¥èéùìòÇ\nØø\rÅåΔ_ΦΓΛΩΠΨΣΘΞÆæßÉ !"#¤%&'()*+,\-.\/0123456789:;<=>?¡ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÑÜ§¿abcdefghijklmnopqrstuvwxyzäöñüà^{}\\[~\]|€]*$/;
+
+        function applySmsTemplate(key) {
+            if (smsTemplates[key]) {
+                document.getElementById('liveSmsInput').value = smsTemplates[key];
+            }
+            recalcSms();
+        }
+
+        function recalcSms() {
+            const text = document.getElementById('liveSmsInput').value;
+            const len = text.length;
+            const isGsm = gsmRegex.test(text);
+
+            let maxSingle = isGsm ? 160 : 70;
+            let maxConcat = isGsm ? 153 : 67;
+
+            let parts = len === 0 ? 0 : (len <= maxSingle ? 1 : Math.ceil(len / maxConcat));
+            let cost = (parts * 0.07).toFixed(2);
+
+            document.getElementById('valChars').textContent = len;
+            const encEl = document.getElementById('valEncoding');
+            if (isGsm) {
+                encEl.textContent = 'GSM-7 (160 zn.)';
+                encEl.style.color = '#34d399';
+            } else {
+                encEl.textContent = 'UCS-2 (70 zn.)';
+                encEl.style.color = '#f43f5e';
+            }
+
+            document.getElementById('valParts').textContent = parts;
+            document.getElementById('valCost').textContent = cost + ' €';
+        }
+
+        function stripAccentsLive() {
+            const el = document.getElementById('liveSmsInput');
+            el.value = el.value.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            recalcSms();
+        }
+
+        // Initialize SMS
+        applySmsTemplate('pripomienka');
+    </script>
+</body>
+</html>

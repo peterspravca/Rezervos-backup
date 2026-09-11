@@ -1,0 +1,171 @@
+@import url('scrollbars.css');
+
+:root {
+    /* LIGHT THEME (Predvolená) */
+    --bg-color: #f8fafc; /* Svetlosivá / biela */
+    --bg-primary: #f8fafc;
+    --bg-secondary: #f1f5f9;
+    --card-bg: #ffffff;
+    --text-primary: #0F172A; /* Grafitová podľa PDF */
+    --text-secondary: #64748b;
+    --primary-color: #b08042; /* Zlatá farba podľa zadania */
+    --primary-hover: #906634;
+    --border-color: #e2e8f0;
+    --input-bg: #f1f5f9;
+    
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    
+    /* Všeobecné nastavenia pre glassmorphism */
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.3);
+}
+
+html.dark-mode,
+body.dark-mode {
+    /* DARK THEME */
+    --bg-color: #0F172A; /* Tmavá grafitová */
+    --bg-primary: #0F172A;
+    --bg-secondary: #1e293b;
+    --card-bg: #1e293b;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --border-color: #334155;
+    --input-bg: #0f172a;
+    
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.5);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.5);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5);
+    
+    --glass-bg: rgba(30, 41, 59, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+/* Base Styles */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Jednotná hrúbka obrysu všetkých kariet na verejnej časti webu. */
+[class~="card"],
+[class$="-card"],
+[class*="-card "] {
+    border-width: 2px !important;
+}
+
+/* Jednotný 2 px obrys všetkých interaktívnych ovládacích prvkov. */
+button,
+input,
+select,
+textarea,
+[class~="btn"],
+[class$="-btn"],
+[class*="-btn "],
+[class$="-button"],
+[class*="-button "] {
+    border-width: 2px !important;
+}
+
+/* Jednotný vzhľad tlačidiel na verejných stránkach */
+button {
+    -webkit-appearance: none;
+    appearance: none;
+    font-family: inherit;
+}
+
+.btn-primary,
+.btn-secondary {
+    min-height: 40px;
+    padding: 0 18px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #d4af37 0%, var(--primary-color) 100%);
+    color: #ffffff;
+    border: 1px solid transparent;
+    box-shadow: 0 3px 10px rgba(176, 128, 66, 0.25);
+}
+
+.btn-primary:hover {
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 14px rgba(176, 128, 66, 0.35);
+}
+
+.btn-secondary {
+    background: var(--card-bg);
+    color: var(--text-primary);
+    border: 1.5px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary:hover {
+    background: rgba(176, 128, 66, 0.08);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+button:not([class]):not([style]) {
+    min-height: 40px;
+    padding: 0 16px;
+    border: 1.5px solid var(--border-color);
+    border-radius: 10px;
+    background: var(--card-bg);
+    color: var(--text-primary);
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s ease;
+}
+
+button:not([class]):not([style]):hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    background: rgba(176, 128, 66, 0.08);
+}
+
+/* Rovnaké zlaté hover zvýraznenie horných tlačidiel aj v tmavej téme. */
+html.dark-mode .top-btn:not(.logout-btn):hover,
+body.dark-mode .top-btn:not(.logout-btn):hover,
+html.dark-mode .icon-btn:not(.logout-control):hover,
+body.dark-mode .icon-btn:not(.logout-control):hover {
+    border-color: var(--primary-color) !important;
+    color: var(--primary-color) !important;
+    background-color: rgba(176, 128, 66, 0.12) !important;
+}
+
+/* Logo v dark mode (invertované farby, aby čierna bola biela, ale zlatá ostala zlatá) */
+body.dark-mode .sidebar-logo img,
+body.dark-mode .brand-logo-link img,
+body.dark-mode .logo-container img {
+    filter: invert(1) hue-rotate(180deg);
+}
+
+/* Zlatá prémiová paleta (ako alternatíva) */
+.premium-gold {
+    --primary-color: #D4AF37;
+    --primary-hover: #b5952f;
+}
+
+/* Flatpickr global font override */
+.flatpickr-calendar {
+    font-family: inherit !important;
+}

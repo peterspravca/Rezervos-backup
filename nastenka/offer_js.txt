@@ -1,0 +1,335 @@
+﻿>     <script>
+          document.addEventListener('DOMContentLoaded', function() {
+              window.leadId = <?= $lead_id ?>;
+              window.editToken = "<?= $edit_token ?>";
+              const draftData = <?= json_encode($draft_data) ?>;
+              const items_body = document.getElementById('items_body');
+  
+              if (window.leadId && !window.editToken) {
+                  fetch(`ajax_get_doc_info.php?lead_id=${window.leadId}&type=offer`)
+                      .then(res => res.json())
+                      .then(data => {
+                          if (data.success) {
+                              const numEl = document.getElementById('offer_number');
+                              if (numEl) numEl.innerText = data.next_number;
+                              
+                              if (data.already_exists) {
+                                  const latest = data.existing_docs[0];
+                                  const dateStr = new Date(latest.created_at).toLocaleDateString('sk-SK');
+                                  const warnMsg = document.getElementById('duplicateWarningMsg');
+                                  if (warnMsg) warnMsg.innerHTML = 
+                                      `Pozor, tomuto klientovi už bola uložená <strong><a href="offer_generator.php?id=${window.leadId}&edit_t=${latest.token}" style="color:#b45309; text-decoration:underline;">Cenová ponuka (${latest.doc_number || 'bez čísla'})</a></strong> dňa ${dateStr}.`;
+                                  const warnWrap = document.getElementById('duplicateWarning');
+                                  if (warnWrap) warnWrap.style.display = 'block';
+                              }
+                          }
+                      });
+              }
+  
+              function parseValue(val) {
+                  if (!val) return 0;
+                  let clean = val.toString().replace(/\s/g, '').replace(/&nbsp;/g, '').replace(',', '.').trim();
+                  let parsed = parseFloat(clean);
+                  return isNaN(parsed) ? 0 : parsed;
+              }
+  
+              window.recalculate = function() {
+                  let sum_base = 0;
+                  let sum_vat = 0;
+                  let has_vat_items = false;
+                  const rows = items_body.querySelectorAll('.item-row');
+  
+                  rows.forEach(row => {
+                      const qty = parseValue(row.querySelector('.qty').innerText) || 1;
+                      const price = parseValue(row.querySelector('.unit-price').innerText);
+                      
+                      const vat_select = row.querySelector('.vat-rate');
+                      const vat_rate = parseFloat(vat_select.value) || 0;
+                      
+                      if (vat_rate > 0) has_vat_items = true;
+  
+                      const base = qty * price;
+                      const vat = base * (vat_rate / 100);
+                      const row_total = base + vat;
+  
+                      row.querySelector('.row-total').innerText = row_total.toLocaleString('sk-SK', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                      
+                      sum_base += base;
+                      sum_vat += vat;
+                  });
+  
+                  const grand_total = sum_base + sum_vat;
+                  document.getElementById('offer_total').innerText = grand_total.toLocaleString('sk-SK', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  
+                  const vat_summary_table = document.getElementById('vat_summary');
+                  vat_summary_table.innerHTML = '';
+                  
+                  if (has_vat_items) {
+                      document.getElementById('vat_breakdown').style.display = 'table';
+                      document.getElementById('non_vat_msg').style.display = 'none';
+                      const tr = document.createElement('tr');
+                      tr.innerHTML = `
+                          <td style="padding: 8px; font-weight: 600;">23%</td>
+                          <td style="padding: 8px; text-align: right;">${sum_base.toLocaleString('sk-SK', { minimumFractionDigits: 2 })} €</td>
+                          <td style="padding: 8px; text-align: right;">${sum_vat.toLocaleString('sk-SK', { minimumFractionDigits: 2 })} €</td>
+                          <td style="padding: 8px; text-align: right; font-weight: 600; color: #333;">${grand_total.toLocaleString('sk-SK', { minimumFractionDigits: 2 })} €</td>
+                      `;
+                      vat_summary_table.appendChild(tr);
+                  } else {
+                      document.getElementById('vat_breakdown').style.display = 'none';
+                      document.getElementById('non_vat_msg').style.display = 'block';
+                  }
+              };
+  
+              window.addRow = function(data = null) {
+                  const tr = document.createElement('tr');
+                  tr.style.borderBottom = '1px solid #f1f5f9';
+                  tr.className = 'item-row';
+                  
+                  const is_zero = data && data.vat === '0';
+                  
+                  tr.innerHTML = `
+                      <td style="padding: 12px; position: relative;">
+                          <div contenteditable="true" class="item-desc" style="outline: none; font-size: 0.9rem;">${data ? data.description : 'Popis položky'}</div>
+                          <button class="remove-row" style="position: absolute; left: -30px; top: 12px; border: none; background: none; color: #ef4444; cursor: pointer; padding: 0; display: flex; align-items: center;" onclick="this.closest('tr').remove(); window.recalculate();"><i class="ti ti-trash" style="font-size: 1rem;"></i></button>
+                      </td>
+                      <td style="padding: 12px; text-align: center;"><div contenteditable="true" class="qty" style="outline: none; font-size: 0.9rem;">${data ? data.qty : '1'}</div></td>
+                      <td style="padding: 12px; text-align: center;"><div contenteditable="true" style="outline: none; font-size: 0.9rem;">${data ? data.unit : 'ks'}</div></td>
+                      <td style="padding: 12px; text-align: right;"><div contenteditable="true" class="unit-price" style="outline: none; font-size: 0.9rem;">${data ? data.price : '0.00'}</div></td>
+                      <td style="padding: 12px; text-align: center;">
+                          <select class="vat-rate" style="outline: none; font-size: 0.85rem; border: 1px solid #cbd5e1; border-radius: 6px; padding: 4px 8px; background: #f8fafc; cursor: pointer; color: #0077c8; font-weight: 700; text-align: center; margin: 0 auto; display: block;">
+                              <option value="23" ${!is_zero ? 'selected' : ''}>23%</option>
+                              <option value="0" ${is_zero ? 'selected' : ''}>0%</option>
+                          </select>
+                      </td>
+                      <td style="padding: 12px; text-align: right; font-weight: 700;"><span class="row-total" style="font-size: 0.9rem;">0.00</span> <span style="font-size: 0.75rem;">EUR</span></td>
+                  `;
+                  items_body.appendChild(tr);
+                  // Listen to VAT change
+                  tr.querySelector('.vat-rate').addEventListener('change', window.recalculate);
+                  window.recalculate();
+              };
+  
+              document.getElementById('add_item_btn').addEventListener('click', () => window.addRow());
+              items_body.addEventListener('input', window.recalculate);
+  
+              if (draftData && draftData.items && draftData.items.length > 0) {
+                  if (draftData.number) document.getElementById('offer_number').innerText = draftData.number;
+                  if (draftData.date_issued) document.getElementById('offer_date').value = draftData.date_issued;
+                  if (draftData.date_valid) document.getElementById('offer_validity').value = draftData.date_valid;
+                  draftData.items.forEach(item => window.addRow(item));
+              } else {
+                  window.addRow(); // Initial row
+              }
+  
+              // SIGNATURE PAD LOGIC
+              const canvas = document.getElementById('signature_canvas');
+              const ctx = canvas.getContext('2d');
+              const clearBtn = document.getElementById('clear_signature');
+              let drawing = false;
+  
+              function resizeCanvas() {
+                  const ratio = Math.max(window.devicePixelRatio || 1, 1);
+                  canvas.width = canvas.offsetWidth * ratio;
+                  canvas.height = canvas.offsetHeight * ratio;
+                  ctx.scale(ratio, ratio);
+                  ctx.strokeStyle = "#004d80";
+                  ctx.lineWidth = 2;
+                  ctx.lineJoin = "round";
+                  ctx.lineCap = "round";
+              }
+              window.addEventListener('resize', resizeCanvas);
+              resizeCanvas();
+  
+              function getCursorPos(e) {
+                  const rect = canvas.getBoundingClientRect();
+                  const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                  const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                  return { x: clientX - rect.left, y: clientY - rect.top };
+              }
+  
+              function startDrawing(e) { drawing = true; const pos = getCursorPos(e); ctx.beginPath(); ctx.moveTo(pos.x, pos.y); e.preventDefault(); }
+              function draw(e) { if (!drawing) return; const pos = getCursorPos(e); ctx.lineTo(pos.x, pos.y); ctx.stroke(); e.preventDefault(); }
+              function stopDrawing() { drawing = false; ctx.closePath(); }
+  
+              canvas.addEventListener('mousedown', startDrawing); canvas.addEventListener('mousemove', draw); window.addEventListener('mouseup', stopDrawing);
+              canvas.addEventListener('touchstart', startDrawing); canvas.addEventListener('touchmove', draw); canvas.addEventListener('touchend', stopDrawing);
+              clearBtn.addEventListener('click', () => ctx.clearRect(0, 0, canvas.width, canvas.height));
+  
+              window.saveDocument = function(showUrl = false, status = 'created') {
+                  if (!window.leadId || window.leadId === 0) {
+                      alert("Pred uložením alebo odoslaním vyberte klienta.");
+                      return;
+                  }
+  
+                  const btn = showUrl ? document.getElementById('share_document_btn') : document.getElementById(status === 'draft' ? 'save_draft_btn' : 'email_document_btn');
+                  const originalContent = btn.innerHTML;
+                  
+                  try {
+                      btn.disabled = true;
+                      btn.innerHTML = '<i class="ti ti-loader-2 rotate"></i> Ukladám...';
+  
+                      const editorData = {
+                          number: document.getElementById('offer_number').innerText,
+                          date_issued: document.getElementById('offer_date').value,
+                          date_valid: document.getElementById('offer_validity').value,
+                          items: []
+                      };
+  
+                      document.querySelectorAll('.item-row').forEach(row => {
+                          editorData.items.push({
+                              description: row.querySelector('.item-desc').innerText,
+                              qty: row.querySelector('.qty').innerText,
+                              unit: row.querySelectorAll('td')[2].innerText,
+                              price: row.querySelector('.unit-price').innerText,
+                              vat: row.querySelector('.vat-rate').value
+                          });
+                      });
+  
+                      const docClone = document.getElementById('offer_document').cloneNode(true);
+                      docClone.querySelectorAll('.remove-row, #clear_signature').forEach(el => el.remove());
+                      docClone.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+                      docClone.querySelectorAll('input, select').forEach(el => {
+                          const span = document.createElement('span');
+                          span.innerText = el.tagName === 'SELECT' ? el.options[el.selectedIndex].text : el.value;
+                          el.parentNode.replaceChild(span, el);
+                      });
+  
+                      const data = new FormData();
+                      data.append('lead_id', window.leadId);
+                      data.append('type', 'offer');
+                      data.append('status', status);
+                      data.append('doc_number', editorData.number);
+                      data.append('title', 'Cenová ponuka ' + editorData.number);
+                      if (window.editToken) data.append('token', window.editToken);
+                      data.append('content', JSON.stringify({ 
+                          html: docClone.innerHTML,
+                          editor_data: editorData 
+                      }));
+  
+                      fetch('save_document.php', { method: 'POST', body: data })
+                      .then(res => res.json())
+                      .then(res => {
+                          if (res.success) {
+                              if (!window.editToken) window.editToken = res.token;
+                              if (showUrl) {
+                                  window.showShareModal(res.url);
+                              } else if (status === 'draft') {
+                                  window.showShareModal(null, "Koncept cenovej ponuky bol úspešne uložený.");
+                              } else {
+                                  window.showShareModal(null, "Cenová ponuka bola úspešne odoslaná.");
+                              }
+                          } else {
+                              window.showShareModal(null, "Chyba: " + res.error);
+                          }
+                      })
+                      .catch(err => {
+                          window.showShareModal(null, "Chyba pri ukladaní dokumentu.");
+                          console.error(err);
+                      })
+                      .finally(() => {
+                          btn.disabled = false;
+                          btn.innerHTML = originalContent;
+                      });
+                  } catch (err) {
+                      console.error('JS save crash:', err);
+                      alert("Chyba pri príprave dokumentu na uloženie.");
+                      btn.disabled = false;
+                      btn.innerHTML = originalContent;
+                  }
+              };
+  
+              // Modal logic
+              window.showQuickAddModal = () => document.getElementById('quickAddModal').classList.add('open');
+              window.closeQuickAddModal = () => document.getElementById('quickAddModal').classList.remove('open');
+              
+              window.switchPickerTab = function(tab) {
+                  document.getElementById('pane-search').style.display = tab === 'search' ? 'block' : 'none';
+                  document.getElementById('pane-add').style.display = tab === 'add' ? 'block' : 'none';
+                  document.getElementById('tab-search-btn').classList.toggle('active', tab === 'search');
+                  document.getElementById('tab-add-btn').classList.toggle('active', tab === 'add');
+              };
+  
+              window.searchLeads = function(query) {
+                  const resultsArea = document.getElementById('searchResults');
+                  if (query.length < 2) {
+                      resultsArea.innerHTML = '<div style="text-align:center; color:#94a3b8; padding:20px; font-size:0.9rem;">Začnite písať pre vyhľadávanie...</div>';
+                      return;
+                  }
+                  const data = new FormData(); data.append('query', query);
+                  fetch('ajax_search_leads.php', { method: 'POST', body: data })
+                  .then(res => res.json()).then(leads => {
+                      if (leads.length === 0) { resultsArea.innerHTML = '<div style="text-align:center; color:#94a3b8; padding:20px; font-size:0.9rem;">Nenašli sa žiadni klienti.</div>'; return; }
+                      resultsArea.innerHTML = leads.map(l => `
+                          <div onclick="window.selectLead(${l.id})" class="search-item">
+                              <div style="font-weight:700; color:white; text-align:left; font-size:0.95rem;">${l.name}</div>
+                              <div style="font-size:0.75rem; color:#9ca3af; text-align:left; margin-top:2px;">${l.company || ''} ${l.city ? '• ' + l.city : ''}</div>
+                              <div style="font-size:0.75rem; color:#64748b; text-align:left;">${l.email}</div>
+                          </div>
+                      `).join('');
+                  });
+              };
+  
+              window.selectLead = function(id) {
+                  const url = new URL(window.location.href);
+                  url.searchParams.set('id', id);
+                  window.location.href = url.toString();
+              };
+  
+              window.submitQuickAddLead = function() {
+                  const btn = document.getElementById('qSubmitBtn');
+                  const originalText = btn.innerHTML;
+                  const name = document.getElementById('qName').value.trim();
+                  const email = document.getElementById('qEmail').value.trim();
+                  const phone = document.getElementById('qPhone').value.trim();
+                  const address = document.getElementById('qAddress').value.trim();
+                  const city = document.getElementById('qCity').value.trim();
+                  
+                  if (!name || !email) { alert("Meno a E-mail sú povinné."); return; }
+                  btn.disabled = true; btn.innerHTML = '<i class="ti ti-loader-2 rotate"></i> Ukladám...';
+                  const data = new FormData(); data.append('name', name); data.append('email', email); data.append('phone', phone); data.append('address', address); data.append('city', city);
+                  fetch('ajax_quick_add_lead.php', { method: 'POST', body: data })
+                  .then(res => res.json()).then(res => {
+                      if (res.success) window.selectLead(res.id);
+                      else { alert("Chyba: " + (res.error || "Nepodarilo sa vytvoriť.")); btn.disabled = false; btn.innerHTML = originalText; }
+                  }).catch(err => { alert("Chyba siete."); btn.disabled = false; btn.innerHTML = originalText; });
+              };
+  
+              const shareModal = document.getElementById('shareModal');
+              window.showShareModal = function(url, message = null) {
+                  const titleEl = document.getElementById('shareModalTitle');
+                  const msgEl = document.getElementById('shareModalMsg');
+                  const inputGroup = document.getElementById('shareInputGroup');
+                  const urlInput = document.getElementById('share_url_input');
+                  const openBtn = document.getElementById('open_link_btn');
+  
+                  if (url) {
+                      titleEl.innerText = "Dokument je pripravený";
+                      msgEl.innerText = "Odkaz na online verziu bol vygenerovaný. Môžete ho poslať klientovi.";
+                      inputGroup.style.display = 'flex';
+                      urlInput.value = url;
+                      openBtn.style.display = 'inline-flex';
+                      openBtn.href = url;
+                  } else {
+                      titleEl.innerText = "Úspešne uložené";
+                      msgEl.innerText = message || "Zmeny boli uložené.";
+                      inputGroup.style.display = 'none';
+                      openBtn.style.display = 'none';
+                  }
+                  shareModal.classList.add('open');
+              };
+  
+              window.closeShareModal = () => shareModal.classList.remove('open');
+              window.copyShareUrl = function() {
+                  document.getElementById('share_url_input').select();
+                  document.execCommand('copy');
+                  const copyBtn = document.querySelector('#shareInputGroup .btn-success');
+                  const originalHtml = copyBtn.innerHTML;
+                  copyBtn.innerHTML = '<i class="ti ti-check"></i> Skopírované!';
+                  setTimeout(() => { copyBtn.innerHTML = originalHtml; }, 2000);
+              };
+          });
+      </script>
+  </body>
+  </html>
+  

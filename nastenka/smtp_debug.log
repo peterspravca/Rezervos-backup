@@ -1,0 +1,273 @@
+2026-03-20 16:11:52 - DELIVERY to zekrasro@gmail.com:
+Connecting to mail.usr.sk for zekrasro@gmail.com...
+220 mail.usr.sk Microsoft ESMTP MAIL Service, Version: 5.0.2195.6713
+250-mail.usr.sk
+250-PIPELINING
+250-SIZE 100000000
+250-ETRN
+250-AUTH PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+334 VXNlcm5hbWU6
+334 UGFzc3dvcmQ6
+235 2.7.0 Authentication successful
+250 2.1.0 Ok
+250 2.1.5 Ok
+354 End data with <CR><LF>.<CR><LF>
+250 2.0.0 Ok: queued as 316331C062A
+
+-------------------
+2026-03-20 16:11:52 - DELIVERY to j.sutek70@gmail.com:
+Connecting to mail.usr.sk for j.sutek70@gmail.com...
+220 mail.usr.sk Microsoft ESMTP MAIL Service, Version: 5.0.2195.6713
+250-mail.usr.sk
+250-PIPELINING
+250-SIZE 100000000
+250-ETRN
+250-AUTH PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+334 VXNlcm5hbWU6
+334 UGFzc3dvcmQ6
+235 2.7.0 Authentication successful
+250 2.1.0 Ok
+250 2.1.5 Ok
+354 End data with <CR><LF>.<CR><LF>
+250 2.0.0 Ok: queued as 5BAA71C08CE
+
+-------------------
+2026-03-20 16:15:13 - DELIVERY to zekrasro@gmail.com:
+Connecting to mail.usr.sk for zekrasro@gmail.com...
+220 mail.usr.sk Microsoft ESMTP MAIL Service, Version: 5.0.2195.6713
+250-mail.usr.sk
+250-PIPELINING
+250-SIZE 100000000
+250-ETRN
+250-AUTH PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+334 VXNlcm5hbWU6
+334 UGFzc3dvcmQ6
+235 2.7.0 Authentication successful
+250 2.1.0 Ok
+250 2.1.5 Ok
+354 End data with <CR><LF>.<CR><LF>
+250 2.0.0 Ok: queued as CE4321C0848
+
+-------------------
+2026-03-20 16:15:14 - DELIVERY to j.sutek70@gmail.com:
+Connecting to mail.usr.sk for j.sutek70@gmail.com...
+220 mail.usr.sk Microsoft ESMTP MAIL Service, Version: 5.0.2195.6713
+250-mail.usr.sk
+250-PIPELINING
+250-SIZE 100000000
+250-ETRN
+250-AUTH PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+334 VXNlcm5hbWU6
+334 UGFzc3dvcmQ6
+235 2.7.0 Authentication successful
+250 2.1.0 Ok
+250 2.1.5 Ok
+354 End data with <CR><LF>.<CR><LF>
+250 2.0.0 Ok: queued as 038A71C08CE
+
+-------------------
+2026-03-20 16:18:49 - DELIVERY to zekrasro@gmail.com:
+Connecting to mail.usr.sk for zekrasro@gmail.com...
+220 mail.usr.sk Microsoft ESMTP MAIL Service, Version: 5.0.2195.6713
+250-mail.usr.sk
+250-PIPELINING
+250-SIZE 100000000
+250-ETRN
+250-AUTH PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+334 VXNlcm5hbWU6
+334 UGFzc3dvcmQ6
+235 2.7.0 Authentication successful
+250 2.1.0 Ok
+250 2.1.5 Ok
+354 End data with <CR><LF>.<CR><LF>
+250 2.0.0 Ok: queued as 914281C062A
+
+-------------------
+2026-03-20 16:18:49 - DELIVERY to j.sutek70@gmail.com:
+Connecting to mail.usr.sk for j.sutek70@gmail.com...
+220 mail.usr.sk Microsoft ESMTP MAIL Service, Version: 5.0.2195.6713
+250-mail.usr.sk
+250-PIPELINING
+250-SIZE 100000000
+250-ETRN
+250-AUTH PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+334 VXNlcm5hbWU6
+334 UGFzc3dvcmQ6
+235 2.7.0 Authentication successful
+250 2.1.0 Ok
+250 2.1.5 Ok
+354 End data with <CR><LF>.<CR><LF>
+250 2.0.0 Ok: queued as B7FD41C08A8
+
+-------------------
+2026-03-20 22:32:33 - DELIVERY to marso@vueto.sk:
+Connecting to mail.usr.sk for marso@vueto.sk...
+220 mail.usr.sk Microsoft ESMTP MAIL Service, Version: 5.0.2195.6713
+250-mail.usr.sk
+250-PIPELINING
+250-SIZE 100000000
+250-ETRN
+250-AUTH PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+334 VXNlcm5hbWU6
+334 UGFzc3dvcmQ6
+235 2.7.0 Authentication successful
+250 2.1.0 Ok
+250 2.1.5 Ok
+354 End data with <CR><LF>.<CR><LF>
+250 2.0.0 Ok: queued as 6E68D1C08CE
+
+-------------------
+2026-04-23 12:11:06 - DELIVERY to zeman@vueto.sk:
+Connecting to mail.usr.sk for zeman@vueto.sk...
+220 mail.usr.sk Microsoft ESMTP MAIL Service, Version: 5.0.2195.6713
+250-mail.usr.sk
+250-PIPELINING
+250-SIZE 100000000
+250-ETRN
+250-AUTH PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+334 VXNlcm5hbWU6
+334 UGFzc3dvcmQ6
+235 2.7.0 Authentication successful
+250 2.1.0 Ok
+250 2.1.5 Ok
+354 End data with <CR><LF>.<CR><LF>
+250 2.0.0 Ok: queued as 48EEE1C09DE
+
+-------------------
+2026-04-23 12:11:06 - DELIVERY to sutek@vueto.sk:
+Connecting to mail.usr.sk for sutek@vueto.sk...
+220 mail.usr.sk Microsoft ESMTP MAIL Service, Version: 5.0.2195.6713
+250-mail.usr.sk
+250-PIPELINING
+250-SIZE 100000000
+250-ETRN
+250-AUTH PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+334 VXNlcm5hbWU6
+334 UGFzc3dvcmQ6
+235 2.7.0 Authentication successful
+250 2.1.0 Ok
+250 2.1.5 Ok
+354 End data with <CR><LF>.<CR><LF>
+250 2.0.0 Ok: queued as 708871C0BBD
+
+-------------------
+2026-04-23 12:11:54 - DELIVERY to zeman@vueto.sk:
+Connecting to mail.usr.sk for zeman@vueto.sk...
+220 mail.usr.sk Microsoft ESMTP MAIL Service, Version: 5.0.2195.6713
+250-mail.usr.sk
+250-PIPELINING
+250-SIZE 100000000
+250-ETRN
+250-AUTH PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+334 VXNlcm5hbWU6
+334 UGFzc3dvcmQ6
+235 2.7.0 Authentication successful
+250 2.1.0 Ok
+250 2.1.5 Ok
+354 End data with <CR><LF>.<CR><LF>
+250 2.0.0 Ok: queued as AACDF1C0A26
+
+-------------------
+2026-04-23 12:11:54 - DELIVERY to sutek@vueto.sk:
+Connecting to mail.usr.sk for sutek@vueto.sk...
+220 mail.usr.sk Microsoft ESMTP MAIL Service, Version: 5.0.2195.6713
+250-mail.usr.sk
+250-PIPELINING
+250-SIZE 100000000
+250-ETRN
+250-AUTH PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+334 VXNlcm5hbWU6
+334 UGFzc3dvcmQ6
+235 2.7.0 Authentication successful
+250 2.1.0 Ok
+250 2.1.5 Ok
+354 End data with <CR><LF>.<CR><LF>
+250 2.0.0 Ok: queued as D440D1C0BBD
+
+-------------------
+2026-04-23 12:12:54 - DELIVERY to zeman@vueto.sk:
+Connecting to mail.usr.sk for zeman@vueto.sk...
+220 mail.usr.sk Microsoft ESMTP MAIL Service, Version: 5.0.2195.6713
+250-mail.usr.sk
+250-PIPELINING
+250-SIZE 100000000
+250-ETRN
+250-AUTH PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+334 VXNlcm5hbWU6
+334 UGFzc3dvcmQ6
+235 2.7.0 Authentication successful
+250 2.1.0 Ok
+250 2.1.5 Ok
+354 End data with <CR><LF>.<CR><LF>
+250 2.0.0 Ok: queued as D7D281C09DE
+
+-------------------
+2026-04-23 12:12:55 - DELIVERY to sutek@vueto.sk:
+Connecting to mail.usr.sk for sutek@vueto.sk...
+220 mail.usr.sk Microsoft ESMTP MAIL Service, Version: 5.0.2195.6713
+250-mail.usr.sk
+250-PIPELINING
+250-SIZE 100000000
+250-ETRN
+250-AUTH PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+334 VXNlcm5hbWU6
+334 UGFzc3dvcmQ6
+235 2.7.0 Authentication successful
+250 2.1.0 Ok
+250 2.1.5 Ok
+354 End data with <CR><LF>.<CR><LF>
+250 2.0.0 Ok: queued as 0A3211C0A26
+
+-------------------

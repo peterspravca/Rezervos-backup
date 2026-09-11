@@ -1,0 +1,2703 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hĺbkový Technický & Funkčný Audit: Bookio Services vs Rezervos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #0b0f17;
+      --bg-surface: #111827;
+      --bg-card: #1a2234;
+      --bg-card-hover: #222d44;
+      --border-subtle: #2d3748;
+      --border-accent: #3b82f6;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-highlight: #60a5fa;
+      --accent-blue: #2563eb;
+      --accent-cyan: #06b6d4;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --accent-purple: #8b5cf6;
+      --bookio-red: #ea580c;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding-bottom: 80px;
+    }
+    code, pre { font-family: 'JetBrains Mono', monospace; }
+
+    /* STICKY TOP NAV */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(17, 24, 39, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 14px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .badge-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent-emerald);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .badge-live::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 8px var(--accent-emerald);
+    }
+    .nav-search-box {
+      display: flex;
+      align-items: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 6px 14px;
+      width: 380px;
+      max-width: 100%;
+    }
+    .nav-search-box input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text-main);
+      font-size: 13px;
+      width: 100%;
+      font-family: inherit;
+    }
+    .nav-links {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .nav-btn {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-btn:hover {
+      color: var(--text-main);
+      background: var(--bg-card);
+    }
+
+    /* CONTAINER */
+    .container {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* HERO SECTION */
+    .hero {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .hero-title {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #ffffff 30%, #93c5fd 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-sub {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 900px;
+      line-height: 1.6;
+    }
+
+    /* AUDIT TARGET BAR */
+    .target-bar {
+      margin-top: 24px;
+      background: linear-gradient(90deg, rgba(234, 88, 12, 0.12), rgba(37, 99, 235, 0.12));
+      border: 1px solid rgba(234, 88, 12, 0.3);
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .target-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .target-icon {
+      font-size: 28px;
+    }
+    .target-title {
+      font-weight: 700;
+      font-size: 15px;
+      color: #fed7aa;
+    }
+    .target-desc {
+      font-size: 13px;
+      color: #fdba74;
+    }
+    .target-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,0,0,0.4);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* KPI GRID */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin: 32px 0;
+    }
+    .kpi-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--kpi-color, var(--accent-blue));
+    }
+    .kpi-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .kpi-val {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.5px;
+      margin-bottom: 4px;
+    }
+    .kpi-hint {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .kpi-diff-bad { color: var(--accent-rose); font-weight: 600; }
+    .kpi-diff-good { color: var(--accent-emerald); font-weight: 600; }
+
+    /* SECTION TITLE */
+    .section-head {
+      margin: 48px 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 12px;
+    }
+    .section-title {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+    .section-badge {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* LESSONS / ADVANTAGES OF BOOKIO */
+    .lessons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+    }
+    .lesson-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 18px;
+    }
+    .lesson-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .lesson-badge {
+      background: rgba(37, 99, 235, 0.15);
+      color: #93c5fd;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+    .lesson-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .lesson-body {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+    .lesson-takeaway {
+      background: rgba(16, 185, 129, 0.08);
+      border-left: 3px solid var(--accent-emerald);
+      padding: 8px 12px;
+      border-radius: 0 6px 6px 0;
+      font-size: 12px;
+      color: #a7f3d0;
+    }
+
+    /* SMS CALCULATOR & PHONE SIMULATOR */
+    .simulator-wrapper {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 28px;
+      margin: 24px 0;
+    }
+    @media (max-width: 900px) {
+      .simulator-wrapper { grid-template-columns: 1fr; }
+    }
+    .sim-left h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .sim-left p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .sim-input-group {
+      margin-bottom: 14px;
+    }
+    .sim-input-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .sim-textarea {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 12px;
+      color: var(--text-main);
+      font-size: 13px;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 90px;
+    }
+    .sim-metrics {
+      display: flex;
+      gap: 16px;
+      margin-top: 10px;
+      font-size: 12px;
+    }
+    .sim-metric-item {
+      background: var(--bg-card);
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border-subtle);
+    }
+    .sim-metric-val {
+      font-weight: 700;
+      color: var(--accent-cyan);
+    }
+    .sim-cost-box {
+      margin-top: 18px;
+      background: rgba(244, 63, 94, 0.08);
+      border: 1px solid rgba(244, 63, 94, 0.2);
+      border-radius: 10px;
+      padding: 14px;
+    }
+    .sim-cost-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+    .sim-cost-row.total {
+      font-weight: 800;
+      font-size: 15px;
+      color: #fda4af;
+      border-top: 1px dashed rgba(244, 63, 94, 0.3);
+      padding-top: 8px;
+      margin-top: 8px;
+    }
+
+    /* PHONE PREVIEW */
+    .iphone-frame {
+      background: #000;
+      border: 4px solid #374151;
+      border-radius: 36px;
+      padding: 16px;
+      width: 290px;
+      margin: 0 auto;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+      position: relative;
+    }
+    .iphone-notch {
+      width: 110px;
+      height: 18px;
+      background: #374151;
+      border-radius: 0 0 12px 12px;
+      margin: 0 auto 16px;
+    }
+    .iphone-bubble {
+      background: #2563eb;
+      color: #fff;
+      padding: 12px 14px;
+      border-radius: 16px 16px 4px 16px;
+      font-size: 12px;
+      line-height: 1.4;
+      word-wrap: break-word;
+      box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+    }
+    .iphone-sender {
+      font-size: 10px;
+      color: #9ca3af;
+      text-align: center;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* MODULES GRID (26 MODULES) */
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+      gap: 24px;
+    }
+    @media (max-width: 600px) {
+      .modules-grid { grid-template-columns: 1fr; }
+    }
+    .module-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .module-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(59, 130, 246, 0.4);
+    }
+    .module-header {
+      padding: 16px 18px;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .module-id {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      background: rgba(6, 182, 212, 0.1);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .module-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .module-url {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      padding: 8px 18px;
+      background: rgba(0,0,0,0.25);
+      border-bottom: 1px solid var(--border-subtle);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .module-img-container {
+      position: relative;
+      background: #000;
+      width: 100%;
+      height: 230px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .module-img-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      transition: transform 0.3s ease;
+    }
+    .module-img-container:hover img {
+      transform: scale(1.03);
+    }
+    .module-content {
+      padding: 18px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .module-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .pros-cons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      font-size: 12px;
+      margin-top: auto;
+    }
+    .pros-box {
+      background: rgba(16, 185, 129, 0.06);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: 8px;
+      padding: 10px;
+    }
+    .cons-box {
+      background: rgba(244, 63, 94, 0.06);
+      border: 1px solid rgba(244, 63, 94, 0.2);
+      border-radius: 8px;
+      padding: 10px;
+    }
+    .box-label {
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .pros-box .box-label { color: var(--accent-emerald); }
+    .cons-box .box-label { color: var(--accent-rose); }
+    .pros-box ul, .cons-box ul {
+      padding-left: 14px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* COMPARISON MATRIX TABLE (40+ CRITERIA) */
+    .table-container {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      overflow-x: auto;
+      margin: 24px 0;
+    }
+    .cmp-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+    }
+    .cmp-table th, .cmp-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .cmp-table th {
+      background: var(--bg-card);
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+    }
+    .cmp-table th.highlight-col {
+      background: rgba(37, 99, 235, 0.15);
+      color: #93c5fd;
+      border-bottom: 2px solid var(--accent-blue);
+    }
+    .cmp-table td.highlight-col {
+      background: rgba(37, 99, 235, 0.04);
+      font-weight: 600;
+    }
+    .cmp-table tr:last-child td {
+      border-bottom: none;
+    }
+    .cmp-table tr:hover td {
+      background: var(--bg-card-hover);
+    }
+    .tag-yes { color: var(--accent-emerald); font-weight: 700; }
+    .tag-no { color: var(--accent-rose); font-weight: 700; }
+    .tag-part { color: var(--accent-amber); font-weight: 700; }
+
+    /* MODAL FOR IMAGE ZOOM */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.88);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-img {
+      max-width: 95%;
+      max-height: 92vh;
+      border-radius: 10px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.7);
+      border: 1px solid #4b5563;
+    }
+  
+    /* MOBILE FIRST & RESPONSIVE FIXES */
+    html, body {
+      overflow-x: hidden !important;
+      max-width: 100vw !important;
+      width: 100% !important;
+    }
+
+    /* DESKTOP NAV DEFAULTS */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(17, 24, 39, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .nav-search-box {
+      display: flex;
+      align-items: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 8px 14px;
+      width: 340px;
+      max-width: 100%;
+      flex-shrink: 1;
+    }
+    .nav-search-box input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text-main);
+      font-size: 13px;
+      width: 100%;
+      font-family: inherit;
+    }
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    /* TABLE SCROLL TOUCH */
+    .table-container {
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch;
+      max-width: 100%;
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+    }
+    .cmp-table {
+      min-width: 750px;
+    }
+
+    /* RESPONSIVE BREAKPOINT <= 1024px (Laptops & Tablets) */
+    @media (max-width: 1024px) {
+      .top-nav {
+        flex-wrap: wrap;
+        padding: 12px 16px;
+        gap: 10px;
+      }
+      .brand-group {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .nav-search-box {
+        width: 100%;
+        order: 2;
+      }
+      .nav-links {
+        width: 100%;
+        order: 3;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: 4px 0 6px;
+        -webkit-overflow-scrolling: touch;
+      }
+      .nav-links::-webkit-scrollbar {
+        height: 3px;
+      }
+      .nav-links::-webkit-scrollbar-thumb {
+        background: var(--border-subtle);
+        border-radius: 4px;
+      }
+      .nav-btn {
+        background: var(--bg-card);
+        padding: 6px 12px;
+        border: 1px solid var(--border-subtle);
+      }
+    }
+
+    /* RESPONSIVE BREAKPOINT <= 768px (Mobile Devices) */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 14px !important;
+      }
+      .hero {
+        padding: 24px 0 16px !important;
+      }
+      .hero-title {
+        font-size: 22px !important;
+        line-height: 1.25 !important;
+        letter-spacing: -0.3px !important;
+      }
+      .hero-sub {
+        font-size: 13px !important;
+        line-height: 1.5 !important;
+      }
+      .target-bar {
+        padding: 12px 14px !important;
+        gap: 10px !important;
+      }
+      .target-title {
+        font-size: 13px !important;
+      }
+      .target-desc {
+        font-size: 11px !important;
+      }
+      .target-status {
+        width: 100%;
+        justify-content: center;
+        font-size: 11px !important;
+      }
+      .kpi-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+        margin: 20px 0 !important;
+      }
+      .kpi-grid .kpi-card:last-child {
+        grid-column: span 2;
+      }
+      .kpi-card {
+        padding: 14px !important;
+      }
+      .kpi-label {
+        font-size: 10px !important;
+      }
+      .kpi-val {
+        font-size: 20px !important;
+      }
+      .kpi-hint {
+        font-size: 11px !important;
+      }
+      .section-head {
+        margin: 32px 0 14px !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 4px !important;
+      }
+      .section-title {
+        font-size: 18px !important;
+      }
+      .lessons-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+      }
+      .simulator-wrapper {
+        grid-template-columns: 1fr !important;
+        padding: 16px !important;
+        gap: 16px !important;
+      }
+      .iphone-frame {
+        width: 100% !important;
+        max-width: 280px !important;
+        padding: 12px !important;
+        border-radius: 28px !important;
+      }
+      .modules-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+      }
+      .module-card {
+        border-radius: 12px !important;
+      }
+      .module-header {
+        padding: 12px 14px !important;
+      }
+      .module-title {
+        font-size: 14px !important;
+      }
+      .module-url {
+        font-size: 10px !important;
+        padding: 6px 14px !important;
+      }
+      .module-img-container {
+        height: 180px !important;
+      }
+      .module-content {
+        padding: 14px !important;
+      }
+      .pros-cons {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+      }
+    }
+
+    /* RESPONSIVE BREAKPOINT <= 480px (Small Phones) */
+    @media (max-width: 480px) {
+      .kpi-grid {
+        grid-template-columns: 1fr !important;
+      }
+      .kpi-grid .kpi-card:last-child {
+        grid-column: span 1;
+      }
+      .hero-title {
+        font-size: 20px !important;
+      }
+      .cmp-table th, .cmp-table td {
+        padding: 10px 12px !important;
+        font-size: 11px !important;
+      }
+    }
+
+  
+    /* SCROLL MARGIN SO CONTENT DOES NOT HIDE UNDER STICKY HEADER */
+    html {
+      scroll-behavior: smooth;
+    }
+    section, div[id] {
+      scroll-margin-top: 110px !important;
+    }
+
+    /* BULLETPROOF TOP NAV */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(15, 23, 42, 0.96);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 10px 20px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      box-sizing: border-box;
+      width: 100%;
+    }
+    .nav-main-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    .nav-brand-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.2px;
+      white-space: nowrap;
+    }
+    .nav-badge-count {
+      font-size: 11px;
+      font-weight: 700;
+      background: rgba(37, 99, 235, 0.18);
+      color: #93c5fd;
+      border: 1px solid rgba(37, 99, 235, 0.35);
+      padding: 2px 8px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .search-toggle-btn {
+      display: none;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 6px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .nav-search-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 6px 12px;
+      width: 320px;
+      max-width: 100%;
+      flex-shrink: 1;
+    }
+    .nav-search-box input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text-main);
+      font-size: 12px;
+      width: 100%;
+      font-family: inherit;
+    }
+    .nav-links {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-shrink: 0;
+      overflow-x: auto;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .nav-links::-webkit-scrollbar {
+      display: none;
+    }
+    .nav-btn {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .nav-btn:hover {
+      color: #fff;
+      background: var(--accent-blue);
+      border-color: var(--accent-blue);
+    }
+
+    /* MOBILE & TABLET LAYOUT (< 1024px) */
+    @media (max-width: 1024px) {
+      .top-nav {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 8px 12px;
+        gap: 8px;
+      }
+      .nav-main-row {
+        justify-content: space-between;
+        width: 100%;
+      }
+      .search-toggle-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .nav-search-box {
+        width: 100%;
+        display: none; /* hidden by default on mobile, toggled with search button or visible if space */
+      }
+      .nav-search-box.active {
+        display: flex !important;
+      }
+      .nav-links {
+        width: 100%;
+        padding: 2px 0;
+        gap: 6px;
+      }
+      .nav-btn {
+        font-size: 11px;
+        padding: 5px 10px;
+      }
+      section, div[id] {
+        scroll-margin-top: 85px !important;
+      }
+    }
+
+  
+    /* NAV LINKS WRAPPER WITH ARROWS & DRAG-SCROLL */
+    .nav-links-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+    .nav-arrow-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .nav-arrow-btn:hover {
+      background: var(--accent-blue);
+      border-color: var(--accent-blue);
+      color: #fff;
+    }
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex: 1;
+      overflow-x: auto !important;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+      cursor: grab;
+      user-select: none;
+      padding: 4px 2px 6px;
+    }
+    .nav-links.grabbing {
+      cursor: grabbing;
+    }
+    /* VISIBLE SLEEK SCROLLBAR */
+    .nav-links::-webkit-scrollbar {
+      height: 4px;
+      display: block !important;
+    }
+    .nav-links::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+    }
+    .nav-links::-webkit-scrollbar-thumb {
+      background: rgba(59, 130, 246, 0.5);
+      border-radius: 4px;
+    }
+    .nav-links::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-blue);
+    }
+
+  </style>
+</head>
+<body>
+<a href="../prehlad/index.html" style="position:fixed;bottom:20px;right:20px;z-index:99999;display:inline-flex;align-items:center;gap:8px;background:#111827;color:#60a5fa;border:1px solid #2d3748;border-radius:10px;padding:10px 16px;font:700 13px/1.2 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.4);">&larr; Späť na Prehľad</a>
+
+  <!-- TOP NAV -->
+  <nav class="top-nav">
+    <div class="nav-main-row">
+      <div class="brand-group">
+        <span class="live-dot" title="Live Audit aktívny"></span>
+        <strong class="nav-brand-title">Bookio vs Rezervos</strong>
+        <span class="nav-badge-count">26 Modulov</span>
+      </div>
+      <button class="search-toggle-btn" onclick="toggleSearch()" id="searchToggleBtn" title="Vyhľadávanie">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </button>
+    </div>
+
+    <div class="nav-search-box" id="navSearchBox">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:var(--text-muted); flex-shrink:0;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="liveSearchInput" placeholder="Hľadať v 26 moduloch (napr. sms, storno, ceny)...">
+    </div>
+
+    <div class="nav-links-wrapper">
+      <button class="nav-arrow-btn" id="navArrowLeft" onclick="scrollNav(-160)" aria-label="Dozadu" title="Posunúť doľava">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+
+      <div class="nav-links" id="navLinksContainer">
+        <a href="#lessons" class="nav-btn">Čo má Bookio lepšie</a>
+        <a href="#simulator" class="nav-btn">SMS Simulátor</a>
+        <a href="#modules" class="nav-btn">26 Modulov</a>
+        <a href="#forensic" class="nav-btn">Forenzná Pitva</a>
+        <a href="#pricing" class="nav-btn">Cenová Pitva</a>
+        <a href="#matrix" class="nav-btn">5-Smerná Matrica</a>
+      </div>
+
+      <button class="nav-arrow-btn" id="navArrowRight" onclick="scrollNav(160)" aria-label="Dopredu" title="Posunúť doprava">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <!-- HERO -->
+    <header class="hero">
+      <h1 class="hero-title">Kompletný Hĺbkový Audit: Bookio Services (services.bookio.com)</h1>
+      <p class="hero-sub">
+        Forenzná technická, funkčná a cenová dekonštrukcia rezervačného lídra slovenského trhu. Overenie 26 kľúčových pohľadov, nastavení rezervácií, klientskeho toku, obmedzení balíkov (stropy 100/150/300 termínov, 1-5 zamestnancov) a detailná roadmapa pre REZERVOS.
+      </p>
+
+      <!-- AUDIT TARGET BAR -->
+      <div class="target-bar">
+        <div class="target-info">
+          <span class="target-icon">🎯</span>
+          <div>
+            <div class="target-title">Target: Bookio Services Client Admin & Widget Architecture</div>
+            <div class="target-desc">Preverené: Účet karernictvo@hotapobv.eu / 26 autentických screenshotov celej aplikácie</div>
+          </div>
+        </div>
+        <div class="target-status">
+          <span style="color: #4ade80;">● 100 % Audit Dokrytý</span>
+          <span style="color: #94a3b8;">| 26/26 Modulov & Podstránok</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- 5 MASTER KPI CARDS -->
+    <section class="kpi-grid">
+      <div class="kpi-card" style="--kpi-color: var(--accent-rose);">
+        <div class="kpi-label">Celkové Skóre Bookio</div>
+        <div class="kpi-val">6.8 <span style="font-size: 16px; color: var(--text-muted);">/ 10</span></div>
+        <div class="kpi-hint">Silný brand, ale staršie UI a tvrdé limity termínov</div>
+      </div>
+
+      <div class="kpi-card" style="--kpi-color: var(--accent-amber);">
+        <div class="kpi-label">Ročný Náklad Salónu</div>
+        <div class="kpi-val">~700 € <span style="font-size: 14px; color: var(--text-muted);">+ SMS</span></div>
+        <div class="kpi-hint"><span class="kpi-diff-bad">Standard 38,90 €/m + SMS kredity</span> (vs 0 € základ Rezervos)</div>
+      </div>
+
+      <div class="kpi-card" style="--kpi-color: var(--accent-purple);">
+        <div class="kpi-label">Strop Termínov / Personálu</div>
+        <div class="kpi-val">150 / 300 <span style="font-size: 14px; color: var(--text-muted);">termínov</span></div>
+        <div class="kpi-hint">Easy (150/1 os.), Smart (300/3 os.), Standard (5 os.)</div>
+      </div>
+
+      <div class="kpi-card" style="--kpi-color: var(--accent-blue);">
+        <div class="kpi-label">Cena za 1 SMS Pripomienku</div>
+        <div class="kpi-val">0,075 € <span style="font-size: 14px; color: var(--text-muted);">/ ks</span></div>
+        <div class="kpi-hint">Pri diakritike 2 SMS = <span class="kpi-diff-bad">0,15 € / pripomienka</span></div>
+      </div>
+
+      <div class="kpi-card" style="--kpi-color: var(--accent-emerald);">
+        <div class="kpi-label">Podpora Stoličkárov (Viac IČO)</div>
+        <div class="kpi-val">0 % <span style="font-size: 14px; color: var(--text-muted);">Absencia</span></div>
+        <div class="kpi-hint"><span class="kpi-diff-good">Rezervos ponúka autonómne IČO účty</span></div>
+      </div>
+    </section>
+
+    <!-- LESSONS SECTION -->
+    <section id="lessons">
+      <div class="section-head">
+        <h2 class="section-title">💡 Čo má Bookio LEPŠIE ako my? (8 Kľúčových Lekcií)</h2>
+        <span class="section-badge">Poznatky a inšpirácia pre Rezervos</span>
+      </div>
+
+      <div class="lessons-grid">
+        <div class="lesson-card">
+          <div class="lesson-header">
+            <span class="lesson-badge">Dôvera trhu</span>
+            <div class="lesson-title">1. Masívna penetrácia a spontánna znalosť značky</div>
+          </div>
+          <div class="lesson-body">
+            Bookio pôsobí na slovenskom trhu vyše 10 rokov (reštaurácie + služby). Klienti poznajú Bookio logo, čo znižuje bariéru pri prvej online rezervácii.
+          </div>
+          <div class="lesson-takeaway">
+            <strong>Riešenie pre Rezervos:</strong> White-label prístup s vlastnou doménou salónu a okamžitým pridaním do Apple/Google Wallet buduje ešte silnejšiu lojalitu priamo k salónu.
+          </div>
+        </div>
+
+        <div class="lesson-card">
+          <div class="lesson-header">
+            <span class="lesson-badge">Widget</span>
+            <div class="lesson-title">2. Dvojitá integrácia: Embed iframe vs Pop-up tlačidlo</div>
+          </div>
+          <div class="lesson-body">
+            Bookio poskytuje hotový skript, ktorý vygeneruje buď priamy iframe do stránky, alebo plávajúce tlačidlo "Rezervovať online" v rohu obrazovky.
+          </div>
+          <div class="lesson-takeaway">
+            <strong>Riešenie pre Rezervos:</strong> Skopírovať tento 1-riadkový embed kód pre WordPress / Wix / Shoptet s bleskovou rýchlosťou bez iframu.
+          </div>
+        </div>
+
+        <div class="lesson-card">
+          <div class="lesson-header">
+            <span class="lesson-badge">Prehľadnosť</span>
+            <div class="lesson-title">3. Denný dashboard s obsadenosťou na 1 klik</div>
+          </div>
+          <div class="lesson-body">
+            Po prihlásení vidí manažér na hlavnej obrazovke percento vyťaženia personálu, zoznam dnešných klientov a čakajúce schvaľovania bez nutnosti otvárať kalendár.
+          </div>
+          <div class="lesson-takeaway">
+            <strong>Riešenie pre Rezervos:</strong> Implementovať "Today Command Center" s rýchlymi akciami (zavolať, označiť zaplatené, No-Show).
+          </div>
+        </div>
+
+        <div class="lesson-card">
+          <div class="lesson-header">
+            <span class="lesson-badge">Kalendár UX</span>
+            <div class="lesson-title">4. Intuitívne ťahanie bloku voľna a obedňajšej pauzy</div>
+          </div>
+          <div class="lesson-body">
+            V týždennom kalendári stačí kliknúť a potiahnuť kurzorom, čím sa okamžite vyblokuje voľno personálu bez zložitého nastavovania v profile zamestnanca.
+          </div>
+          <div class="lesson-takeaway">
+            <strong>Riešenie pre Rezervos:</strong> Rýchle gestá drag-and-drop na mobile aj touch zariadeniach.
+          </div>
+        </div>
+
+        <div class="lesson-card">
+          <div class="lesson-header">
+            <span class="lesson-badge">Klientsky tok</span>
+            <div class="lesson-title">5. Možnosť "Kto má voľno skôr"</div>
+          </div>
+          <div class="lesson-body">
+            Ak klientovi nezáleží na konkrétnom barberovi či kaderníčke, Bookio automaticky ponúkne prvý voľný slot naprieč všetkými pracovníkmi.
+          </div>
+          <div class="lesson-takeaway">
+            <strong>Riešenie pre Rezervos:</strong> Algoritmus pre rovnomerné vyťažovanie kapacity a prioritizáciu stoličkárov s voľnými kreslami.
+          </div>
+        </div>
+
+        <div class="lesson-card">
+          <div class="lesson-header">
+            <span class="lesson-badge">SMS Sender</span>
+            <div class="lesson-title">6. Vlastné alfanumerické meno odosielateľa SMS</div>
+          </div>
+          <div class="lesson-body">
+            SMS pripomienky nechodia z náhodného čísla, ale priamo pod hlavičkou "Salón X" alebo "Bookio", čo zvyšuje dôveryhodnosť a otváranosť SMS na 98%.
+          </div>
+          <div class="lesson-takeaway">
+            <strong>Riešenie pre Rezervos:</strong> Vlastný alfanumerický sender ID cez slovenskú GSM bránu + natívne push notifikácie cez PWA zadarmo.
+          </div>
+        </div>
+
+        <div class="lesson-card">
+          <div class="lesson-header">
+            <span class="lesson-badge">Marketing</span>
+            <div class="lesson-title">7. Automatický zber Google / Bookio hodnotení</div>
+          </div>
+          <div class="lesson-body">
+            Systém 2 hodiny po absolvovaní termínu odošle zákazníkovi krátky ďakovný e-mail s výzvou na 1-5 hviezdičkové hodnotenie.
+          </div>
+          <div class="lesson-takeaway">
+            <strong>Riešenie pre Rezervos:</strong> Presmerovanie spokojných zákazníkov (5 hviezdičiek) priamo na Google Business profil salónu.
+          </div>
+        </div>
+
+        <div class="lesson-card">
+          <div class="lesson-header">
+            <span class="lesson-badge">Analytika</span>
+            <div class="lesson-title">8. Meranie konverzií cez Facebook Pixel a Google Analytics</div>
+          </div>
+          <div class="lesson-body">
+            Bookio umožňuje v nastaveniach zadať GA4 Measurement ID a Meta Pixel ID, čo umožňuje merať návratnosť platenej reklamy na Instagrame.
+          </div>
+          <div class="lesson-takeaway">
+            <strong>Riešenie pre Rezervos:</strong> Vstavaný tracking server-side eventov (CAPI) pre presné meranie bez blokovania AdBlockom.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SMS SIMULATOR -->
+    <section id="simulator">
+      <div class="section-head">
+        <h2 class="section-title">📱 SMS Notifikačný Engine & Cenová Pasca</h2>
+        <span class="section-badge">Interaktívna analýza nákladov Bookio SMS</span>
+      </div>
+
+      <div class="simulator-wrapper">
+        <div class="sim-left">
+          <h3>Simulátor SMS Kódovania & Výpočtu Nákladov</h3>
+          <p>
+            Vyskúšajte, ako diakritika (mäkčene a dĺžne) v Bookio znižuje limit z 160 znakov na 70 znakov (prepnutie do UCS-2), čím sa cena správy zdvojnásobí až strojnásobí:
+          </p>
+
+          <div class="sim-input-group">
+            <label for="smsText">Text SMS správy:</label>
+            <textarea id="smsText" class="sim-textarea" oninput="calculateSms()">Dobrý deň, pripomíname Váš termín zajtra o 14:00 v kaderníctve. Tešíme sa na Vašu návštevu!</textarea>
+          </div>
+
+          <div class="sim-metrics">
+            <div class="sim-metric-item">Počet znakov: <span id="charCount" class="sim-metric-val">90</span></div>
+            <div class="sim-metric-item">Kódovanie: <span id="encodingType" class="sim-metric-val">UCS-2 (Diakritika)</span></div>
+            <div class="sim-metric-item">Spotreba SMS častí: <span id="partsCount" class="sim-metric-val">2 SMS</span></div>
+          </div>
+
+          <div class="sim-cost-box">
+            <div class="sim-cost-row">
+              <span>Sadzba Bookio za 1 SMS:</span>
+              <strong>0,075 €</strong>
+            </div>
+            <div class="sim-cost-row">
+              <span>Cena tejto jednej pripomienky:</span>
+              <strong id="singleCost" style="color: var(--accent-rose);">0,150 €</strong>
+            </div>
+            <div class="sim-cost-row">
+              <span>Mesačný náklad salónu (300 klientov):</span>
+              <strong id="monthCost" style="color: var(--accent-rose);">45,00 € / mes.</strong>
+            </div>
+            <div class="sim-cost-row total">
+              <span>Ročný náklad salónu len na SMS v Bookio:</span>
+              <span id="yearCost">540,00 €</span>
+            </div>
+            <div style="font-size: 11px; color: var(--accent-emerald); margin-top: 8px;">
+              💡 <strong>Riešenie REZERVOS:</strong> 0 € za neobmedzené Push Notifikácie do smartfónu zákazníka + automatický orez diakritiky na 160 znakov pri odosielaní SMS!
+            </div>
+          </div>
+        </div>
+
+        <div class="sim-right">
+          <div class="iphone-frame">
+            <div class="iphone-notch"></div>
+            <div class="iphone-sender">Správy • BOOKIO</div>
+            <div class="iphone-bubble" id="phonePreview">
+              Dobrý deň, pripomíname Váš termín zajtra o 14:00 v kaderníctve. Tešíme sa na Vašu návštevu!
+            </div>
+            <div style="font-size: 9px; color: #6b7280; text-align: right; margin-top: 4px;">Doručené práve teraz</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 26 MODULES & SETTINGS SECTION -->
+    <section id="modules">
+      <div class="section-head">
+        <h2 class="section-title">🔍 Forenzná Analýza: 26 Modulov & Nastavení Bookio</h2>
+        <span class="section-badge">Všetky moduly overené na live systéme</span>
+      </div>
+
+      <div class="modules-grid" id="modulesGrid">
+
+        <!-- 01. Login -->
+        <div class="module-card" data-tags="login auth pristup registracia">
+          <div class="module-header">
+            <span class="module-id">MODUL 01</span>
+            <div class="module-title">Autentifikácia & Prihlásenie</div>
+          </div>
+          <div class="module-url">https://services.bookio.com/auth/login</div>
+          <div class="module-img-container" onclick="openZoom('screenshots/bookio_login_page.png')">
+            <img src="screenshots/bookio_login_page.png" alt="Bookio Login">
+          </div>
+          <div class="module-content">
+            <div class="module-desc">
+              Čisté a jednoduché prihlasovacie rozhranie. Možnosť prihlásenia emailom a heslom, reset hesla a jazyková mutácia (SK/CZ/EN/HU).
+            </div>
+            <div class="pros-cons">
+              <div class="pros-box">
+                <div class="box-label">Silné stránky</div>
+                <ul>
+                  <li>Jednoduché a prehľadné</li>
+                  <li>Viacjazyčná podpora</li>
+                </ul>
+              </div>
+              <div class="cons-box">
+                <div class="box-label">Slabé stránky</div>
+                <ul>
+                  <li>Chýba Google / Apple prihlásenie</li>
+                  <li>Žiadne 2FA zabezpečenie</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 02. Dashboard -->
+        <div class="module-card" data-tags="dashboard prehlad uvod dnes vytaženie">
+          <div class="module-header">
+            <span class="module-id">MODUL 02</span>
+            <div class="module-title">Hlavný Dashboard & Súhrn dňa</div>
+          </div>
+          <div class="module-url">https://services.bookio.com/client-admin</div>
+          <div class="module-img-container" onclick="openZoom('screenshots/bookio_dashboard.png')">
+            <img src="screenshots/bookio_dashboard.png" alt="Bookio Dashboard">
+          </div>
+          <div class="module-content">
+            <div class="module-desc">
+              Úvodná riadiaca obrazovka zobrazujúca dnešný počet rezervácií, čakajúce žiadosti, kapacitné vyťaženie a rýchle prekliky do kalendára.
+            </div>
+            <div class="pros-cons">
+              <div class="pros-box">
+                <div class="box-label">Silné stránky</div>
+                <ul>
+                  <li>Okamžitý prehľad dňa</li>
+                  <li>Čakajúce akcie zvýraznené</li>
+                </ul>
+              </div>
+              <div class="cons-box">
+                <div class="box-label">Slabé stránky</div>
+                <ul>
+                  <li>Menej finančných metrík</li>
+                  <li>Pomalší prechod na mobil</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 03. Week Calendar -->
+        <div class="module-card" data-tags="kalendar tyzden rozvrh sloty rezervacie">
+          <div class="module-header">
+            <span class="module-id">MODUL 03</span>
+            <div class="module-title">Týždenný Kalendár Rezervácií</div>
+          </div>
+          <div class="module-url">https://services.bookio.com/calendar/week</div>
+          <div class="module-img-container" onclick="openZoom('screenshots/bookio_calendar_week.png')">
+            <img src="screenshots/bookio_calendar_week.png" alt="Bookio Calendar Week">
+          </div>
+          <div class="module-content">
+            <div class="module-desc">
+              Prehľadný rozvrh na 7 dní v týždni. Farebne odlíšené stavy (potvrdené, čakajúce, zrušené). Možnosť rýchleho vytvárania kliknutím.
+            </div>
+            <div class="pros-cons">
+              <div class="pros-box">
+                <div class="box-label">Silné stránky</div>
+                <ul>
+                  <li>Vizuálne čisté bloky</li>
+                  <li>Rýchly drag & drop termínov</li>
+                </ul>
+              </div>
+              <div class="cons-box">
+                <div class="box-label">Slabé stránky</div>
+                <ul>
+                  <li>Pri viacerých kreslách neprehľadné</li>
+                  <li>Nemožnosť rozdeliť platby na IČO</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 04. Day Calendar -->
+        <div class="module-card" data-tags="kalendar den stlpce personal kresla">
+          <div class="module-header">
+            <span class="module-id">MODUL 04</span>
+            <div class="module-title">Denný Pohľad Kalendára & Personál</div>
+          </div>
+          <div class="module-url">https://services.bookio.com/calendar/day</div>
+          <div class="module-img-container" onclick="openZoom('screenshots/bookio_calendar_day.png')">
+            <img src="screenshots/bookio_calendar_day.png" alt="Bookio Calendar Day">
+          </div>
+          <div class="module-content">
+            <div class="module-desc">
+              Stĺpcový pohľad na aktuálny deň, kde každý pracovník má svoj vlastný stĺpec s rozvrhom, pauzami a rezerváciami.
+            </div>
+            <div class="pros-cons">
+              <div class="pros-box">
+                <div class="box-label">Silné stránky</div>
+                <ul>
+                  <li>Ideálne pre recepciu salónu</li>
+                  <li>Okamžitý prehľad o voľných oknách</li>
+                </ul>
+              </div>
+              <div class="cons-box">
+                <div class="box-label">Slabé stránky</div>
+                <ul>
+                  <li>Pri 5+ pracovníkoch nutný scroll</li>
+                  <li>Fixná šírka stĺpcov</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 05. Month Calendar -->
+        <div class="module-card" data-tags="kalendar mesiac kapacity trendy">
+          <div class="module-header">
+            <span class="module-id">MODUL 05</span>
+            <div class="module-title">Mesačný Kalendár & Trendy</div>
+          </div>
+          <div class="module-url">https://services.bookio.com/calendar/month</div>
+          <div class="module-img-container" onclick="openZoom('screenshots/bookio_calendar_month.png')">
+            <img src="screenshots/bookio_calendar_month.png" alt="Bookio Calendar Month">
+          </div>
+          <div class="module-content">
+            <div class="module-desc">
+              Globálny mesačný prehľad vyťaženosti. Pomáha manažérom plánovať zmeny, dovolenky a identifikovať slabé dni v týždni.
+            </div>
+            <div class="pros-cons">
+              <div class="pros-box">
+                <div class="box-label">Silné stránky</div>
+                <ul>
+                  <li>Prehľad o vyťaženosti mesiaca</li>
+                  <li>Rýchla navigácia medzi mesiacmi</li>
+                </ul>
+              </div>
+              <div class="cons-box">
+                <div class="box-label">Slabé stránky</div>
+                <ul>
+                  <li>Nezobrazuje detaily klientov</li>
+                  <li>Iba počty rezervácií</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 06. Calendar Settings (NEW) -->
+        <div class="module-card" data-tags="kalendar nastavenia sloty interval zobrazenie">
+          <div class="module-header">
+            <span class="module-id">MODUL 06</span>
+            <div class="module-title">Nastavenia Kalendára & Intervaly</div>
+          </div>
+          <div class="module-url">https://services.bookio.com/calendar-settings</div>
+          <div class="module-img-container" onclick="openZoom('screenshots/bookio_calendar_settings.png')">
+            <img src="screenshots/bookio_calendar_settings.png" alt="Bookio Calendar Settings">
+          </div>
+          <div class="module-content">
+            <div class="module-desc">
+              Konfigurácia mriežky kalendára: časový krok (15, 30, 60 min), predvolené zobrazenie pri štarte, farebné označenie a zvýraznenie aktuálneho času.
+            </div>
+            <div class="pros-cons">
+              <div class="pros-box">
+                <div class="box-label">Silné stránky</div>
+                <ul>
+                  <li>Flexibilný časový raster</li>
+                  <li>Voľba predvoleného pohľadu</li>
+                </ul>
+              </div>
+              <div class="cons-box">
+                <div class="box-label">Slabé stránky</div>
+                <ul>
+                  <li>Chýba vlastné farebné kódovanie služieb</li>
+                  <li>Obmedzené prispôsobenie zobrazenia</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 07. New Booking Modal -->
+        <div class="module-card" data-tags="modal nova rezervacia klient sluzba cas">
+          <div class="module-header">
+            <span class="module-id">MODUL 07</span>
+            <div class="module-title">Modál Vytvorenia Rezervácie</div>
+          </div>
+          <div class="module-url">https://services.bookio.com/booking/create</div>
+          <div class="module-img-container" onclick="openZoom('screenshots/bookio_new_booking_modal.png')">
+            <img src="screenshots/bookio_new_booking_modal.png" alt="Bookio New Booking Modal">
+          </div>
+          <div class="module-content">
+            <div class="module-desc">
+              Dialógové okno pre manuálne vytvorenie termínu telefonujúcemu zákazníkovi. Výber služby, pracovníka, času, poznámky a automatické vyhľadávanie v CRM.
+            </div>
+            <div class="pros-cons">
+              <div class="pros-box">
+                <div class="box-label">Silné stránky</div>
+                <ul>
+                  <li>Rýchle vyhľadanie existujúceho klienta</li>
+                  <li>Automatické dopočítanie trvania</li>
+                </ul>
+              </div>
+              <div class="cons-box">
+                <div class="box-label">Slabé stránky</div>
+                <ul>
+                  <li>Nemožno kombinovať viac služieb naraz</li>
+                  <li>Absencia okamžitého generovania zálohy</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 08. Reservations List -->
+        <div class="module-card" data-tags="zoznam rezervacii tabulka export filter">
+          <div class="module-header">
+            <span class="module-id">MODUL 08</span>
+            <div class="module-title">Tabuľkový Zoznam Rezervácií</div>
+          </div>
+          <div class="module-url">https://services.bookio.com/reservations</div>
+          <div class="module-img-container" onclick="openZoom('screenshots/bookio_reservations_list.png')">
+            <img src="screenshots/bookio_reservations_list.png" alt="Bookio Reservations List">
+          </div>
+          <div class="module-content">
+            <div class="module-desc">
+              Prehľadná tabuľka všetkých historických a budúcich termínov. Filtrovanie podľa stavu, zamestnanca, časového rozsahu a export do CSV/Excel.
+            </div>
+            <div class="pros-cons">
+              <div class="pros-box">
+                <div class="box-label">Silné stránky</div>
+                <ul>
+                  <li>Detailné filtre a hľadanie</li>
+                  <li>Export do Excelu pre účtovníctvo</li>
+                </ul>
+              </div>
+              <div class="cons-box">
+                <div class="box-label">Slabé stránky</div>
+                <ul>
+                  <li>Chýba hromadná zmena stavov</li>
+                  <li>Menej intuitívne na malých displejoch</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 09. Global Reservation Settings (NEW) -->
+        <div class="module-card" data-tags="rezervacie nastavenia predstih storno qr platby sms">
+          <div class="module-header">
+            <span class="module-id">MODUL 09</span>
+            <div class="module-title">Nastavenia Rezervácií & Pravidlá</div>
+          </div>
+          <div class="module-url">https://services.bookio.com/reservation-settings</div>
+          <div class="module-img-container" onclick="openZoom('screenshots/bookio_reservation_settings.png')">
+            <img src="screenshots/bookio_reservation_settings.png" alt="Bookio Reservation Settings">
+          </div>
+          <div class="module-content">
+            <div class="module-desc">
+              Srdce rezervačných pravidiel: minimálny predstih pred termínom (napr. 2 hodiny), maximálny horizont rezervácie (napr. 60 dní), storno podmienky a QR platby.
+            </div>
+            <div class="pros-cons">
+              <div class="pros-box">
+                <div class="box-label">Silné stránky</div>
+                <ul>
+                  <li>Ochrana proti rezerváciám na poslednú chvíľu</li>
+                  <li>Nastavenie storno okna pre klienta</li>
+                </ul>
+              </div>
+              <div class="cons-box">
+                <div class="box-label">Slabé stránky</div>
+                <ul>
+                  <li>Žiadne variabilné storno poplatky</li>
+                  <li>Nemožno nastaviť rôzne pravidlá pre stoličkárov</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 10. Customers CRM -->
+        <div class="module-card" data-tags="crm zakaznici databaza kontakty telefon">
+          <div class="module-header">
+            <span class="module-id">MODUL 10</span>
+            <div class="module-title">CRM Databáza Zákazníkov</div>
+          </div>
+          <div class="module-url">https://services.bookio.com/customers</div>
+          <div class="module-img-container" onclick="openZoom('screenshots/bookio_customers_list.png')">
+            <img src="screenshots/bookio_customers_list.png" alt="Bookio Customers List">
+          </div>
+          <div class="module-content">
+            <div class="module-desc">
+              Zoznam všetkých zákazníkov salónu. Automatické ukladanie kontaktu pri prvej online rezervácii, história návštev a celková útrata.
+            </div>
+            <div class="pros-cons">
+              <div class="pros-box">
+                <div class="box-label">Silné stránky</div>
+                <ul>
+                  <li>Automatická tvorba profilu</li>
+                  <li>Možnosť importu z Excelu</li>
+                </ul>
+              </div>
+              <div class="cons-box">
+                <div class="box-label">Slabé stránky</div>
+                <ul>
+                  <li>Chýba tagovanie a segmentácia</li>
+                  <li>Žiadne prepojenie na Apple Wallet karty</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 11. Customer Profile -->
+        <div class="module-card" data-tags="profil klienta historia poznamka preferencie">
+          <div class="module-header">
+            <span class="module-id">MODUL 11</span>
+            <div class="module-title">Zákaznícky Profil & História</div>
+          </div>
+          <div class="module-url">https://services.bookio.com/customer/:id</div>
+          <div class="module-img-container" onclick="openZoom('screenshots/bookio_customer_detail.png')">
+            <img src="screenshots/bookio_customer_detail.png" alt="Bookio Customer Detail">
+          </div>
+          <div class="module-content">
+            <div class="module-desc">
+              Detail konkrétneho klienta: telefón, email, interná poznámka kaderníka (napr. číslo farby na vlasy), zoznam všetkých absolvovaných i zrušených návštev.
+            </div>
+            <div class="pros-cons">
+              <div class="pros-box">
+                <div class="box-label">Silné stránky</div>
+                <ul>
+                  <li>Kompletná časová os návštev</li>
+                  <li>Interná poznámka viditeľná len personálu</li>
+                </ul>
+              </div>
+              <div class="cons-box">
+                <div class="box-label">Slabé stránky</div>
+                <ul>
+                  <li>Chýba fotogaléria účesov / premien</li>
+                  <li>Chýba GDPR súhlas na stiahnutie</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 12. Services List -->
+        <div class="module-card" data-tags="sluzby cennik trvanie procedury kategoria">
+          <div class="module-header">
+            <span class="module-id">MODUL 12</span>
+            <div class="module-title">Katalóg Služieb & Cenotvorba</div>
+          </div>
+          <div class="module-url">https://services.bookio.com/services</div>
+          <div class="module-img-container" onclick="openZoom('screenshots/bookio_services_list.png')">
+            <img src="screenshots/bookio_services_list.png" alt="Bookio Services List">
+          </div>
+          <div class="module-content">
+            <div class="module-desc">
+              Prehľad poskytovaných služieb salónu s cenami a časovým trvaním. Možnosť radenia, aktivácie / deaktivácie pre online rezerváciu.
+            </div>
+            <div class="pros-cons">
+              <div class="pros-box">
+                <div class="box-label">Silné stránky</div>
+                <ul>
+                  <li>Jednoduché zapínanie/vypínanie</li>
+                  <li>Rýchla zmena cien</li>
+                </ul>
+              </div>
+              <div class="cons-box">
+                <div class="box-label">Slabé stránky</div>
+                <ul>
+                  <li>Menej flexibilné kategórie</li>
+                  <li>Nemožno nastaviť rôzne ceny podľa seniority barbera</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 13. Service Edit -->
+        <div class="module-card" data-tags="editacia sluzby cas pauza pred po popis">
+          <div class="module-header">
+            <span class="module-id">MODUL 13</span>
+            <div class="module-title">Detail Služby & Časové Pauzy</div>
+          </div>
+          <div class="module-url">https://services.bookio.com/service/edit</div>
+          <div class="module-img-container" onclick="openZoom('screenshots/bookio_service_detail.png')">
+            <img src="screenshots/bookio_service_detail.png" alt="Bookio Service Detail">
+          </div>
+          <div class="module-content">
+            <div class="module-desc">
+              Konfigurácia dĺžky služby, prípravného času pred procedúrou a upratovacieho času po procedúre (buffer time), priradenie k personálu.
+            </div>
+            <div class="pros-cons">
+              <div class="pros-box">
+                <div class="box-label">Silné stránky</div>
+                <ul>
+                  <li>Časové rezervy pred a po službe</li>
+                  <li>Podrobný popis pre zákazníka</li>
+                </ul>
+              </div>
+              <div class="cons-box">
+                <div class="box-label">Slabé stránky</div>
+                <ul>
+                  <li>Nemožno vložiť video ukážku</li>
+                  <li>Chýba dynamické predkupné odporúčanie (Upsell)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 14. Service Packages (NEW) -->
+        <div class="module-card" data-tags="baliky sluzieb balicky procedury kombo">
+          <div class="module-header">
+            <span class="module-id">MODUL 14</span>
+            <div class="module-title">Balíky Služieb & Kombo Procedúry</div>
+          </div>
+          <div class="module-url">https://services.bookio.com/services-packages</div>
+          <div class="module-img-container" onclick="openZoom('screenshots/bookio_service_packages.png')">
+            <img src="screenshots/bookio_service_packages.png" alt="Bookio Service Packages">
+          </div>
+          <div class="module-content">
+            <div class="module-desc">
+              Modul umožňujúci spájať viacero procedúr do jedného zvýhodneného balíka (napr. Strih + Brada + Peeling so zľavou 15%).
+            </div>
+            <div class="pros-cons">
+              <div class="pros-box">
+                <div class="box-label">Silné stránky</div>
+                <ul>
+                  <li>Zvyšuje priemerný nákupný košík</li>
+                  <li>Jednoduché zviazanie služieb</li>
+                </ul>
+              </div>
+              <div class="cons-box">
+                <div class="box-label">Slabé stránky</div>
+                <ul>
+                  <li>Zložitejšie časové plánovanie v kalendári</li>
+                  <li>Dostupné len vo vyšších balíkoch</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 15. Staff Management -->
+        <div class="module-card" data-tags="personal zamestnanci pracovnici uväzok">
+          <div class="module-header">
+            <span class="module-id">MODUL 15</span>
+            <div class="module-title">Správa Personálu & Pracovníci</div>
+          </div>
+          <div class="module-url">https://services.bookio.com/staff</div>
+          <div class="module-img-container" onclick="openZoom('screenshots/bookio_workers_list.png')">
+            <img src="screenshots/bookio_workers_list.png" alt="Bookio Staff List">
+          </div>
+          <div class="module-content">
+            <div class="module-desc">
+              Zoznam personálu salónu. Zobrazenie fotografií, pracovných rolí a stavu aktivity. Limitovaný počet podľa zakúpeného mesačného balíka (1 až 5 osôb).
+            </div>
+            <div class="pros-cons">
+              <div class="pros-box">
+                <div class="box-label">Silné stránky</div>
+                <ul>
+                  <li>Fotografie personálu vo widgete</li>
+                  <li>Prehľadné priradenie služieb</li>
+                </ul>
+              </div>
+              <div class="cons-box">
+                <div class="box-label">Slabé stránky</div>
+                <ul>
+                  <li>Tvrdý limit (max 1-5 osôb v štandarde)</li>
+                  <li>Žiadna podpora externých stoličkárov (IČO)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 16. Staff Profile -->
+        <div class="module-card" data-tags="zamestnanec profil prava rozvrh sluzby">
+          <div class="module-header">
+            <span class="module-id">MODUL 16</span>
+            <div class="module-title">Pracovný Profil & Špecializácia</div>
+          </div>
+          <div class="module-url">https://services.bookio.com/staff/:id</div>
+          <div class="module-img-container" onclick="openZoom('screenshots/bookio_worker_detail.png')">
+            <img src="screenshots/bookio_worker_detail.png" alt="Bookio Staff Detail">
+          </div>
+          <div class="module-content">
+            <div class="module-desc">
+              Detail zamestnanca: osobné údaje, priradené služby, individuálny pracovný čas a prístupové práva do systému (Admin vs Pracovník).
+            </div>
+            <div class="pros-cons">
+              <div class="pros-box">
+                <div class="box-label">Silné stránky</div>
+                <ul>
+                  <li>Individuálny pracovný rozvrh</li>
+                  <li>Možnosť zakázať prístup k cudzím klientom</li>
+                </ul>
+              </div>
+              <div class="cons-box">
+                <div class="box-label">Slabé stránky</div>
+                <ul>
+                  <li>Nemá vlastné platobné nastavenia (Stripe)</li>
+                  <li>Výplata provízií sa počíta manuálne</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 17. Opening Hours -->
+        <div class="module-card" data-tags="otvaracie hodiny prevadzka rozvrh sviatky">
+          <div class="module-header">
+            <span class="module-id">MODUL 17</span>
+            <div class="module-title">Otváracie Hodiny Prevádzky</div>
+          </div>
+          <div class="module-url">https://services.bookio.com/opening-hours</div>
+          <div class="module-img-container" onclick="openZoom('screenshots/bookio_opening_hours.png')">
+            <img src="screenshots/bookio_opening_hours.png" alt="Bookio Opening Hours">
+          </div>
+          <div class="module-content">
+            <div class="module-desc">
+              Nastavenie globálnej prevádzkovej doby salónu na jednotlivé dni v týždni. Definovanie celosalónnych prestávok a sviatkov.
+            </div>
+            <div class="pros-cons">
+              <div class="pros-box">
+                <div class="box-label">Silné stránky</div>
+                <ul>
+                  <li>Rýchle kopírovanie hodín do všetkých dní</li>
+                  <li>Zamedzí rezerváciám mimo otváracích hodín</li>
+                </ul>
+              </div>
+              <div class="cons-box">
+                <div class="box-label">Slabé stránky</div>
+                <ul>
+                  <li>Nemožno nastaviť nočné zmeny</li>
+                  <li>Chýba automatické načítanie štátnych sviatkov SR</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 18. Online Form Design (NEW) -->
+        <div class="module-card" data-tags="online formular dizajn farby logo vzhlad widget">
+          <div class="module-header">
+            <span class="module-id">MODUL 18</span>
+            <div class="module-title">Dizajn Online Formulára & Brand</div>
+          </div>
+          <div class="module-url">https://services.bookio.com/online-form/design</div>
+          <div class="module-img-container" onclick="openZoom('screenshots/bookio_online_form_design.png')">
+            <img src="screenshots/bookio_online_form_design.png" alt="Bookio Form Design">
+          </div>
+          <div class="module-content">
+            <div class="module-desc">
+              Prispôsobenie vizuálu widgetu: výber primárnej farby tlačidiel, nahratie loga salónu, voľba svetlého/tmavého režimu a úprava uvítacieho textu.
+            </div>
+            <div class="pros-cons">
+              <div class="pros-box">
+                <div class="box-label">Silné stránky</div>
+                <ul>
+                  <li>Rýchle zladenie s firemnou farbou</li>
+                  <li>Automatický náhľad zmien</li>
+                </ul>
+              </div>
+              <div class="cons-box">
+                <div class="box-label">Slabé stránky</div>
+                <ul>
+                  <li>Stále viditeľné Bookio logo v pätičke</li>
+                  <li>Chýba možnosť vlastného CSS štýlovania</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 19. Custom Fields (NEW) -->
+        <div class="module-card" data-tags="vlastne polia dotaznik formular otazky gdpr">
+          <div class="module-header">
+            <span class="module-id">MODUL 19</span>
+            <div class="module-title">Prispôsobenie Polí & Dotazník</div>
+          </div>
+          <div class="module-url">https://services.bookio.com/online-form/custom-fields</div>
+          <div class="module-img-container" onclick="openZoom('screenshots/bookio_online_form_fields.png')">
+            <img src="screenshots/bookio_online_form_fields.png" alt="Bookio Form Fields">
+          </div>
+          <div class="module-content">
+            <div class="module-desc">
+              Nastavenie dodatočných otázok vo formulári (napr. "Máte alergiu na farbu?", "Číslo darčekového poukazu", povinnosť zadať adresu).
+            </div>
+            <div class="pros-cons">
+              <div class="pros-box">
+                <div class="box-label">Silné stránky</div>
+                <ul>
+                  <li>Voliteľné aj povinné polia</li>
+                  <li>Možnosť zaškrtávacích políčok (Checkbox)</li>
+                </ul>
+              </div>
+              <div class="cons-box">
+                <div class="box-label">Slabé stránky</div>
+                <ul>
+                  <li>Obmedzený počet vlastných polí</li>
+                  <li>Nemožno nahrávať súbory/fotografie stavu</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 20. Widget Embed Config -->
+        <div class="module-card" data-tags="widget embed web iframe kod button">
+          <div class="module-header">
+            <span class="module-id">MODUL 20</span>
+            <div class="module-title">Konfigurátor Rezervačného Widgetu</div>
+          </div>
+          <div class="module-url">https://services.bookio.com/online-form/link</div>
+          <div class="module-img-container" onclick="openZoom('screenshots/bookio_widget_preview.png')">
+            <img src="screenshots/bookio_widget_preview.png" alt="Bookio Widget Preview">
+          </div>
+          <div class="module-content">
+            <div class="module-desc">
+              Generátor HTML kódu pre integráciu do webových stránok. Výber medzi vloženým iframe formulárom, priamym odkazom na podstránku a plávajúcim tlačidlom.
+            </div>
+            <div class="pros-cons">
+              <div class="pros-box">
+                <div class="box-label">Silné stránky</div>
+                <ul>
+                  <li>Hotový kód na skopírovanie</li>
+                  <li>Návod pre WordPress / Wix</li>
+                </ul>
+              </div>
+              <div class="cons-box">
+                <div class="box-label">Slabé stránky</div>
+                <ul>
+                  <li>Iframe spomaľuje načítanie mobilného webu</li>
+                  <li>Problémy s cookies tretích strán na Safari</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 21. Client Booking Flow -->
+        <div class="module-card" data-tags="klientsky tok widget krok 1 2 3 rezervacia">
+          <div class="module-header">
+            <span class="module-id">MODUL 21</span>
+            <div class="module-title">Klientsky Rezervačný Tok</div>
+          </div>
+          <div class="module-url">https://services.bookio.com/kadernickyservis-sro/widget</div>
+          <div class="module-img-container" onclick="openZoom('screenshots/bookio_widget_flow.png')">
+            <img src="screenshots/bookio_widget_flow.png" alt="Bookio Widget Flow">
+          </div>
+          <div class="module-content">
+            <div class="module-desc">
+              Reálne rozhranie, ktoré vidí klient: 1. Výber služby, 2. Výber zamestnanca, 3. Voľba dátumu a času, 4. Zadanie osobných údajov a potvrdenie.
+            </div>
+            <div class="pros-cons">
+              <div class="pros-box">
+                <div class="box-label">Silné stránky</div>
+                <ul>
+                  <li>Známy tok pre slovenských zákazníkov</li>
+                  <li>Okamžité potvrdenie e-mailom</li>
+                </ul>
+              </div>
+              <div class="cons-box">
+                <div class="box-label">Slabé stránky</div>
+                <ul>
+                  <li>Pomalšie načítavanie slotov</li>
+                  <li>Chýba 1-klik uloženie do Apple / Google Wallet</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 22. Vouchers (NEW) -->
+        <div class="module-card" data-tags="vouchery poukazky darcek zlava platnost">
+          <div class="module-header">
+            <span class="module-id">MODUL 22</span>
+            <div class="module-title">Darčekové Poukážky & Vouchery</div>
+          </div>
+          <div class="module-url">https://services.bookio.com/vouchers</div>
+          <div class="module-img-container" onclick="openZoom('screenshots/bookio_vouchers.png')">
+            <img src="screenshots/bookio_vouchers.png" alt="Bookio Vouchers">
+          </div>
+          <div class="module-content">
+            <div class="module-desc">
+              Modul na evidenciu a predaj darčekových poukážok. Generovanie unikátnych kódov, kontrola platnosti a uplatnenie pri rezervácii termínu.
+            </div>
+            <div class="pros-cons">
+              <div class="pros-box">
+                <div class="box-label">Silné stránky</div>
+                <ul>
+                  <li>Výborný zdroj vianočných a sezónnych tržieb</li>
+                  <li>Automatické odpočítavanie zostatku</li>
+                </ul>
+              </div>
+              <div class="cons-box">
+                <div class="box-label">Slabé stránky</div>
+                <ul>
+                  <li>Dostupné len v najvyšších balíkoch</li>
+                  <li>Chýba digitálna karta do Apple Wallet</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 23. Ratings & Reviews (NEW) -->
+        <div class="module-card" data-tags="hodnotenia recenzie hviezdičky feedback skore">
+          <div class="module-header">
+            <span class="module-id">MODUL 23</span>
+            <div class="module-title">Hodnotenia Klientov & Spätná Väzba</div>
+          </div>
+          <div class="module-url">https://services.bookio.com/ratings</div>
+          <div class="module-img-container" onclick="openZoom('screenshots/bookio_ratings.png')">
+            <img src="screenshots/bookio_ratings.png" alt="Bookio Ratings">
+          </div>
+          <div class="module-content">
+            <div class="module-desc">
+              Prehľad recenzií od zákazníkov, ktorým po návšteve prišiel dotazník spokojnosti. 1-5 hviezdičiek, textový komentár a možnosť reakcie personálu.
+            </div>
+            <div class="pros-cons">
+              <div class="pros-box">
+                <div class="box-label">Silné stránky</div>
+                <ul>
+                  <li>Automatický zber spätnej väzby</li>
+                  <li>Interná kontrola kvality práce</li>
+                </ul>
+              </div>
+              <div class="cons-box">
+                <div class="box-label">Slabé stránky</div>
+                <ul>
+                  <li>Hodnotenia ostávajú v Bookio a nejdú na Google Maps</li>
+                  <li>Žiadny filter proti falošným recenziám</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 24. Occupancy Statistics (NEW) -->
+        <div class="module-card" data-tags="statistika vyuzitost obsadenost grafy hodiny">
+          <div class="module-header">
+            <span class="module-id">MODUL 24</span>
+            <div class="module-title">Štatistiky Obsadenosti Prevádzky</div>
+          </div>
+          <div class="module-url">https://services.bookio.com/statistics/occupancy</div>
+          <div class="module-img-container" onclick="openZoom('screenshots/bookio_statistics_occupancy.png')">
+            <img src="screenshots/bookio_statistics_occupancy.png" alt="Bookio Statistics Occupancy">
+          </div>
+          <div class="module-content">
+            <div class="module-desc">
+              Analytický graf percentuálneho vyťaženia kapacít podľa dní v týždni a hodín. Umožňuje identifikovať "hluché miesta" v prevádzke.
+            </div>
+            <div class="pros-cons">
+              <div class="pros-box">
+                <div class="box-label">Silné stránky</div>
+                <ul>
+                  <li>Vizuálne tepelné mapy vyťaženosti</li>
+                  <li>Podklad pre optimalizáciu zmien</li>
+                </ul>
+              </div>
+              <div class="cons-box">
+                <div class="box-label">Slabé stránky</div>
+                <ul>
+                  <li>Neumožňuje automatické zľavy na hluché hodiny</li>
+                  <li>Dostupné len v balíkoch Smart a Standard</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 25. Revenue Statistics (NEW) -->
+        <div class="module-card" data-tags="trzby financie zisk statistika obrat">
+          <div class="module-header">
+            <span class="module-id">MODUL 25</span>
+            <div class="module-title">Štatistiky Tržieb & Financií</div>
+          </div>
+          <div class="module-url">https://services.bookio.com/statistics/revenues</div>
+          <div class="module-img-container" onclick="openZoom('screenshots/bookio_statistics_revenues.png')">
+            <img src="screenshots/bookio_statistics_revenues.png" alt="Bookio Statistics Revenues">
+          </div>
+          <div class="module-content">
+            <div class="module-desc">
+              Finančný prehľad tržieb z realizovaných rezervácií v čase. Rozpad podľa služieb, pracovníkov a typu platby (hotovosť / karta).
+            </div>
+            <div class="pros-cons">
+              <div class="pros-box">
+                <div class="box-label">Silné stránky</div>
+                <ul>
+                  <li>Rýchly prehľad hrubého obratu</li>
+                  <li>Porovnanie výkonu mesiac voči mesiacu</li>
+                </ul>
+              </div>
+              <div class="cons-box">
+                <div class="box-label">Slabé stránky</div>
+                <ul>
+                  <li>Nezohľadňuje skutočné e-kasa tržby</li>
+                  <li>Nerozdeľuje tržby podľa IČO stoličkárov</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 26. Integrations (NEW) -->
+        <div class="module-card" data-tags="integracie google kalendar ical pixel gtm lišta">
+          <div class="module-header">
+            <span class="module-id">MODUL 26</span>
+            <div class="module-title">Integrácie & Prepojenia</div>
+          </div>
+          <div class="module-url">https://services.bookio.com/integrations</div>
+          <div class="module-img-container" onclick="openZoom('screenshots/bookio_integrations.png')">
+            <img src="screenshots/bookio_integrations.png" alt="Bookio Integrations">
+          </div>
+          <div class="module-content">
+            <div class="module-desc">
+              Prepojenie s externými platformami: synchronizácia do Google Kalendára / iCal, oznamovacia lišta na web, sledovací kód Facebook Pixel a Google Tag Manager.
+            </div>
+            <div class="pros-cons">
+              <div class="pros-box">
+                <div class="box-label">Silné stránky</div>
+                <ul>
+                  <li>Obojsmerná iCal / Google synchronizácia</li>
+                  <li>Vstavaná notifikačná lišta na web</li>
+                </ul>
+              </div>
+              <div class="cons-box">
+                <div class="box-label">Slabé stránky</div>
+                <ul>
+                  <li>Chýba moderné REST / Webhook API</li>
+                  <li>Chýba priame prepojenie na účtovné systémy (KROS, Superfaktúra)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PRICING DISSECTION -->
+    <section id="pricing">
+      <div class="section-head">
+        <h2 class="section-title">💰 Cenová Dekonštrukcia Bookio Services</h2>
+        <span class="section-badge">Skutočné oficiálne ceny a skryté pasce</span>
+      </div>
+
+      <div class="table-container">
+        <table class="cmp-table">
+          <thead>
+            <tr>
+              <th>Balík</th>
+              <th>Cena / Mes. (Ročne)</th>
+              <th>Cena / Mes. (Mesačne)</th>
+              <th>Limit Termínov</th>
+              <th>Limit Personálu</th>
+              <th>SMS Cena</th>
+              <th>Skryté Náklady</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Bookio Freemium</strong></td>
+              <td>0,00 €</td>
+              <td>0,00 €</td>
+              <td>Max 100 termínov</td>
+              <td>Iba 1 osoba</td>
+              <td>0,075 € / ks</td>
+              <td>Reklamy, Bookio branding, nulová podpora</td>
+            </tr>
+            <tr>
+              <td><strong>Bookio Easy</strong></td>
+              <td>6,90 €</td>
+              <td>8,90 €</td>
+              <td>Max 150 termínov</td>
+              <td>Iba 1 osoba</td>
+              <td>0,075 € / ks</td>
+              <td>Veľmi nízky strop termínov (len 5 termínov/deň)</td>
+            </tr>
+            <tr>
+              <td><strong>Bookio Smart</strong></td>
+              <td>14,90 €</td>
+              <td>18,90 €</td>
+              <td>Max 300 termínov</td>
+              <td>Max 3 osoby</td>
+              <td>0,075 € / ks</td>
+              <td>Stále prísny strop 300 rezervácií</td>
+            </tr>
+            <tr>
+              <td><strong>Bookio Standard</strong></td>
+              <td>29,90 €</td>
+              <td>38,90 €</td>
+              <td>Neobmedzene</td>
+              <td>Max 5 osôb</td>
+              <td>0,075 € / ks</td>
+              <td>Pre salón nad 5 osôb nutný individuálny drahý balík</td>
+            </tr>
+            <tr style="background: rgba(245, 158, 11, 0.05); border-top: 2px solid rgba(245, 158, 11, 0.2);">
+              <td><strong>Planivo.sk FREE</strong></td>
+              <td>0,00 €</td>
+              <td>0,00 €</td>
+              <td>Iba 30 termínov (tvrdý strop)</td>
+              <td>1 osoba (max 3 služby)</td>
+              <td>SMS nepodporované</td>
+              <td>Extrémne nízky limit 30 rezervácií</td>
+            </tr>
+            <tr style="background: rgba(245, 158, 11, 0.05);">
+              <td><strong>Planivo.sk STARTER</strong></td>
+              <td>5,90 €</td>
+              <td>5,90 €</td>
+              <td>150 termínov</td>
+              <td>Max 2 osoby (max 5 služieb)</td>
+              <td>SMS nepodporované</td>
+              <td>Strop 150 termínov a len 2 pracovníci</td>
+            </tr>
+            <tr style="background: rgba(245, 158, 11, 0.05);">
+              <td><strong>Planivo.sk PRO</strong></td>
+              <td>9,90 €</td>
+              <td>12,90 €</td>
+              <td>Neobmedzene</td>
+              <td>Max 5 osôb</td>
+              <td>50 SMS v cene, potom 0,07 €</td>
+              <td>Strop 5 osôb (pre viac nutný Business)</td>
+            </tr>
+            <tr style="background: rgba(245, 158, 11, 0.05);">
+              <td><strong>Planivo.sk BUSINESS</strong></td>
+              <td>24,90 €</td>
+              <td>24,90 €</td>
+              <td>Neobmedzene</td>
+              <td>Neobmedzene</td>
+              <td>0,07 € / ks (diakritika 0,14 €)</td>
+              <td>Stále chýbajú stoličkári & Apple Wallet</td>
+            </tr>
+            <tr style="background: rgba(37, 99, 235, 0.1); border-top: 2px solid var(--accent-blue);">
+              <td><strong style="color: var(--accent-cyan);">REZERVOS</strong></td>
+              <td><strong style="color: var(--accent-emerald);">0,00 € (Základ)</strong></td>
+              <td><strong style="color: var(--accent-emerald);">0,00 €</strong></td>
+              <td><strong style="color: var(--accent-emerald);">NEOBMEDZENE</strong></td>
+              <td><strong style="color: var(--accent-emerald);">NEOBMEDZENE</strong></td>
+              <td><strong style="color: var(--accent-emerald);">0 € Push / 0,049 € SMS</strong></td>
+              <td><strong>Žiadne skryté poplatky, plná sloboda & IČO pre každé kreslo</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 4-WAY COMPARISON MATRIX -->
+    
+    <!-- FORENSIC DEEP-DIVE UNDER THE HOOD -->
+    <section id="forensic">
+      <div class="section-head">
+        <h2 class="section-title">🕵️‍♂️ Forenzná Pitva pod Povrchom: Čo Bookio skrýva v kóde a zmluvách</h2>
+        <span class="section-badge">Reverzný inžiniering JS balíkov, API a právnych rizík</span>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 20px; margin-top: 20px;">
+        
+        <!-- CARD 1: Obfuscated APIs -->
+        <div class="lesson-card" style="border-left: 4px solid var(--accent-cyan);">
+          <div class="lesson-header">
+            <span class="lesson-badge" style="background: rgba(6, 182, 212, 0.15); color: var(--accent-cyan);">Kód & API</span>
+            <div class="lesson-title">1. Obfuskovaná tabuľka 42 interných API endpointov</div>
+          </div>
+          <div class="lesson-body">
+            Bookio v kóde widgetu maskuje svoje interné routovanie za reverznú Base64 šifru (funkcia <code>findBestMatch(r,e)</code> s dešifrovacou rutinou <code>fr.afr(t)</code>).<br><br>
+            <strong>Dešifrovaním sme odhalili 42 interných endpointov</strong> vrátane:
+            <ul style="padding-left: 16px; margin-top: 6px; font-family: monospace; font-size: 11px; color: #93c5fd;">
+              <li>/widget/api/services (POST s auto-increment ID)</li>
+              <li>/widget/api/workers (magic value workerId: -1 pre najbližší termín)</li>
+              <li>/widget/api/create-wl (čakacia listina)</li>
+              <li>/api/v1/contract (správa zmluvných viazaností)</li>
+              <li>/api/js-error (interný error tracking)</li>
+            </ul>
+          </div>
+          <div class="lesson-takeaway">
+            <strong>Riešenie Rezervos:</strong> Moderné, otvorené a dokumentované REST API bez proprietárnej obfuskácie, umožňujúce salónom napojiť si vlastný sklad, ERP či účtovníctvo.
+          </div>
+        </div>
+
+        <!-- CARD 2: GDPR Evasion -->
+        <div class="lesson-card" style="border-left: 4px solid var(--accent-rose);">
+          <div class="lesson-header">
+            <span class="lesson-badge" style="background: rgba(244, 63, 94, 0.15); color: var(--accent-rose);">GDPR Riziko</span>
+            <div class="lesson-title">2. "isFramed" trik: Potláčanie Cookie lišty v iframoch</div>
+          </div>
+          <div class="lesson-body">
+            Pri forenznej analýze skriptu widgetu sme našli túto podmienku:<br>
+            <code style="display:block; background:#000; padding:6px; border-radius:4px; font-size:11px; margin:6px 0; color:#f87171;">
+              function isFramed() { try { return window.self !== window.top; } catch (e) { return true; } };<br>
+              if (!isFramed()) { load CookieYes banner... }
+            </code>
+            <strong>Právna hrozba pre salón:</strong> Keď si salón vloží Bookio do svojho webu cez <code>&lt;iframe&gt;</code>, Bookio <strong>úmyselne nespustí cookie lištu</strong>, ale meracie skripty Google Tag Managera bežia na pozadí! Prevádzkovateľ webu tak riskuje pokutu od Úradu na ochranu osobných údajov SR za zber dát bez udeleného súhlasu.
+          </div>
+          <div class="lesson-takeaway">
+            <strong>Riešenie Rezervos:</strong> 100% GDPR-first architektúra. Žiadne trackovacie skripty tretích strán bez vedomia klienta.
+          </div>
+        </div>
+
+        <!-- CARD 3: Tech Debt -->
+        <div class="lesson-card" style="border-left: 4px solid var(--accent-amber);">
+          <div class="lesson-header">
+            <span class="lesson-badge" style="background: rgba(245, 158, 11, 0.15); color: var(--accent-amber);">Technologický Dlh</span>
+            <div class="lesson-title">3. 1,88 MB JavaScript bundle & Legacy Sentry (Release 4545)</div>
+          </div>
+          <div class="lesson-body">
+            Veľkosť hlavného widget balíka <code>main-*.js</code> je neuveriteľných <strong>1 883 465 bajtov (~1,88 MB)</strong>. Na mobilných dátach spôsobuje 2 až 4 sekundové zdržanie pri načítaní.<br><br>
+            Zároveň systém využíva zastaranú knižnicu <strong>Raven.js</strong> hlásiacu chyby na interný server <code>sentry.cweb.sk/3</code> (Creative Web s.r.o. - materská firma). Preťaženosť formulára riešia vkladaním <strong>Cloudflare Turnstile CAPTCHA</strong>, čo odrádza mobilných klientov.
+          </div>
+          <div class="lesson-takeaway">
+            <strong>Riešenie Rezervos:</strong> Bleskový PWA klientsky widget s veľkosťou pod 60 kB. Okamžité otvorenie do 300 ms bez zdržujúcich CAPTCHA overení.
+          </div>
+        </div>
+
+        <!-- CARD 4: SEO Hijacking -->
+        <div class="lesson-card" style="border-left: 4px solid var(--accent-purple);">
+          <div class="lesson-header">
+            <span class="lesson-badge" style="background: rgba(139, 92, 246, 0.15); color: var(--accent-purple);">SEO Pasca</span>
+            <div class="lesson-title">4. Kanibalizácia vyhľadávania (Schema.org parazitizmus)</div>
+          </div>
+          <div class="lesson-body">
+            Bookio do hlavičky widgetu automaticky vkladá JSON-LD metadáta:<br>
+            <code style="display:block; background:#000; padding:6px; border-radius:4px; font-size:11px; margin:6px 0; color:#c084fc;">
+              "@type": "WebPage",<br>
+              "@id": "https://services.bookio.com/salon-sro/widget",<br>
+              "name": "Salón s.r.o. - rezervácia termínu | Bookio"
+            </code>
+            Google zaindexuje túto podstránku na doméne <strong>services.bookio.com</strong>. Keď klient do Googlu zadá názov salónu, Bookio sa často zobrazí <strong>nad vlastnou stránkou salónu</strong> a odvádza mu návštevnosť.
+          </div>
+          <div class="lesson-takeaway">
+            <strong>Riešenie Rezervos:</strong> Stopercentný white-label na vlastnej subdoméne salónu. SEO hodnota a reputácia ostáva výhradne salónu.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="matrix">
+      <div class="section-head">
+        <h2 class="section-title">📊 5-Smerná Megamatrica: Bookio vs EasyBooking vs Booqme vs Planivo vs Rezervos</h2>
+        <span class="section-badge">Porovnanie 40+ kritérií slovenskej konkurencie</span>
+      </div>
+
+      <div class="table-container">
+        <table class="cmp-table">
+          <thead>
+            <tr>
+              <th>Funkcia / Parameter</th>
+              <th>Bookio Services</th>
+              <th>EasyBooking.sk</th>
+              <th>Booqme.app</th>
+              <th>Planivo.sk (A&T)</th>
+              <th class="highlight-col">REZERVOS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Mesačný paušál (Základ)</strong></td>
+              <td>0 € (Freemium do 100 t.)</td>
+              <td>24,90 € / mes.</td>
+              <td>0 € (Freemium)</td>
+              <td>0 € (FREE do 30 t.) / 5,90 €</td>
+              <td class="highlight-col tag-yes">0,00 € / mes. ZADARMO</td>
+            </tr>
+            <tr>
+              <td><strong>Strop počtu rezervácií</strong></td>
+              <td class="tag-no">100 / 150 / 300 termínov</td>
+              <td class="tag-yes">Neobmedzene</td>
+              <td class="tag-no">100 termínov</td>
+              <td class="tag-no">30 (FREE) / 150 (STARTER)</td>
+              <td class="highlight-col tag-yes">NEOBMEDZENE</td>
+            </tr>
+            <tr>
+              <td><strong>Strop počtu zamestnancov</strong></td>
+              <td class="tag-no">1 až 5 osôb</td>
+              <td class="tag-yes">Neobmedzene</td>
+              <td class="tag-no">1 až 3 osoby</td>
+              <td class="tag-no">1 (FREE) / 2 (STARTER) / 5 (PRO)</td>
+              <td class="highlight-col tag-yes">NEOBMEDZENE</td>
+            </tr>
+            <tr>
+              <td><strong>Limit počtu služieb</strong></td>
+              <td class="tag-yes">Neobmedzene</td>
+              <td class="tag-yes">Neobmedzene</td>
+              <td class="tag-yes">Neobmedzene</td>
+              <td class="tag-no">Max 3 (FREE) / Max 5 (STARTER)</td>
+              <td class="highlight-col tag-yes">NEOBMEDZENE</td>
+            </tr>
+            <tr>
+              <td><strong>Cena SMS pripomienky</strong></td>
+              <td>~0,075 € / ks</td>
+              <td>0,083 € / ks</td>
+              <td>~0,070 € / ks</td>
+              <td>0,070 € / ks (nad 50 ks v PRO)</td>
+              <td class="highlight-col tag-yes">0 € PUSH / 0,049 € SMS</td>
+            </tr>
+            <tr>
+              <td><strong>Smart orezanie diakritiky (160 zn.)</strong></td>
+              <td class="tag-no">NIE (predražuje na 2 SMS)</td>
+              <td class="tag-no">NIE (0,166 €)</td>
+              <td class="tag-part">Čiastočne</td>
+              <td class="tag-no">NIE (diakritika = 70 zn. = 0,14 €)</td>
+              <td class="highlight-col tag-yes">ÁNO (Vždy 1 SMS = 160 zn.)</td>
+            </tr>
+            <tr>
+              <td><strong>Bezplatné PWA Push Notifikácie</strong></td>
+              <td class="tag-no">NIE</td>
+              <td class="tag-no">NIE</td>
+              <td class="tag-no">NIE</td>
+              <td class="tag-no">NIE</td>
+              <td class="highlight-col tag-yes">ÁNO (100% Zadarmo)</td>
+            </tr>
+            <tr>
+              <td><strong>Stoličkári (Prenájom kresla / Viac IČO)</strong></td>
+              <td class="tag-no">NIE (jedno spoločné konto)</td>
+              <td class="tag-no">NIE</td>
+              <td class="tag-no">NIE</td>
+              <td class="tag-no">NIE (jedno spoločné IČO)</td>
+              <td class="highlight-col tag-yes">ÁNO (Nezávislé IČO sub-účty)</td>
+            </tr>
+            <tr>
+              <td><strong>Vlastné platobné brány na pracovníka</strong></td>
+              <td class="tag-no">NIE</td>
+              <td class="tag-no">NIE (len ich gateway)</td>
+              <td class="tag-no">NIE</td>
+              <td class="tag-no">NIE</td>
+              <td class="highlight-col tag-yes">ÁNO (Každé IČO má svoj Stripe)</td>
+            </tr>
+            <tr>
+              <td><strong>Provízia zo salónnych platieb</strong></td>
+              <td>0 %</td>
+              <td class="tag-no">2,5 % + 0,35 € / platba</td>
+              <td>0 %</td>
+              <td>0 %</td>
+              <td class="highlight-col tag-yes">0 % ŽIADNA PROVÍZIA</td>
+            </tr>
+            <tr>
+              <td><strong>Apple Wallet & Google Wallet Karty</strong></td>
+              <td class="tag-no">NIE</td>
+              <td class="tag-no">NIE</td>
+              <td class="tag-no">NIE</td>
+              <td class="tag-no">NIE</td>
+              <td class="highlight-col tag-yes">ÁNO (Natívne Passy v mobile)</td>
+            </tr>
+            <tr>
+              <td><strong>Klientsky Widget bez iframu</strong></td>
+              <td class="tag-no">Iframe (pomalší 1,88 MB)</td>
+              <td class="tag-no">Iframe</td>
+              <td class="tag-yes">PWA Widget</td>
+              <td class="tag-part">Embed / iFrame</td>
+              <td class="highlight-col tag-yes">Bleskový PWA Widget (&lt;60 kB)</td>
+            </tr>
+            <tr>
+              <td><strong>White-label (Úplné odstránenie loga)</strong></td>
+              <td class="tag-no">Len vo vysokom balíku</td>
+              <td class="tag-no">Príplatok 29,90 €</td>
+              <td class="tag-no">Príplatok</td>
+              <td class="tag-no">Iba v balíku BUSINESS (24,90 €)</td>
+              <td class="highlight-col tag-yes">V CENE (Vlastný Brand)</td>
+            </tr>
+            <tr>
+              <td><strong>Vouchery a Darčekové poukážky</strong></td>
+              <td class="tag-part">Len vyšší balík</td>
+              <td class="tag-yes">Áno v balíku</td>
+              <td class="tag-no">Nie</td>
+              <td class="tag-no">VÔBEC NEPONÚKA (chýba eshop)</td>
+              <td class="highlight-col tag-yes">ÁNO (Verejný eshop s QR platbou)</td>
+            </tr>
+            <tr>
+              <td><strong>Zber Google Reviews na profil salónu</strong></td>
+              <td class="tag-no">Ukladá do Bookio</td>
+              <td class="tag-no">Interné recenzie</td>
+              <td class="tag-no">Nie</td>
+              <td class="tag-no">Interný zber</td>
+              <td class="highlight-col tag-yes">ÁNO (Presmerovanie na Google Maps)</td>
+            </tr>
+            <tr>
+              <td><strong>Zálohy proti No-Show klientom</strong></td>
+              <td class="tag-part">Cez GoPay</td>
+              <td class="tag-part">Cez ich bránu</td>
+              <td class="tag-no">Nie</td>
+              <td class="tag-part">Cez platobnú bránu</td>
+              <td class="highlight-col tag-yes">ÁNO (Fixná / % Záloha cez Stripe)</td>
+            </tr>
+            <tr>
+              <td><strong>Radar voľných kresiel (Kreslo Hunter)</strong></td>
+              <td class="tag-no">Iba pasívny waitlist</td>
+              <td class="tag-no">Nie</td>
+              <td class="tag-no">Nie</td>
+              <td class="tag-part">Čakacia listina (iba v PRO)</td>
+              <td class="highlight-col tag-yes">ÁNO (Aktívny SMS/Push radar)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ROADMAP -->
+    <footer style="margin-top: 48px; border-top: 1px solid var(--border-subtle); padding-top: 24px; text-align: center; font-size: 13px; color: var(--text-muted);">
+      <p>Vygenerované v rámci Master Auditu Konkurencie pre projekt <strong>REZERVOS / VoľnéKreslo</strong>.</p>
+      <p style="margin-top: 4px;">Priečinok: <code>c:\VolneKresloookio\index.html</code> | Dátum auditu: September 2026</p>
+    </footer>
+
+  </div>
+
+  <!-- ZOOM MODAL -->
+  <div id="zoomModal" class="modal-overlay" onclick="closeZoom()">
+    <img id="zoomModalImg" class="modal-img" src="" alt="Zoom Screenshot">
+  </div>
+
+  <script>
+    // LIVE FILTER
+    const searchInput = document.getElementById('liveSearchInput');
+    const cards = document.querySelectorAll('.module-card');
+
+    searchInput.addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        const tags = (card.getAttribute('data-tags') || '').toLowerCase();
+        if (text.includes(q) || tags.includes(q)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+
+    // SMS SIMULATOR
+    function calculateSms() {
+      const text = document.getElementById('smsText').value;
+      const len = text.length;
+      document.getElementById('charCount').innerText = len;
+      document.getElementById('phonePreview').innerText = text || '(Prázdna správa)';
+
+      // Check for non-GSM characters (diacritics)
+      const gsmRegex = /^[A-Za-z0-9 
+
+@£$¥èéùìòÇØøÅåΔ_ΦΓΛΩΠΨΣΘΞÆæßÉ!"#%&'()*+,\-.\/:;<=>?]*$/;
+      const isGsm = gsmRegex.test(text);
+
+      let parts = 1;
+      let enc = 'GSM-7 (Bez diakritiky)';
+      if (!isGsm) {
+        enc = 'UCS-2 (S diakritikou)';
+        if (len <= 70) parts = 1;
+        else parts = Math.ceil(len / 67);
+      } else {
+        if (len <= 160) parts = 1;
+        else parts = Math.ceil(len / 153);
+      }
+
+      document.getElementById('encodingType').innerText = enc;
+      document.getElementById('partsCount').innerText = parts + ' SMS';
+
+      const single = (parts * 0.075).toFixed(3);
+      const month = (parts * 0.075 * 300).toFixed(2);
+      const year = (parts * 0.075 * 300 * 12).toFixed(2);
+
+      document.getElementById('singleCost').innerText = single + ' €';
+      document.getElementById('monthCost').innerText = month + ' € / mes.';
+      document.getElementById('yearCost').innerText = year + ' €';
+    }
+
+    // IMAGE MODAL
+    function openZoom(src) {
+      const modal = document.getElementById('zoomModal');
+      const img = document.getElementById('zoomModalImg');
+      img.src = src;
+      modal.classList.add('active');
+    }
+    function closeZoom() {
+      document.getElementById('zoomModal').classList.remove('active');
+    }
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeZoom();
+    });
+
+    // Run calculator once
+    calculateSms();
+  </script>
+
+  <script>
+    function toggleSearch() {
+      const box = document.getElementById('navSearchBox');
+      const btn = document.getElementById('searchToggleBtn');
+      if (box.classList.contains('active')) {
+        box.classList.remove('active');
+      } else {
+        box.classList.add('active');
+        const inp = document.getElementById('liveSearchInput');
+        if (inp) inp.focus();
+      }
+    }
+  </script>
+
+
+  <script>
+    // ARROW BUTTON SCROLL
+    function scrollNav(amount) {
+      const container = document.getElementById('navLinksContainer');
+      if (container) {
+        container.scrollBy({ left: amount, behavior: 'smooth' });
+      }
+    }
+
+    // MOUSE DRAG TO SCROLL & MOUSE WHEEL
+    (function() {
+      const slider = document.getElementById('navLinksContainer');
+      if (!slider) return;
+
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+
+      slider.addEventListener('mousedown', (e) => {
+        isDown = true;
+        slider.classList.add('grabbing');
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+      });
+
+      slider.addEventListener('mouseleave', () => {
+        isDown = false;
+        slider.classList.remove('grabbing');
+      });
+
+      slider.addEventListener('mouseup', () => {
+        isDown = false;
+        slider.classList.remove('grabbing');
+      });
+
+      slider.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - slider.offsetLeft;
+        const walk = (x - startX) * 1.5;
+        slider.scrollLeft = scrollLeft - walk;
+      });
+
+      // Mouse wheel horizontal scroll
+      slider.addEventListener('wheel', (e) => {
+        if (e.deltaY !== 0) {
+          e.preventDefault();
+          slider.scrollLeft += e.deltaY;
+        }
+      }, { passive: false });
+    })();
+  </script>
+
+</body>
+</html>

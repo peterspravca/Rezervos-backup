@@ -1,0 +1,2484 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Language" content="sk">
+    <meta name="language" content="Slovak">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Booqme.app – Kompletný audit, porovnanie a analýza | Rezervos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap&subset=latin,latin-ext" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-body: #0a0e17;
+            --bg-card: rgba(17, 24, 39, 0.88);
+            --bg-card-hover: rgba(26, 36, 56, 0.95);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-active: rgba(99, 102, 241, 0.4);
+            
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --primary-glow: rgba(99, 102, 241, 0.35);
+            
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f43f5e;
+            --accent-cyan: #06b6d4;
+            --accent-purple: #a855f7;
+            
+            --text-main: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 10%, rgba(99, 102, 241, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 90% 20%, rgba(16, 185, 129, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 50% 70%, rgba(6, 182, 212, 0.07) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-card:hover {
+            border-color: var(--border-active);
+        }
+
+        /* Sticky Nav Header - Fully Mobile Responsive */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(10, 14, 23, 0.92);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 16px;
+        }
+
+        .nav-container {
+            max-width: 1560px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-main);
+            flex-shrink: 0;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #6366f1, #3b82f6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: white;
+            box-shadow: 0 0 15px var(--primary-glow);
+            flex-shrink: 0;
+        }
+
+        .brand-title {
+            font-weight: 800;
+            font-size: 1rem;
+            letter-spacing: -0.02em;
+            white-space: nowrap;
+        }
+
+        .brand-subtitle {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            display: block;
+        }
+
+        .search-box-header {
+            position: relative;
+            flex: 1;
+            max-width: 380px;
+        }
+
+        .search-box-header input {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 8px 12px 8px 34px;
+            color: #fff;
+            font-size: 0.82rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-box-header input:focus {
+            border-color: var(--primary);
+            background: rgba(15, 23, 42, 0.95);
+        }
+
+        .search-box-header i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .nav-link-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .nav-link-btn:hover {
+            color: #fff;
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .nav-link-btn.highlight {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        /* Mobile Header - Iba ikony na mobile */
+        @media (max-width: 820px) {
+            .nav-btn-text {
+                display: none !important;
+            }
+            .nav-link-btn {
+                padding: 7px 11px;
+                font-size: 0.95rem;
+                border-radius: 9px;
+                justify-content: center;
+            }
+            .nav-links {
+                gap: 6px;
+            }
+            .search-box-header {
+                max-width: 170px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .brand-subtitle {
+                display: none;
+            }
+            .logo-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 0.95rem;
+                border-radius: 8px;
+            }
+            .brand-title {
+                font-size: 0.95rem;
+            }
+            .brand-badge {
+                gap: 8px;
+            }
+            .search-box-header {
+                max-width: 110px;
+            }
+            .search-box-header input {
+                padding: 6px 8px 6px 28px;
+                font-size: 0.74rem;
+            }
+            .search-box-header i {
+                left: 9px;
+                font-size: 0.72rem;
+            }
+            .nav-link-btn {
+                padding: 7px 9px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1560px;
+            margin: 0 auto;
+            padding: 20px 14px 80px;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                padding: 30px 24px 80px;
+            }
+        }
+
+        /* Hero */
+        .hero {
+            padding: 24px 0 16px;
+            text-align: center;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(99, 102, 241, 0.12);
+            color: var(--primary-light);
+            border: 1px solid rgba(99, 102, 241, 0.25);
+            padding: 5px 14px;
+            border-radius: 30px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .hero h1 {
+            font-size: clamp(1.8rem, 5vw, 2.9rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1.18;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: clamp(0.9rem, 2.5vw, 1.15rem);
+            color: var(--text-secondary);
+            max-width: 860px;
+            margin: 0 auto 20px;
+            line-height: 1.5;
+        }
+
+        /* Target Meta Bar */
+        .target-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 14px;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .target-bar strong {
+            color: #fff;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .meta-tag {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+        }
+
+        /* Top KPI Stats Grid */
+        .stats-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        @media (min-width: 900px) {
+            .stats-summary-grid {
+                grid-template-columns: repeat(5, 1fr);
+                gap: 16px;
+            }
+        }
+
+        .stat-box {
+            padding: 14px;
+            border-radius: 14px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .stat-icon-wrap {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.05rem;
+            flex-shrink: 0;
+        }
+
+        .stat-val {
+            font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.1;
+        }
+
+        .stat-label {
+            font-size: 0.68rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            margin-top: 2px;
+        }
+
+        /* Sticky Navigation Pills */
+        .module-nav-wrapper {
+            position: sticky;
+            top: 58px;
+            z-index: 900;
+            background: rgba(10, 14, 23, 0.96);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 8px 0;
+            margin: 0 -14px 24px;
+            padding-left: 14px;
+            padding-right: 14px;
+            border-bottom: 1px solid var(--border);
+            overflow-x: auto;
+            white-space: nowrap;
+            display: flex;
+            gap: 6px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .mod-pill {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .mod-pill:hover, .mod-pill.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        .mod-pill.pill-star {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border-color: rgba(16, 185, 129, 0.35);
+        }
+
+        /* Section Layout */
+        .audit-section {
+            margin-bottom: 40px;
+            scroll-margin-top: 110px;
+        }
+
+        .section-headline {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        @media (min-width: 640px) {
+            .section-headline {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+
+        .section-headline-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-num-badge {
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--primary-light);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+
+        .section-title {
+            font-size: clamp(1.2rem, 3.5vw, 1.5rem);
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .section-route {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.04);
+            padding: 3px 8px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            align-self: flex-start;
+        }
+
+        /* Audit Grid */
+        .audit-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        @media (min-width: 1024px) {
+            .audit-grid {
+                grid-template-columns: 1.15fr 0.85fr;
+                gap: 24px;
+            }
+        }
+
+        .card-inner {
+            padding: 16px;
+        }
+
+        @media (min-width: 640px) {
+            .card-inner {
+                padding: 24px;
+            }
+        }
+
+        .card-title {
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feature-bullet {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            line-height: 1.45;
+        }
+
+        .feature-bullet i {
+            color: var(--accent-green);
+            font-size: 0.8rem;
+            margin-top: 4px;
+            flex-shrink: 0;
+        }
+
+        .feature-bullet strong {
+            color: #fff;
+        }
+
+        /* Preview Screenshot Container */
+        .preview-shot-container {
+            position: relative;
+            background: #090d16;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+
+        .preview-shot-container img {
+            width: 100%;
+            height: auto;
+            max-height: 320px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .shot-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(10, 14, 23, 0.95) 100%);
+            padding: 12px 10px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            font-size: 0.75rem;
+            color: #cbd5e1;
+        }
+
+        .shot-zoom-tag {
+            background: rgba(99, 102, 241, 0.85);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        /* Verdict Box */
+        .verdict-box {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (min-width: 550px) {
+            .verdict-box {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .verdict-col {
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-size: 0.8rem;
+        }
+
+        .verdict-col.pro { border-left: 3px solid var(--accent-green); }
+        .verdict-col.con { border-left: 3px solid var(--accent-rose); }
+
+        .verdict-col h5 {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .verdict-col.pro h5 { color: #34d399; }
+        .verdict-col.con h5 { color: #fb7185; }
+
+        .verdict-col ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .verdict-col li {
+            margin-bottom: 3px;
+            color: #cbd5e1;
+            line-height: 1.35;
+        }
+
+        /* Mobile Scrollable Tables */
+        .table-scroll-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-top: 14px;
+        }
+
+        .table-hint-mobile {
+            display: block;
+            text-align: right;
+            font-size: 0.72rem;
+            color: var(--primary-light);
+            margin-bottom: 6px;
+        }
+
+        @media (min-width: 768px) {
+            .table-hint-mobile {
+                display: none;
+            }
+        }
+
+        .comp-table {
+            width: 100%;
+            min-width: 600px;
+            border-collapse: collapse;
+            font-size: 0.84rem;
+            text-align: left;
+        }
+
+        .comp-table th, .comp-table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comp-table th {
+            background: rgba(15, 23, 42, 0.9);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-secondary);
+        }
+
+        .comp-table td.col-rezervos {
+            background: rgba(13, 148, 136, 0.08);
+            font-weight: 600;
+            color: #2dd4bf;
+        }
+
+        .comp-table td.col-booqme {
+            background: rgba(245, 158, 11, 0.05);
+            color: #fde68a;
+        }
+
+        /* Lightbox */
+        .lightbox-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 99999;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .lightbox-modal.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 8px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.9);
+            object-fit: contain;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 14px;
+            right: 16px;
+            color: #fff;
+            font-size: 28px;
+            cursor: pointer;
+            background: rgba(255,255,255,0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        /* Pill tags */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 7px;
+            border-radius: 5px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .pill-blue { background: rgba(59, 130, 246, 0.15); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.3); }
+        .pill-green { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .pill-amber { background: rgba(245, 158, 11, 0.15); color: #fde68a; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .pill-rose { background: rgba(244, 63, 94, 0.15); color: #fda4af; border: 1px solid rgba(244, 63, 94, 0.3); }
+        .pill-purple { background: rgba(168, 85, 247, 0.15); color: #d8b4fe; border: 1px solid rgba(168, 85, 247, 0.3); }
+
+        /* Pricing Grid */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        @media (min-width: 850px) {
+            .pricing-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .price-card {
+            padding: 20px;
+            border-radius: 16px;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .price-card.featured {
+            border-color: var(--primary);
+            background: linear-gradient(180deg, rgba(99, 102, 241, 0.08) 0%, rgba(15, 23, 42, 0.8) 100%);
+        }
+
+        .price-amount {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #fff;
+            margin: 8px 0 2px;
+        }
+
+        .price-period {
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+        }
+
+        .price-limits {
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            font-size: 0.78rem;
+            color: #cbd5e1;
+            margin-bottom: 12px;
+        }
+
+        .price-features-list {
+            list-style: none;
+            padding: 0;
+            font-size: 0.82rem;
+            color: #cbd5e1;
+        }
+
+        .price-features-list li {
+            padding: 5px 0;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        /* Interactive Simulator & Calculator */
+        .calc-textarea {
+            width: 100%;
+            height: 90px;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px;
+            color: #fff;
+            font-size: 0.85rem;
+            outline: none;
+        }
+
+        .calc-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px;
+            margin: 12px 0;
+        }
+
+        @media (min-width: 600px) {
+            .calc-stats {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .calc-stat {
+            text-align: center;
+        }
+
+        .calc-stat-label {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .calc-stat-val {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        /* Phone mockup */
+        .phone-mockup {
+            width: 100%;
+            max-width: 300px;
+            height: 480px;
+            background: #000;
+            border-radius: 36px;
+            padding: 10px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.15);
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .phone-screen {
+            background: #18191c;
+            flex: 1;
+            border-radius: 26px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .phone-header {
+            padding: 24px 12px 8px;
+            background: #23252b;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .phone-chat {
+            flex: 1;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .sms-bubble {
+            background: #2d323e;
+            color: #f1f5f9;
+            padding: 10px 12px;
+            border-radius: 14px 14px 14px 4px;
+            font-size: 0.78rem;
+            line-height: 1.4;
+            word-break: break-word;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 60px;
+            border-top: 1px solid var(--border);
+            padding: 30px 16px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            background: rgba(10, 14, 23, 0.95);
+        }
+    </style>
+</head>
+<body>
+<a href="../prehlad/index.html" style="position:fixed;bottom:20px;right:20px;z-index:99999;display:inline-flex;align-items:center;gap:8px;background:#111827;color:#60a5fa;border:1px solid #2d3748;border-radius:10px;padding:10px 16px;font:700 13px/1.2 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.4);">&larr; Späť na Prehľad</a>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="brand-badge">
+                <div class="logo-icon"><i class="fa-solid fa-bolt"></i></div>
+                <div>
+                    <div class="brand-title">Rezervos</div>
+                    <span class="brand-subtitle">vs Booqme</span>
+                </div>
+            </a>
+
+            <div class="search-box-header">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="moduleFilterInput" placeholder="Hľadať funkciu..." oninput="filterModules(this.value)">
+            </div>
+
+            <div class="nav-links">
+                <a href="../planivo/index.html" class="nav-link-btn" style="background: rgba(37, 99, 235, 0.2); color: #60a5fa; border-color: rgba(37, 99, 235, 0.4);" title="Prejsť na Audit Planivo.sk"><i class="fa-solid fa-calendar-check"></i> <span class="nav-btn-text">Audit Planivo</span></a>
+                <a href="#lepsie-ako-my" class="nav-link-btn highlight" title="Čo majú lepšie?"><i class="fa-solid fa-star"></i> <span class="nav-btn-text">Čo majú lepšie?</span></a>
+                <a href="#porovnanie-rezervos" class="nav-link-btn highlight" style="background: rgba(13, 148, 136, 0.2); color: #2dd4bf; border-color: rgba(13, 148, 136, 0.4);" title="Návrhy pre Rezervos"><i class="fa-solid fa-rocket"></i> <span class="nav-btn-text">Návrhy pre Rezervos</span></a>
+                <a href="#tarify" class="nav-link-btn" title="Cenník & Balíky"><i class="fa-solid fa-tags"></i> <span class="nav-btn-text">Cenník</span></a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Hero Header -->
+        <section class="hero">
+            <div class="hero-tag">
+                <i class="fa-solid fa-microchip"></i> 100% Kompletný audit všetkých funkcií & nastavení
+            </div>
+            <h1>Booqme.app – Master Analýza</h1>
+            <p>
+                Technická a biznis dekonštrukcia všetkých 17 modulov, 54 obrazoviek, porovnávacia matrica a <strong>otvorené zhodnotenie toho, čo má Booqme lepšie spracované než Rezervos</strong>.
+            </p>
+
+            <div class="target-bar">
+                <span>Účet: <strong>karernictvo@hotapobv.eu</strong></span>
+                <span class="meta-tag">Balík: <strong>BUSINESS (Trial 14 dní)</strong></span>
+                <span class="meta-tag">Limit: <strong>0 / 500 rezervácií</strong></span>
+                <span class="meta-tag">SMS kredit: <strong>1.40 €</strong></span>
+                <span class="meta-tag">Screenshoty: <strong>54 originálov</strong></span>
+            </div>
+        </section>
+
+        <!-- High-Level Stats -->
+        <div class="stats-summary-grid">
+            <div class="stat-box">
+                <div class="stat-icon-wrap" style="background: rgba(99, 102, 241, 0.15); color: #818cf8;">
+                    <i class="fa-solid fa-cube"></i>
+                </div>
+                <div>
+                    <div class="stat-val">17</div>
+                    <div class="stat-label">Modulov</div>
+                </div>
+            </div>
+
+            <div class="stat-box">
+                <div class="stat-icon-wrap" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24;">
+                    <i class="fa-brands fa-apple"></i>
+                </div>
+                <div>
+                    <div class="stat-val">Wallet</div>
+                    <div class="stat-label">Vernostné karty</div>
+                </div>
+            </div>
+
+            <div class="stat-box">
+                <div class="stat-icon-wrap" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
+                    <i class="fa-solid fa-chair"></i>
+                </div>
+                <div>
+                    <div class="stat-val">Prenájmy</div>
+                    <div class="stat-label">Kreslá & stoličky</div>
+                </div>
+            </div>
+
+            <div class="stat-box">
+                <div class="stat-icon-wrap" style="background: rgba(244, 63, 94, 0.15); color: #f43f5e;">
+                    <i class="fa-solid fa-percent"></i>
+                </div>
+                <div>
+                    <div class="stat-val">0.49%</div>
+                    <div class="stat-label">Stripe provízia</div>
+                </div>
+            </div>
+
+            <div class="stat-box">
+                <div class="stat-icon-wrap" style="background: rgba(6, 182, 212, 0.15); color: #06b6d4;">
+                    <i class="fa-solid fa-comment-sms"></i>
+                </div>
+                <div>
+                    <div class="stat-val">0.07 €</div>
+                    <div class="stat-label">Cena za 70 zn.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sticky Module Navigation -->
+        <div class="module-nav-wrapper">
+            <a href="#lepsie-ako-my" class="mod-pill pill-star"><i class="fa-solid fa-star"></i> ČO MAJÚ LEPŠIE AKO MY</a>
+            <a href="#porovnanie-rezervos" class="mod-pill pill-star" style="background: rgba(13, 148, 136, 0.2); color: #2dd4bf; border-color: rgba(13, 148, 136, 0.4);"><i class="fa-solid fa-rocket"></i> ZHODNOTENIE PRE REZERVOS</a>
+            <a href="#sms-deepdive" class="mod-pill"><i class="fa-solid fa-comment-dots"></i> SMS Engine & Kalkulačka</a>
+            <a href="#mod-1" class="mod-pill"><i class="fa-solid fa-chart-pie"></i> 1. Prehľad</a>
+            <a href="#mod-2" class="mod-pill"><i class="fa-solid fa-calendar-days"></i> 2. Kalendár</a>
+            <a href="#mod-3" class="mod-pill"><i class="fa-solid fa-globe"></i> 3. Online formulár</a>
+            <a href="#mod-4" class="mod-pill"><i class="fa-solid fa-calendar-check"></i> 4. Rezervácie</a>
+            <a href="#mod-5" class="mod-pill"><i class="fa-solid fa-users"></i> 5. Zákazníci (CRM)</a>
+            <a href="#mod-6" class="mod-pill"><i class="fa-solid fa-clock-rotate-left"></i> 6. Čakatelia</a>
+            <a href="#mod-7" class="mod-pill"><i class="fa-solid fa-gift"></i> 7. Poukážky</a>
+            <a href="#mod-8" class="mod-pill"><i class="fa-brands fa-apple"></i> 8. Apple/Google Wallet</a>
+            <a href="#mod-9" class="mod-pill"><i class="fa-solid fa-scissors"></i> 9. Služby</a>
+            <a href="#mod-10" class="mod-pill"><i class="fa-solid fa-chair"></i> 10. Prenájmy</a>
+            <a href="#mod-11" class="mod-pill"><i class="fa-solid fa-star"></i> 11. Hodnotenia</a>
+            <a href="#mod-12" class="mod-pill"><i class="fa-solid fa-chart-line"></i> 12. Štatistiky</a>
+            <a href="#mod-13" class="mod-pill"><i class="fa-solid fa-user-gear"></i> 13. Personál & Provízie</a>
+            <a href="#mod-14" class="mod-pill"><i class="fa-solid fa-business-time"></i> 14. Pracovný čas</a>
+            <a href="#mod-15" class="mod-pill"><i class="fa-solid fa-file-invoice-dollar"></i> 15. Transakcie & Stripe</a>
+            <a href="#mod-16" class="mod-pill"><i class="fa-solid fa-sliders"></i> 16. Nastavenia</a>
+            <a href="#mod-17" class="mod-pill"><i class="fa-solid fa-code"></i> 17. API</a>
+            <a href="#tarify" class="mod-pill"><i class="fa-solid fa-tags"></i> Tarify & Balíky</a>
+            <a href="#matrix" class="mod-pill"><i class="fa-solid fa-scale-balanced"></i> Porovnanie</a>
+        </div>
+
+        <!-- SPECIAL HERO SECTION: ČO MAJÚ LEPŠIE AKO MY -->
+        <section class="audit-section" id="lepsie-ako-my" style="background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 20px; padding: 20px; margin-bottom: 50px;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                <div style="width: 36px; height: 36px; border-radius: 10px; background: #10b981; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.1rem;">
+                    <i class="fa-solid fa-eye"></i>
+                </div>
+                <div>
+                    <h2 style="font-size: clamp(1.3rem, 4vw, 1.8rem); font-weight: 800; color: #fff;">Čo má Booqme spracované LEPŠIE ako my?</h2>
+                    <div style="font-size: 0.8rem; color: #34d399; font-weight: 600;">Úprimná sebareflexia a zoznam funkcií, ktoré musíme od Booqme odkukať</div>
+                </div>
+            </div>
+
+            <p style="font-size: 0.88rem; color: #cbd5e1; margin-bottom: 20px; line-height: 1.5;">
+                Aby sme Booqme porazili, nesmieme si zatvárať oči pred vecami, ktoré spravili špičkovo. Toto je <strong>8 konkrétnych funkcionalít a architektonických riešení</strong>, kde má Booqme momentálne navrch a ktoré odporúčam prevziať do Rezervos:
+            </p>
+
+            <div style="display: grid; grid-template-columns: 1fr; gap: 14px;">
+                <!-- Better 1 -->
+                <div class="glass-card card-inner" style="border-left: 4px solid #10b981;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                        <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">1. Natívne Apple & Google Wallet karty + PUSH notifikácie zadarmo</h4>
+                        <span class="pill pill-green">Top Funkcia #1</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.45;">
+                        Klient si nemusí sťahovať žiadnu aplikáciu zo Store. Po rezervácii si klikne na tlačidlo a karta sa mu uloží priamo do <strong>Apple Wallet</strong> na iPhone alebo <strong>Google Wallet</strong> na Androide. 
+                        <strong>Prečo je to geniálne:</strong> Salón môže cez Wallet posielať zákazníkovi <strong>hromadné PUSH notifikácie priamo na zamykaciu obrazovku mobilu</strong> – úplne zadarmo a bez míňania drahých SMS!
+                    </p>
+                </div>
+
+                <!-- Better 2 -->
+                <div class="glass-card card-inner" style="border-left: 4px solid #3b82f6;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                        <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">2. Hotové marketingové eventy pre GTM & Meta Pixel</h4>
+                        <span class="pill pill-blue">Pre Marketérov</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.45;">
+                        Salóny často platia reklamu na Instagrame alebo TikToku. Booqme má priamo v administrácii polia na vloženie <strong>GTM Container ID</strong> a <strong>Meta Pixel ID</strong>. Automaticky odosielajú konverzie: <code>Schedule</code>, <code>CancelReservation</code>, <code>new_eshop_order</code> a <code>waiting_reservation</code>. Vďaka tomu salón presne vie, koľko ho stála jedna rezervácia z reklamy.
+                    </p>
+                </div>
+
+                <!-- Better 3 -->
+                <div class="glass-card card-inner" style="border-left: 4px solid #f59e0b;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                        <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">3. Oficiálne tlačidlo „Rezervovať“ na Instagrame & Facebooku (Meta Action Button)</h4>
+                        <span class="pill pill-amber">Sociálne Siete</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.45;">
+                        Booqme podporuje priame oficiálne prepojenie s Meta profilmi. Na firemnom <strong>Instagram a Facebook profile salónu</strong> svieti modré tlačidlo <code>Rezervovať</code> (Action Button). Klient pri pozeraní fotiek účesov alebo premien klikne a priamo v okne Instagramu si vyberie termín bez prepisovania linkov do bio. To prináša salónu obrovské množstvo impulzívnych rezervácií.
+                    </p>
+                </div>
+
+                <!-- Better 4 -->
+                <div class="glass-card card-inner" style="border-left: 4px solid #a855f7;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                        <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">4. Provízie personálu na úrovni jednotlivých služieb</h4>
+                        <span class="pill pill-purple">Pre Majiteľov</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.45;">
+                        Väčšina rezervačných systémov má len paušálnu províziu zamestnanca (napr. 40%). Booqme umožňuje nastaviť <strong>špecifické % pre každú službu</strong>. Príklad: pri farbení vlasov je drahý materiál (Olaplex/farba), takže majiteľ dá zamestnancovi len 30%, ale pri pánskom strihu (kde je náklad na materiál nulový) mu dá 50%.
+                    </p>
+                </div>
+
+                <!-- Better 5 -->
+                <div class="glass-card card-inner" style="border-left: 4px solid #06b6d4;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                        <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">5. Živý iPhone simulátor SMS šablón v reálnom čase (Live Mockup Preview)</h4>
+                        <span class="pill pill-cyan">Vizuálny Zážitok</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.45;">
+                        Pri úprave SMS notifikácií a písaní hromadných správ má Booqme priamo vedľa formulára interaktívnu obrazovku iPhonu. Majiteľka salónu pri písaní textu v reálnom čase vidí, ako bude správa vyzerať priamo na zamykacej obrazovke iOS, s automaticky vyplnenými dynamickými tagmi (<code>{client_name}</code>, <code>{datetime}</code>, <code>{service_name}</code>) a okamžitým počítadlom GSM znakov.
+                    </p>
+                </div>
+
+                <!-- Better 6 -->
+                <div class="glass-card card-inner" style="border-left: 4px solid #ec4899;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                        <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">6. Vlastné farebné štítky klientov (Custom CRM Tags & Interné varovania)</h4>
+                        <span class="pill pill-rose">CRM Prehľad</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.45;">
+                        Booqme umožňuje personálu označiť zákazníkov farebnými štítkami (napr. <code>VIP</code>, <code>Alergia na amoniak</code>, <code>Časté meškanie</code>, <code>Modelka</code>). Pri kliknutí na termín v kalendári vidí kaderníčka okamžite internú výstrahu pred chemickým ošetrením, čo chráni salón pred sťažnosťami a škodami.
+                    </p>
+                </div>
+
+                <!-- Better 7 -->
+                <div class="glass-card card-inner" style="border-left: 4px solid #f43f5e;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                        <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">7. Natívne mobilné aplikácie pre personál (iOS & Android)</h4>
+                        <span class="pill pill-rose">Mobilita</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.45;">
+                        Kaderníčky a barberi nemajú celý deň pred sebou notebook. Booqme má v App Store a Google Play jednoduchú aplikáciu, kde si pracovník ráno pozrie svoj denný rozvrh, prepne stav termínu alebo pridá novú rezerváciu za 5 sekúnd.
+                    </p>
+                </div>
+
+                <!-- Better 8 -->
+                <div class="glass-card card-inner" style="border-left: 4px solid #10b981;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                        <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">8. "Video návod" tlačidlo na každej podstránke</h4>
+                        <span class="pill pill-green">Zákaznícka podpora</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.45;">
+                        Pri každom zložitejšom nastavení (SMS, Pixely, Služby, Pracovný čas) má Booqme v pravom hornom rohu modré tlačidlo s YouTube ikonou. Majiteľka salónu nemusí čítať manuál – pustí si 90-sekundové video a vie to nastaviť. To im drasticky šetrí čas podpory.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: SMS ENGINE, KALKULAČKA A PREMENNÉ -->
+        <section class="audit-section" id="sms-deepdive" data-search="sms kalkulacka premenne sablony alias credit 70 znakov">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge"><i class="fa-solid fa-comment-dots"></i></span>
+                    <h2 class="section-title">SMS Notifikačný Engine & Interaktívna Kalkulačka</h2>
+                </div>
+                <span class="section-route">/settings/sms-settings</span>
+            </div>
+
+            <div class="audit-grid">
+                <!-- Left: Simulator & Calculator -->
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-calculator" style="color: var(--accent-cyan);"></i> Testovací simulátor dĺžky a ceny SMS</div>
+                    
+                    <div style="margin-bottom: 12px;">
+                        <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 4px;">Vyberte šablónu z Booqme:</label>
+                        <select id="smsTemplateSelect" onchange="applySmsTemplate(this.value)" style="width: 100%; background: #0f172a; border: 1px solid var(--border); color: #fff; padding: 8px 10px; border-radius: 8px; font-size: 0.82rem;">
+                            <option value="pripomienka">Pripomienka: Blíži sa Váš termín: {date} o {time_from}. {property_name}</option>
+                            <option value="potvrdenie">Potvrdenie: Rezervácia potvrdená: {date} o {time_from}. Tešíme sa! {property_name}</option>
+                            <option value="reaktivacia">Reaktivácia: Dobrý deň, od Vašej poslednej návštevy už uplynul čas...</option>
+                            <option value="privitanie">Privítanie: Dobrý deň, ďakujeme za Vašu prvú návštevu u nás...</option>
+                            <option value="hodnotenie">Hodnotenie: Páčila sa Vám návšteva? Odkaz na hodnotenie...</option>
+                        </select>
+                    </div>
+
+                    <textarea id="liveSmsInput" class="calc-textarea" oninput="recalcSms()"></textarea>
+
+                    <div style="display: flex; gap: 8px; margin-top: 8px;">
+                        <button onclick="stripAccentsLive()" style="background: rgba(99, 102, 241, 0.2); border: 1px solid var(--primary); color: #818cf8; padding: 6px 12px; border-radius: 8px; font-size: 0.78rem; font-weight: 700; cursor: pointer;">
+                            <i class="fa-solid fa-spell-check"></i> Odstrániť diakritiku (Úspora 50%)
+                        </button>
+                    </div>
+
+                    <div class="calc-stats">
+                        <div class="calc-stat">
+                            <div class="calc-stat-label">Znaky</div>
+                            <div class="calc-stat-val" id="valChars">0</div>
+                        </div>
+                        <div class="calc-stat">
+                            <div class="calc-stat-label">Kódovanie</div>
+                            <div class="calc-stat-val" id="valEncoding" style="font-size: 0.85rem; color: #f43f5e;">UCS-2</div>
+                        </div>
+                        <div class="calc-stat">
+                            <div class="calc-stat-label">Časti SMS</div>
+                            <div class="calc-stat-val" id="valParts" style="color: #fbbf24;">1</div>
+                        </div>
+                        <div class="calc-stat">
+                            <div class="calc-stat-label">Cena / SMS</div>
+                            <div class="calc-stat-val" id="valCost" style="color: #34d399;">0.07 €</div>
+                        </div>
+                    </div>
+
+                    <div style="background: rgba(244, 63, 94, 0.08); border: 1px solid rgba(244, 63, 94, 0.25); border-radius: 10px; padding: 10px; font-size: 0.78rem; color: #cbd5e1; line-height: 1.4;">
+                        <strong style="color: #fb7185;"><i class="fa-solid fa-bomb"></i> Prečo Booqme zarába na diakritike:</strong> Predvolené texty v Booqme majú mäkčene a dĺžne ("Tešíme sa!"). Kvôli tomu má 1 SMS limit len <strong>70 znakov</strong>. Správa o pripomienke tak stojí <strong>2 x 0.07 € = 0.14 €</strong>! Salón s 300 rezerváciami mesačne zaplatí namiesto 21 € až <strong>42 € mesačne</strong>.
+                    </div>
+                </div>
+
+                <!-- Right: Phone Preview & Alias Pricing -->
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-signature" style="color: #fbbf24;"></i> Vlastný odosielateľ (Alias) & Náhľad</div>
+                    
+                    <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border); border-radius: 10px; padding: 10px; margin-bottom: 12px; font-size: 0.8rem; color: #cbd5e1;">
+                        <div>Poplatok za vlastný názov: <strong style="color: #f43f5e;">30.00 € aktivácia + 2.00 € / mesiac</strong></div>
+                        <div>Dĺžka: <strong>Max. 11 znakov</strong> | Schválenie: <strong>Až 5 pracovných dní</strong></div>
+                        <div>Krajiny bez podpory: <strong>Belgicko, Bulharsko, Chorvátsko, Maďarsko, Rumunsko</strong></div>
+                    </div>
+
+                    <div class="phone-mockup">
+                        <div class="phone-screen">
+                            <div class="phone-header">
+                                <div style="font-size: 0.72rem; font-weight: 700; color: #fff;">Booqme.</div>
+                                <div style="font-size: 0.62rem; color: #94a3b8;">SMS správa</div>
+                            </div>
+                            <div class="phone-chat">
+                                <div class="sms-bubble">
+                                    <span id="phonePreviewText">Blíži sa Váš termín: 15.09. o 14:30. Tešíme sa! Salón Elite</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 1: PREHĽAD & DASHBOARD -->
+        <section class="audit-section" id="mod-1" data-search="prehlad kpi graf trzby rezervacie zostatok">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">01</span>
+                    <h2 class="section-title">Prehľad & Hlavná Nástenka (Dashboard)</h2>
+                </div>
+                <span class="section-route">/dashboard</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-gauge-high" style="color: #6366f1;"></i> Kľúčové ukazovatele a denná agenda</div>
+                    
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>4 Kľúčové KPI Karty:</strong> Nové rezervácie (dnes vs včera), Rezervácie za mesiac (% medzimesačný rast), Noví zákazníci (rast vs minulý mesiac) a Očakávaný príjem (€ za mesiac a celkom).</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Meziročný graf rezervácií:</strong> Spojnicový graf porovnávajúci krivku počtu rezervácií v jednotlivých mesiacoch roku <code>2026</code> vs <code>2025</code>.</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Widget aktívneho balíka:</strong> Zobrazuje zostávajúci počet dní skúšobnej doby (14 dní), stav rezervácií <code>0 z 500</code> a zelené tlačidlo <code>Predĺžiť balík</code>.</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>SMS Widget:</strong> Zobrazuje zostatok <code>1.40 €</code> (20 SMS notifikácií), odosielateľa <code>Booqme</code> a akčné tlačidlá <code>Dobiť kredit</code> a <code>Poslať SMS</code>.</div>
+                    </div>
+
+                    <div class="verdict-box">
+                        <div class="verdict-col pro">
+                            <h5><i class="fa-solid fa-thumbs-up"></i> Výhody</h5>
+                            <ul>
+                                <li>Čistý moderný vizuál, okamžitý prehľad o denných tržbách</li>
+                                <li>Jasné počítadlo zostávajúcich rezervácií do limitu 500</li>
+                            </ul>
+                        </div>
+                        <div class="verdict-col con">
+                            <h5><i class="fa-solid fa-thumbs-down"></i> Slabiny</h5>
+                            <ul>
+                                <li>Veľký reklamný banner "Zľava 30%!" zaberá 25% výšky</li>
+                                <li>Chýba graf vyťaženosti jednotlivých kresiel / pracovníkov</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/dashboard_top.png')">
+                        <img src="screenshots/dashboard_top.png" alt="Dashboard Top">
+                        <div class="shot-overlay">
+                            <span>Prehľad KPI & Medziročný graf</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 2: KALENDÁR -->
+        <section class="audit-section" id="mod-2" data-search="kalendar booking tyzden den zamestnanci manualna rezervacia">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">02</span>
+                    <h2 class="section-title">Kalendár & Vytváranie Rezervácií</h2>
+                </div>
+                <span class="section-route">/calendar</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-calendar-days" style="color: #10b981;"></i> Plánovací kalendár a modál rezervácie</div>
+                    
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Pohľady:</strong> Deň, Týždeň, Mesiac a Pracovníci (stĺpcový pohľad podľa personálu). Prepínanie časových intervalov (15 / 30 / 60 minút).</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Vytvorenie rezervácie (Modál):</strong> Výber pracovníka a priradenej služby, dĺžka a cena, opakovanie, blokovanie času, kontaktné údaje klienta a prepínače <code>Neposielať SMS / E-mail</code>.</div>
+                    </div>
+
+                    <div class="verdict-box">
+                        <div class="verdict-col pro">
+                            <h5><i class="fa-solid fa-thumbs-up"></i> Výhody</h5>
+                            <ul>
+                                <li>Možnosť pri manuálnej rezervácii vypnúť odoslanie SMS (šetrí kredit)</li>
+                                <li>Pohľad "Pracovníci" vedľa seba v reálnom čase</li>
+                            </ul>
+                        </div>
+                        <div class="verdict-col con">
+                            <h5><i class="fa-solid fa-thumbs-down"></i> Slabiny</h5>
+                            <ul>
+                                <li>Chýba drag-and-drop zmena dĺžky ťahaním za okraj</li>
+                                <li>Žiadne farebné štítkovanie klientov v okne udalosti</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/calendar_view.png')">
+                        <img src="screenshots/calendar_view.png" alt="Kalendár">
+                        <div class="shot-overlay">
+                            <span>Týždenný kalendár a filtrovanie personálu</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 3: ONLINE FORMULÁR & WEB -->
+        <section class="audit-section" id="mod-3" data-search="online formular iframe qr kod widget gtm meta pixel marketing">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">03</span>
+                    <h2 class="section-title">Online Rezervačný Formulár & Marketing</h2>
+                </div>
+                <span class="section-route">/web/settings & /web/marketing</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-globe" style="color: #06b6d4;"></i> Vzhľad, Iframe, QR kód a sledovacie pixely</div>
+                    
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Vzhľad:</strong> Vlastné logo, banner, farebná paleta (HEX kódy) a prepínače zobrazenia personálu a cien.</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Spôsoby vloženia na web:</strong> Priamy odkaz, Iframe kód, QR kód a plávajúce tlačidlo.</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Marketing:</strong> Google Tag Manager (GTM) a Meta Pixel s eventami <code>Schedule</code> a <code>Purchase</code>.</div>
+                    </div>
+
+                    <div class="verdict-box">
+                        <div class="verdict-col pro">
+                            <h5><i class="fa-solid fa-thumbs-up"></i> Výhody</h5>
+                            <ul>
+                                <li>Výborná integrácia pre digitálne agentúry cez GTM</li>
+                                <li>Generátor QR kódu priamo v rozhraní</li>
+                            </ul>
+                        </div>
+                        <div class="verdict-col con">
+                            <h5><i class="fa-solid fa-thumbs-down"></i> Slabiny</h5>
+                            <ul>
+                                <li>Formulár beží výhradne na subdoméne booqme.app</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/form_settings_top.png')">
+                        <img src="screenshots/form_settings_top.png" alt="Form Settings">
+                        <div class="shot-overlay">
+                            <span>Vizuálny konfigurátor rezervačného formulára</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 4: REZERVÁCIE -->
+        <section class="audit-section" id="mod-4" data-search="rezervacie export csv excel mailchimp stavy filtre">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">04</span>
+                    <h2 class="section-title">Správa Rezervácií & Exporty</h2>
+                </div>
+                <span class="section-route">/reservations</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-calendar-check" style="color: #3b82f6;"></i> Tabuľka rezervácií, filtre a exporty</div>
+                    
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Filtre a hľadanie:</strong> Podľa obdobia, pracovníka, služby a stavu (Potvrdená, Čakajúca, Dokončená, Zrušená).</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Exporty:</strong> CSV / Excel pre účtovníctvo, export blokácie, export voľného času a Mailchimp prepojenie.</div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/reservations_list.png')">
+                        <img src="screenshots/reservations_list.png" alt="Rezervácie">
+                        <div class="shot-overlay">
+                            <span>Tabuľka rezervácií a exportné možnosti</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 5: ZÁKAZNÍCI (CRM) -->
+        <section class="audit-section" id="mod-5" data-search="zakaznici crm stitky tags blacklist whitelist hromadne sms">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">05</span>
+                    <h2 class="section-title">Zákazníci (CRM), Štítky & Blacklist</h2>
+                </div>
+                <span class="section-route">/customers, /stickers, /white-black-list</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-users" style="color: #a855f7;"></i> Klientská databáza a riadenie prístupu</div>
+                    
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Klientská karta:</strong> Evidencia kontaktov, celkovej útraty a histórie návštev.</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Blacklist a Whitelist:</strong> Blokovanie problémových klientov a no-shows podľa telefónu/emailu.</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Hromadné SMS:</strong> Segmentované kampane podľa štítkov.</div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/customers_list.png')">
+                        <img src="screenshots/customers_list.png" alt="Zákazníci">
+                        <div class="shot-overlay">
+                            <span>CRM Zoznam zákazníkov & Metriky útraty</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 6: ČAKATELIA -->
+        <section class="audit-section" id="mod-6" data-search="cakatelia waitlist cakacia listina obsadenie terminov">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">06</span>
+                    <h2 class="section-title">Čakatelia (Waitlist Systém)</h2>
+                </div>
+                <span class="section-route">/waiting-list</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-clock-rotate-left" style="color: #f59e0b;"></i> Čakacia listina na obsadené termíny</div>
+                    
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div>Klient sa zapíše na termín a pri storne iným zákazníkom systém automaticky pošle SMS čakateľovi. Funkcia viazaná na drahý balík ULTIMATE (29.90 €).</div>
+                    </div>
+
+                    <div style="margin-top: 14px; padding: 10px 12px; background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 8px; font-size: 0.8rem; color: #cbd5e1;">
+                        <strong style="color: #38bdf8;"><i class="fa-solid fa-crosshairs"></i> Rezervos je popredu:</strong> Rezervos disponuje pokročilým radarom <strong>Kreslo Hunter</strong> (aktívne loví uvoľnené storno termíny, voľné kreslá a cenové prepady) + modulom <strong>Last Minute</strong> zliav priamo v cene!
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/waiting_list_page.png')">
+                        <img src="screenshots/waiting_list_page.png" alt="Čakatelia">
+                        <div class="shot-overlay">
+                            <span>Evidencia čakateľov a pravidlá aktivácie</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 7: POUKÁŽKY & ESHOP -->
+        <section class="audit-section" id="mod-7" data-search="poukazky darcekove karty gift cards eshop stripe vianocne">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">07</span>
+                    <h2 class="section-title">Darčekové Poukážky & Online Eshop</h2>
+                </div>
+                <span class="section-route">/gift-cards, /types, /eshop</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-gift" style="color: #ec4899;"></i> Predaj a uplatňovanie poukážok</div>
+                    
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div>Poukážky na pevnú sumu alebo službu, generovanie kódov, tlač PDF a online predaj cez Stripe (+0.49% provízia pre Booqme).</div>
+                    </div>
+
+                    <div style="margin-top: 14px; padding: 10px 12px; background: rgba(236, 72, 153, 0.08); border: 1px solid rgba(236, 72, 153, 0.25); border-radius: 8px; font-size: 0.8rem; color: #cbd5e1;">
+                        <strong style="color: #f472b6;"><i class="fa-solid fa-gift"></i> Rezervos je popredu:</strong> Rezervos umožňuje predaj poukážok priamo cez <strong>Pay by square QR kód na účet salónu (0% provízia platformy!)</strong> + plnú podporu predaja <strong>Permanentiek (balíkov služieb)</strong>, ktoré Booqme vôbec neponúka!
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/vouchers_active.png')">
+                        <img src="screenshots/vouchers_active.png" alt="Poukážky">
+                        <div class="shot-overlay">
+                            <span>Prehľad vydaných a uplatnených poukážok</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 8: APPLE & GOOGLE WALLET -->
+        <section class="audit-section" id="mod-8" data-search="vernostne karty apple wallet google wallet body peciatky push notifikacie">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">08</span>
+                    <h2 class="section-title">Vernostné Karty Apple & Google Wallet</h2>
+                </div>
+                <span class="section-route">/loyalty-cards/*</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-brands fa-apple" style="color: #fff;"></i> Digitálne karty v smartfóne klienta</div>
+                    
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div>Uloženie priamo do Apple Wallet a Google Wallet bez nutnosti sťahovania externej aplikácie. Bodovací systém, Bronze/Silver/Gold úrovne a bezplatné hromadné Push notifikácie.</div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/loyalty_card_design_page.png')">
+                        <img src="screenshots/loyalty_card_design_page.png" alt="Wallet Karty">
+                        <div class="shot-overlay">
+                            <span>Vizuálny návrh Apple & Google Wallet karty</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 9: SLUŽBY -->
+        <section class="audit-section" id="mod-9" data-search="sluzby kategorie cas prestavka cena dph buffer priradenie">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">09</span>
+                    <h2 class="section-title">Služby, Kategórie & Buffer Time</h2>
+                </div>
+                <span class="section-route">/services, /create</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-scissors" style="color: #14b8a6;"></i> Štruktúra cenníka a časové riadenie</div>
+                    
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div>Fixné ceny, cena "Od", rozmedzie, dĺžka v minútach, **Prestávka po službe (Buffer time)** a Doplnkové služby (Add-ons).</div>
+                    </div>
+
+                    <div style="margin-top: 14px; padding: 10px 12px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; font-size: 0.8rem; color: #cbd5e1;">
+                        <strong style="color: #34d399;"><i class="fa-solid fa-hourglass-half"></i> Rezervos je popredu:</strong> Kým Booqme podporuje iba pauzu po službe a nemá skupinovú kapacitu, Rezervos disponuje <strong>Duálnym Buffer Time (čas PRED aj PO službe)</strong> a plnou podporou <strong>skupinovej kapacity</strong> (sec-08)!
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/services_list_page.png')">
+                        <img src="screenshots/services_list_page.png" alt="Služby">
+                        <div class="shot-overlay">
+                            <span>Katalóg služieb a kategorizácia</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 10: PRENÁJMY -->
+        <section class="audit-section" id="mod-10" data-search="prenajmy kresla stolicky booth rental volnekreslo priestory">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">10</span>
+                    <h2 class="section-title">Prenájmy (Kreslá, Stoličky, Priestory)</h2>
+                </div>
+                <span class="section-route">/rental-items</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-chair" style="color: #f97316;"></i> Interná evidencia prenajímateľných miest</div>
+                    
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div>Booqme má tento modul len ako pasívnu evidenciu prenájmu lehátok a kresiel. **VoľnéKreslo z tohto robí otvorený trhový marketplace pre kaderníkov.**</div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/rentals_list_page.png')">
+                        <img src="screenshots/rentals_list_page.png" alt="Prenájmy">
+                        <div class="shot-overlay">
+                            <span>Evidencia prenajímateľných položiek a kresiel</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 11: HODNOTENIA -->
+        <section class="audit-section" id="mod-11" data-search="hodnotenia recenzie google reviews spokojnost hviezdicky">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">11</span>
+                    <h2 class="section-title">Hodnotenia & Recenzie</h2>
+                </div>
+                <span class="section-route">/ratings</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-star" style="color: #eab308;"></i> Zber spätnej väzby</div>
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div>Automatická výzva po 1 hodine od návštevy, hviezdičky 1–5 s textom, previazanie na konkrétneho pracovníka.</div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/ratings_page.png')">
+                        <img src="screenshots/ratings_page.png" alt="Hodnotenia">
+                        <div class="shot-overlay">
+                            <span>Prehľad recenzií a priemerné skóre personálu</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 12: ŠTATISTIKY -->
+        <section class="audit-section" id="mod-12" data-search="statistiky reporty trzby zamestnanci vyuzitie ubytky retencia">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">12</span>
+                    <h2 class="section-title">Štatistiky & Výkonnosť Tímu</h2>
+                </div>
+                <span class="section-route">/stats, /stats/employees</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-chart-line" style="color: #6366f1;"></i> Tržby, cancellation rate a odpracované hodiny</div>
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div>Vývoj tržieb, priemerný účet, počet vybavených klientov a podklady pre výpočet miezd personálu.</div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/stats_overview_page.png')">
+                        <img src="screenshots/stats_overview_page.png" alt="Štatistiky">
+                        <div class="shot-overlay">
+                            <span>Prehľad tržieb a počtu vybavených objednávok</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 13: ZAMESTNANCI & PROVÍZIE -->
+        <section class="audit-section" id="mod-13" data-search="zamestnanci staff prava role provizie podiel na zisku provizny system">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">13</span>
+                    <h2 class="section-title">Zamestnanci & Provízny Systém</h2>
+                </div>
+                <span class="section-route">/users, /users/create</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-user-gear" style="color: #3b82f6;"></i> Oprávnenia a provízie na služby</div>
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div>Možnosť zamknúť zamestnancovi prístup k cudzím termínom a nastaviť percentuálnu províziu pre každú jednotlivú službu zvlášť.</div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/add_employee_commissions.png')">
+                        <img src="screenshots/add_employee_commissions.png" alt="Provízie">
+                        <div class="shot-overlay">
+                            <span>Nastavenie provízií pre jednotlivé služby</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 14: PRACOVNÝ ČAS -->
+        <section class="audit-section" id="mod-14" data-search="pracovny cas zmeny prestavky dovolenky unavailabilities otvaracie hodiny">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">14</span>
+                    <h2 class="section-title">Pracovný Čas, Zmeny & Pauzy</h2>
+                </div>
+                <span class="section-route">/working-hours</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-business-time" style="color: #10b981;"></i> Rozvrhy zmien a blokovanie voľna</div>
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div>Otváracie hodiny prevádzky, individuálne zmeny zamestnancov, obedné pauzy a jednorazové blokácie na dovolenky a PN-ky.</div>
+                    </div>
+
+                    <div style="margin-top: 14px; padding: 10px 12px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; font-size: 0.8rem; color: #cbd5e1;">
+                        <strong style="color: #34d399;"><i class="fa-solid fa-utensils"></i> Rezervos to má dokonale vyriešené:</strong> V <code>dashboard-tym.php</code> má každý zamestnanec na každý deň v týždni voľbu <strong>Obedňajšia prestávka</strong> a blokovanie <strong>Dovoleniek a PN</strong>. Pri náhlej PN alebo absencii systém umožňuje <strong>zmenu termínu</strong> alebo <strong>automatický presun objednávky na dostupného kolegu</strong>, takže salón nepríde o tržbu!
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/working_hours_page.png')">
+                        <img src="screenshots/working_hours_page.png" alt="Pracovný čas">
+                        <div class="shot-overlay">
+                            <span>Týždenné zmeny, prestávky a blokácie voľna</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 15: TRANSAKCIE & STRIPE -->
+        <section class="audit-section" id="mod-15" data-search="transakcie stripe platby faktury online platby kartou connect provizia">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">15</span>
+                    <h2 class="section-title">Transakcie & Stripe Connect (+0.49% Poplatok)</h2>
+                </div>
+                <span class="section-route">/transactions/*, /settings/stripe-connect</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-file-invoice-dollar" style="color: #10b981;"></i> Platobná brána a skrytá provízia Booqme</div>
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-triangle-exclamation" style="color: #f43f5e;"></i>
+                        <div>Booqme si účtuje **0.49 % z každej online platby kartou** navyše k štandardnému poplatku Stripe (1.5% + 0.25 €).</div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/stripe_connect_page.png')">
+                        <img src="screenshots/stripe_connect_page.png" alt="Stripe Connect">
+                        <div class="shot-overlay">
+                            <span>Stripe Connect onboarding & 0.49% poplatok</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 16: NASTAVENIA PREVÁDZKY -->
+        <section class="audit-section" id="mod-16" data-search="nastavenia prevadzka fakturacne udaje storno podmienky slot step predstih email texty sms">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">16</span>
+                    <h2 class="section-title">Systémové Nastavenia Prevádzky & Storien</h2>
+                </div>
+                <span class="section-route">/settings/*</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-sliders" style="color: #6366f1;"></i> Konfigurácia pravidiel a časových limitov</div>
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div>Minimálny predstih rezervácie, maximálny horizont dopredu, storno lehota (hodiny) a zaokrúhľovanie kroku kalendára (15/30/60 min).</div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/reservation_settings_page.png')">
+                        <img src="screenshots/reservation_settings_page.png" alt="Nastavenia">
+                        <div class="shot-overlay">
+                            <span>Pravidlá časových slotov, storien a predstihu</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 17: API & MULTI-POBOČKY -->
+        <section class="audit-section" id="mod-17" data-search="api dokumentacia multi pobocky my properties rest api token developer">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">17</span>
+                    <h2 class="section-title">Developer REST API & Pobočky</h2>
+                </div>
+                <span class="section-route">/settings/api-docs</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-code" style="color: #ec4899;"></i> API Tokeny a reťazce salónov</div>
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div>REST API s Bearer tokenom (limit 300 req/h) a jednoduché prepínanie viacerých prevádzok pod jedným profilom.</div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/api_docs_page.png')">
+                        <img src="screenshots/api_docs_page.png" alt="API">
+                        <div class="shot-overlay">
+                            <span>API Token generátor a REST dokumentácia</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: TARIFY & BALÍKY -->
+        <section class="audit-section" id="tarify" style="margin-top: 50px;">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge"><i class="fa-solid fa-tags"></i></span>
+                    <h2 class="section-title">Cenník & Balíky Booqme</h2>
+                </div>
+                <span class="section-route">?modal=packageOffer</span>
+            </div>
+
+            <div class="pricing-grid">
+                <!-- LITE -->
+                <div class="price-card">
+                    <div style="font-size: 0.75rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase;">Základ</div>
+                    <h3 style="font-size: 1.3rem; color: #fff; margin-top: 2px;">Balík LITE</h3>
+                    <div class="price-amount">9.90 €</div>
+                    <div class="price-period">mesačne bez DPH (pri ročnej platbe)</div>
+                    <div class="price-limits">
+                        <div><i class="fa-solid fa-user-check"></i> Max. <strong>1 zamestnanec</strong></div>
+                        <div><i class="fa-solid fa-calendar-check"></i> Max. <strong>100 rezervácií / mes.</strong></div>
+                    </div>
+                    <ul class="price-features-list">
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Rezervačný formulár</li>
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Emailové notifikácie</li>
+                        <li><i class="fa-solid fa-xmark" style="color: #f43f5e;"></i> Bez Apple/Google Wallet</li>
+                        <li><i class="fa-solid fa-xmark" style="color: #f43f5e;"></i> Bez Čakacej listiny</li>
+                    </ul>
+                </div>
+
+                <!-- BUSINESS -->
+                <div class="price-card featured">
+                    <div style="position: absolute; top: -10px; right: 16px; background: var(--primary); color: #fff; padding: 2px 10px; border-radius: 10px; font-size: 0.68rem; font-weight: 800;">POPULÁRNE</div>
+                    <div style="font-size: 0.75rem; font-weight: 800; color: var(--primary-light); text-transform: uppercase;">Štandard</div>
+                    <h3 style="font-size: 1.3rem; color: #fff; margin-top: 2px;">Balík BUSINESS</h3>
+                    <div class="price-amount">11.83 € <span style="font-size: 0.95rem; color: #94a3b8; text-decoration: line-through;">19.90 €</span></div>
+                    <div class="price-period">mesačne bez DPH (zľava 30% pri ročnej platbe)</div>
+                    <div class="price-limits" style="background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3);">
+                        <div><i class="fa-solid fa-users"></i> Až <strong>5 zamestnancov</strong></div>
+                        <div><i class="fa-solid fa-calendar-check"></i> Až <strong>500 rezervácií / mes.</strong></div>
+                    </div>
+                    <ul class="price-features-list">
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Všetko z balíka LITE</li>
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Darčekové poukážky & Eshop</li>
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Stripe Connect online platby (+0.49%)</li>
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Provízny systém pre personál</li>
+                    </ul>
+                </div>
+
+                <!-- ULTIMATE -->
+                <div class="price-card">
+                    <div style="font-size: 0.75rem; font-weight: 800; color: #a855f7; text-transform: uppercase;">Enterprise</div>
+                    <h3 style="font-size: 1.3rem; color: #fff; margin-top: 2px;">Balík ULTIMATE</h3>
+                    <div class="price-amount">29.90 €</div>
+                    <div class="price-period">mesačne bez DPH (pri ročnej platbe)</div>
+                    <div class="price-limits">
+                        <div><i class="fa-solid fa-infinity"></i> <strong>Neobmedzene zamestnancov</strong></div>
+                        <div><i class="fa-solid fa-infinity"></i> <strong>Neobmedzene rezervácií</strong></div>
+                    </div>
+                    <ul class="price-features-list">
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Všetko z balíka BUSINESS</li>
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Plná automatizácia Čakateľov</li>
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Apple & Google Wallet Vernostné karty</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: MASTER POROVNANIE -->
+        <section class="audit-section" id="matrix" style="margin-top: 50px;">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge"><i class="fa-solid fa-scale-balanced"></i></span>
+                    <h2 class="section-title">Veľká Porovnávacia Matrica</h2>
+                </div>
+            </div>
+
+            <span class="table-hint-mobile"><i class="fa-solid fa-arrows-left-right"></i> Posuňte tabuľku do strán prstom</span>
+            <div class="table-scroll-wrapper">
+                <table class="comp-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">Funkcia / Oblasť</th>
+                            <th style="width: 37%;">Booqme.app</th>
+                            <th style="width: 38%;">Rezervos / VoľnéKreslo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Cena za SMS notifikáciu</strong></td>
+                            <td class="col-booqme">0.07 € za 70 znakov (2x drahšie pri diakritike)</td>
+                            <td class="col-rezervos"><strong>0.045 € – 0.050 € + Automatické odstránenie diakritiky (160 zn.)</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Vlastné meno odosielateľa (Alias)</strong></td>
+                            <td class="col-booqme">30.00 € jednorazovo + 2.00 € / mesiac</td>
+                            <td class="col-rezervos"><strong>ZADARMO v ročnom predplatnom alebo len 10 € jednorazovo</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Prenájom kresiel / stoličiek</strong></td>
+                            <td class="col-booqme">Len interná pasívna evidencia inventára</td>
+                            <td class="col-rezervos"><strong>Marketplace VoľnéKreslo: Verejná burza voľných kresiel pre kaderníkov</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Poplatky z online platieb</strong></td>
+                            <td class="col-booqme">Stripe poplatok + <strong>0.49% platform fee pre Booqme</strong></td>
+                            <td class="col-rezervos"><strong>0% platform fee</strong> (klient platí len čistý bankový poplatok)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Google Recenzie (Google Business)</strong></td>
+                            <td class="col-booqme">Iba interné hviezdičky v systéme Booqme</td>
+                            <td class="col-rezervos"><strong>Priamy auto-redirect spokojných klientov na Google Firemný Profil</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>WhatsApp & Mobilné kanály</strong></td>
+                            <td class="col-booqme">Žiadne WhatsApp správy (iba SMS a Email)</td>
+                            <td class="col-rezervos"><strong>WhatsApp Business pripomienky za zlomok ceny SMS</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Obsadzovanie termínov & Čakatelia</strong></td>
+                            <td class="col-booqme">Pasívny waitlist zamknutý v drahom balíku ULTIMATE (29.90 €)</td>
+                            <td class="col-rezervos"><strong>Aktívny radar Kreslo Hunter (lov uvoľnených kresiel) + Last Minute zľavy v cene</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Darčekové poukážky & Permanentky</strong></td>
+                            <td class="col-booqme">Poukážky cez Stripe (+0.49% platform fee Booqme), bez permanentiek</td>
+                            <td class="col-rezervos"><strong>Predaj poukážok s QR platbou na účet salónu (0% fee) + Predaj Permanentiek</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Prestávky, Obed & PN výpadky</strong></td>
+                            <td class="col-booqme">Iba pauza PO službe, nulová skupinová kapacita</td>
+                            <td class="col-rezervos"><strong>Duálny Buffer Time (PRED aj PO) + Obedňajšia prestávka personálu + Dovolenky & PN (zmena termínu / presun na kolegu)</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Reaktivácia spiacich klientov (Win-Back)</strong></td>
+                            <td class="col-booqme">Chýba nočný autopilot, nutné manuálne SMS kampane</td>
+                            <td class="col-rezervos"><strong>Automatický Win-Back Engine (60–90 dní cron) na pozadí so 180d ochranou</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SECTION: POROVNANIE S REZERVOS (PREVÁDZKA) – ČO DOROBIŤ, PREROBIŤ A AKO ZVÍŤAZIŤ -->
+        <section class="audit-section" id="porovnanie-rezervos" data-search="rezervos prevadzka zhodnotenie cakatelia waitlist provizie buffer time video navody roadmapa zlepsenia dorobit" style="margin-top: 60px; padding: 28px 20px; background: linear-gradient(180deg, rgba(13, 148, 136, 0.08) 0%, rgba(15, 23, 42, 0.95) 100%); border: 1px solid rgba(13, 148, 136, 0.35); border-radius: 24px;">
+            <div class="section-headline" style="border-bottom-color: rgba(13, 148, 136, 0.3);">
+                <div class="section-headline-title">
+                    <span class="section-num-badge" style="background: rgba(13, 148, 136, 0.2); color: #2dd4bf; border-color: rgba(13, 148, 136, 0.4);"><i class="fa-solid fa-flag-checkered"></i></span>
+                    <div>
+                        <h2 class="section-title" style="color: #fff;">Zhodnotenie pre Rezervos: Čo dorobiť, prerobiť a ako zvíťaziť</h2>
+                        <div style="font-size: 0.82rem; color: #2dd4bf; font-weight: 600;">Hĺbková analýza modulu prevádzky (prevadzka/index.html), zdravé poznámky a konkrétne návrhy riešení</div>
+                    </div>
+                </div>
+                <span class="section-route" style="border-color: rgba(13, 148, 136, 0.3); color: #2dd4bf;">Strategický Audit 2026</span>
+            </div>
+
+            <!-- Prehľad: Kde je Rezervos už dnes popredu -->
+            <div style="margin-bottom: 28px;">
+                <h3 style="font-size: 1.1rem; color: #fff; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-crown" style="color: #fbbf24;"></i> V čom je Rezervos už dnes POPREDU pred Booqme:
+                </h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px;">
+                    <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 12px; padding: 14px; box-shadow: 0 0 15px rgba(168, 85, 247, 0.1);">
+                        <strong style="color: #c084fc; font-size: 0.9rem;"><i class="fa-solid fa-clock-rotate-left"></i> Automatický Win-Back Engine (60–90 dní reaktivácia na autopilota):</strong>
+                        <p style="font-size: 0.82rem; color: #cbd5e1; margin-top: 4px;">Rezervos má v jadre systému (<code>cron_auto_ratings.php</code> + <code>api/auto_ratings_helper.php</code>) plne implementovaný a na živo bežiaci nočný cron <code>sendWinbackEmails()</code>. Systém automaticky vyhľadáva spiacich klientov 60 až 90 dní od poslednej návštevy, kontroluje, či nemajú vytvorenú novú rezerváciu, a cez <code>mailer.php</code> im automaticky odosiela personalizovaný e-mail <em>„Chýbate nám!“</em> s priamym tlačidlom na objednanie (s ochranou proti spamu na 180 dní v tabuľke <code>customer_winback_log</code>). Booqme takúto automatickú nočnú reaktiváciu v základe vôbec nemá!</p>
+                    </div>
+
+                    <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(236, 72, 153, 0.4); border-radius: 12px; padding: 14px; box-shadow: 0 0 15px rgba(236, 72, 153, 0.1);">
+                        <strong style="color: #f472b6; font-size: 0.9rem;"><i class="fa-solid fa-gift"></i> Kompletný Marketing Hub: Darčekové poukazy, Permanentky & UTM:</strong>
+                        <p style="font-size: 0.82rem; color: #cbd5e1; margin-top: 4px;">Každá prevádzka v Rezervos predáva <strong>vlastné darčekové poukazy</strong> priamo na svojej verejnej stránke s okamžitou platbou cez QR kód priamo na účet salónu (0% poplatok z obratu salónu!). Rezervos navyše ponúka predaj <strong>Permanentiek (balíkov vstupov)</strong>, vernostný program a UTM tracking. Booqme permanentky ani bezpoplatkový QR predaj nemá!</p>
+                    </div>
+
+                    <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 12px; padding: 14px; box-shadow: 0 0 15px rgba(56, 189, 248, 0.1);">
+                        <strong style="color: #38bdf8; font-size: 0.9rem;"><i class="fa-solid fa-crosshairs"></i> Kreslo Hunter & Last Minute Engine (Aktívny Radar vs Pasívny Waitlist):</strong>
+                        <p style="font-size: 0.82rem; color: #cbd5e1; margin-top: 4px;">Rezervos disponuje prelomovým systémom <strong>Kreslo Hunter</strong> – inteligentným radarom, ktorý pre klientov aktívne striehne a "loví" uvoľnené storno termíny, voľné kreslá a cenové prepady + modulom <strong>Last Minute</strong> pre okamžitý výpredaj prázdnych hodín. Booqme má len obyčajný pasívny zoznam (Waitlist) bez akéhokoľvek radarového párovania a navyše ho arogantne podmieňuje najdrahším balíkom ULTIMATE za 29.90 €/mesiac!</p>
+                    </div>
+
+                    <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border); border-radius: 12px; padding: 14px;">
+                        <strong style="color: #2dd4bf; font-size: 0.9rem;"><i class="fa-solid fa-table-columns"></i> Kanban Tabuľa úloh (sec-04):</strong>
+                        <p style="font-size: 0.82rem; color: #cbd5e1; margin-top: 4px;">Rezervos má integrovanú Kanban tabuľu úloh pre salón (upratovanie, nákup farieb, sanitácia). Booqme nemá žiadny interný task manažment.</p>
+                    </div>
+
+                    <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border); border-radius: 12px; padding: 14px;">
+                        <strong style="color: #2dd4bf; font-size: 0.9rem;"><i class="fa-solid fa-chair"></i> Inzercia & Voľné Kreslo (sec-13):</strong>
+                        <p style="font-size: 0.82rem; color: #cbd5e1; margin-top: 4px;">Skutočné trhovisko voľných stoličiek a práce pre kaderníkov. Booqme má prenájom kresiel len ako mŕtvy interný zoznam.</p>
+                    </div>
+
+                    <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border); border-radius: 12px; padding: 14px;">
+                        <strong style="color: #2dd4bf; font-size: 0.9rem;"><i class="fa-solid fa-envelope-open"></i> Interná e-mailová schránka (sec-11):</strong>
+                        <p style="font-size: 0.82rem; color: #cbd5e1; margin-top: 4px;">Komunikácia s klientmi priamo z rozhrania salónu. V Booqme musí majiteľ prepínať do externého emailového klienta.</p>
+                    </div>
+
+                    <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border); border-radius: 12px; padding: 14px;">
+                        <strong style="color: #2dd4bf; font-size: 0.9rem;"><i class="fa-solid fa-hand-holding-dollar"></i> 0% Poplatok z online platieb:</strong>
+                        <p style="font-size: 0.82rem; color: #cbd5e1; margin-top: 4px;">Rezervos neberie z každej platby kartou žiadne pol percento. Booqme si berie skrytých 0.49 % z každej online platby!</p>
+                    </div>
+
+                    <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border); border-radius: 12px; padding: 14px;">
+                        <strong style="color: #2dd4bf; font-size: 0.9rem;"><i class="fa-solid fa-shield-halved"></i> 2FA zabezpečenie účtu (sec-19):</strong>
+                        <p style="font-size: 0.82rem; color: #cbd5e1; margin-top: 4px;">Plná podpora dvojfaktorovej autentifikácie pre ochranu citlivých údajov o zákazníkoch. Booqme má len obyčajné heslo.</p>
+                    </div>
+
+                    <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 14px;">
+                        <strong style="color: #34d399; font-size: 0.9rem;"><i class="fa-solid fa-utensils"></i> Duálny Buffer Time, Obed & PN (sec-07, sec-08):</strong>
+                        <p style="font-size: 0.82rem; color: #cbd5e1; margin-top: 4px;">Rezervos má v cenníku nielen čas na očistenie PO službe, ale aj čas na prípravu PRED službou a skupinovú kapacitu. V <code>dashboard-tym.php</code> má každý pracovník priamo <strong>Obedňajšiu prestávku</strong> a správu <strong>Dovoleniek a PN</strong>, pričom systém pri absencii umožňuje <strong>zmenu termínu alebo okamžitý presun na kolegu</strong>!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8 ZDRAVÝCH POZNÁMOK: ČO TREBA DOROBIŤ ALEBO PREROBIŤ -->
+            <div style="margin-top: 30px;">
+                <h3 style="font-size: 1.15rem; color: #fff; font-weight: 800; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-wrench" style="color: #38bdf8;"></i> 8 Zdravých poznámok: Čo treba dorobiť alebo prerobiť na Rezervos
+                </h3>
+
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+
+                    <!-- Poznámka 1 -->
+                    <div class="glass-card card-inner" style="border-left: 4px solid #25d366;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 6px;">
+                            <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">1. WhatsApp Business API & Interaktívne Pripomienky (Prémiový platený Add-on s implementačným poplatkom)</h4>
+                            <span class="pill pill-green" style="font-size: 0.75rem;">Priorita: P0 (Kľúčový trhák)</span>
+                        </div>
+                        <div style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; margin-bottom: 8px;">
+                            <strong>Problém na trhu:</strong> SMS správy sú drahé (0.07 € až 0.14 € za 1 správu), sú jednosmerné a zákazník na ne nemôže priamo kliknúť jedným tlačidlom na potvrdenie či preloženie.<br>
+                            <strong>Prečo & V čom to bude obrovská výhoda:</strong> Kým Booqme núti salóny platiť drahé SMS kredity (a pri diakritike im účtuje 2x toľko), Rezervos prinesie priame potvrdenia a pripomienky cez <strong>WhatsApp Business Cloud API</strong> za zlomok ceny (iba 0.03 € namiesto 0.07–0.14 €). Správa obsahuje interaktívne tlačidlá <code>[✅ Potvrdzujem]</code> a <code>[📅 Preložiť termín]</code>. Zákazník klikne priamo v chate, kalendár v Rezervos sa okamžite aktualizuje a salón ušetrí stovky eur ročne.<br>
+                            
+                            <!-- Box: Biznis model -->
+                            <div style="margin-top: 8px; padding: 10px; background: rgba(37, 211, 102, 0.08); border-left: 3px solid #25d366; border-radius: 6px;">
+                                <strong style="color: #25d366;"><i class="fa-solid fa-coins"></i> Jasné biznis pravidlá pre prevádzku (Nič sa nerozdáva zadarmo):</strong>
+                                <ul style="margin: 6px 0 0 16px; padding: 0; font-size: 0.82rem; color: #cbd5e1; line-height: 1.5;">
+                                    <li><strong>1. Platený modul / Vyšší balík:</strong> WhatsApp integrácia NIE JE zadarmo. Ak ju prevádzka chce využívať, musí si zakúpiť prémiový balík alebo samostatnú doplnkovú službu (Add-on).</li>
+                                    <li><strong>2. Vlastná značka salónu (Branding) & Setup poplatok:</strong> Salón nechce, aby zákazníkovi svietil cudzí názov „Rezervos“. Chce budovať <strong>svoje vlastné meno</strong>! Práve za to sa platí <strong>jednorazový implementačný poplatok (napr. 49 €)</strong>: v Meta API salónu zaregistrujeme jeho <em>oficiálny Display Name</em> (napr. „Barber Shop Elite“), jeho vlastné logo a spárujeme jeho firemné číslo. Klientovi tak príde WhatsApp priamo od salónu! (Pre mikro-kaderníctva bez poplatku môže existovať základný odosielateľ zo systémového čísla).</li>
+                                    <li><strong>3. Správy sa platia z kreditu (ako SMS):</strong> Salóny si už dnes na Rezervos kupujú kredit. Z tohto dobitého kreditu sa pri každej odoslanej WhatsApp správe strhne <strong>0.03 €</strong> (pri SMS 0.07 €). Žiadna nová zmluva s Facebookom – prevádzka si jednoducho kupuje svoj bežný kredit, ale WhatsApp ju stojí o 60 % menej ako SMS!</li>
+                                </ul>
+                            </div>
+
+                            <!-- Box: Realita SR trhu a kategória 50+ -->
+                            <div style="margin-top: 8px; padding: 10px; background: rgba(245, 158, 11, 0.08); border-left: 3px solid #f59e0b; border-radius: 6px;">
+                                <strong style="color: #fbbf24;"><i class="fa-solid fa-chart-pie"></i> Realita slovenského trhu: Dátové služby vs. Kategória 50+ a tlačidlové telefóny:</strong>
+                                <div style="font-size: 0.82rem; color: #cbd5e1; margin-top: 4px; line-height: 1.5;">
+                                    <ul>
+                                        <li><strong>Kto má dáta a WhatsApp:</strong> Na Slovensku má smartfón a aktívne mobilné dáta cca <strong>82–85 % dospelej populácie</strong>. WhatsApp aktívne používa cca <strong>68 % Slovákov</strong> (najsilnejšia skupina 18–45 rokov, čo tvorí gro klientely barberov, kozmetiky a moderných salónov). Pre túto väčšinu je WhatsApp rýchlejší, lacnejší a interaktívny.</li>
+                                        <li><strong>Prečo NIE Viber (ktorý dnes núka EuroSMS):</strong> EuroSMS a ďalšie SMS brány sa snažia predávať <em>Viber Business správy</em>, pretože z nich majú vysokú províziu a jednoduchšie napojenie. Realita slovenského trhu je však krutá: <strong>Viber je na Slovensku takmer mŕtva sieť</strong> – aktívne ho používa ledva 10–12 % ľudí a drvivá väčšina má naň vypnuté zvuky a notifikácie kvôli masívnemu spamu z e-shopov a bánk. Pripomienku na Viberi si klient všimne často až večer alebo o 2 dni a termín prepadne. Naopak, <strong>WhatsApp je živá komunikačná sieť č. 1</strong> na Slovensku s 98% okamžitou čítanosťou do 5 minút.</li>
+                                        <li><strong>Kategória 50+ rokov a tlačidlové telefóny (Prečo SMS nesmie nikdy zaniknúť):</strong> Na Slovensku je stále cca <strong>15–20 % zákazníkov</strong> (najmä generácia 50+, seniori alebo ľudia na vidieku), ktorí majú <strong>klasický tlačidlový telefón (Nokia, Aligator)</strong> alebo nemajú zaplatené mobilné dáta a mimo domácej Wi-Fi sú offline. Na WhatsApp správu by neodpovedali a termín by prepadol!</li>
+                                        <li><strong>Riešenie Rezervos – Hybridný Smart Routing:</strong> Systém pred odoslaním automaticky overí, či číslo klienta má aktívny WhatsApp. Ak <strong>ÁNO</strong>, pošle moderný WhatsApp (cena 0.03 €, úspora 60 %, tlačidlá). Ak <strong>NIE</strong> (klient 50+, tlačidlový mobil, vypnuté dáta), systém okamžite pošle <strong>100% spoľahlivú SMS (0.07 €)</strong>. Salón tak ušetrí na väčšine správ majetok a zároveň nikdy nestratí kontakt so starším zákazníkom!</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Porovnávacia matica kanálov pre SR trh -->
+                                <div class="table-scroll-wrapper" style="margin-top: 10px; margin-bottom: 4px;">
+                                    <table class="comp-table" style="font-size: 0.8rem; margin: 0;">
+                                        <thead>
+                                            <tr>
+                                                <th>Komunikačný kanál</th>
+                                                <th>Reálna penetrácia v SR</th>
+                                                <th>Open-rate & Správanie používateľov</th>
+                                                <th>Náklad / správa</th>
+                                                <th>Strategické rozhodnutie Rezervos</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr style="background: rgba(239, 68, 68, 0.08);">
+                                                <td><strong style="color: #f87171;"><i class="fa-brands fa-viber"></i> Viber</strong> (EuroSMS)</td>
+                                                <td>10 – 12 % (upadá)</td>
+                                                <td>Ignorovaný spam, vypnuté zvuky, prečítanie s oneskorením dní</td>
+                                                <td>0.035 €</td>
+                                                <td><span class="pill pill-rose">IGNOROVAŤ</span> Vyhodené peniaze salónu</td>
+                                            </tr>
+                                            <tr style="background: rgba(37, 211, 102, 0.08);">
+                                                <td><strong style="color: #4ade80;"><i class="fa-brands fa-whatsapp"></i> WhatsApp Business</strong></td>
+                                                <td><strong>68 %</strong> (jadro 18–49 r.)</td>
+                                                <td><strong>98 % prečítanie do 5 minút</strong>, interaktívne tlačidlá, logo salónu</td>
+                                                <td><strong>0.03 €</strong> (úspora 60%)</td>
+                                                <td><span class="pill pill-green">HLAVNÝ MODERNÝ KANÁL</span> Prémiový platený Add-on</td>
+                                            </tr>
+                                            <tr style="background: rgba(56, 189, 248, 0.08);">
+                                                <td><strong style="color: #38bdf8;"><i class="fa-solid fa-comment-sms"></i> SMS</strong> (EuroSMS / brána)</td>
+                                                <td><strong>100 %</strong> (všetky mobily)</td>
+                                                <td>Dorazí aj na staré tlačidlové Nokie 50+ a ľuďom bez zapnutých dát</td>
+                                                <td>0.07 € / 0.14 €</td>
+                                                <td><span class="pill pill-blue">NENAHRADITEĽNÁ POISTKA</span> Automatický fallback</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border); border-radius: 10px; padding: 10px; font-size: 0.8rem; color: #94a3b8;">
+                            <strong style="color: #25d366;"><i class="fa-solid fa-lightbulb"></i> Návrh technického riešenia pre vývojárov:</strong>
+                            V module <code>Peňaženka, Kredit & SMS (sec-14)</code> premenovať sekciu na <em>"Komunikačná Peňaženka"</em>. Pridať aktivačnú kartu: <em>"Aktivovať WhatsApp Business pripomienky s vlastnou značkou prevádzky"</em> s jednorazovým poplatkom za overenie v Meta Cloud API. Po aktivácii prepínač: <code>[x] Inteligentné smerovanie: WhatsApp prednostne (0.03 €) + Automatický SMS Fallback pre tlačidlové mobily a offline klientov (0.07 €)</code>.
+                        </div>
+                    </div>
+
+                    <!-- Poznámka 2 -->
+                    <div class="glass-card card-inner" style="border-left: 4px solid #6366f1;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 6px;">
+                            <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">2. GSM Strip diakritiky v SMS správach (Zabijak 70-znakového limitu)</h4>
+                            <span class="pill pill-rose" style="font-size: 0.75rem;">Priorita: P0 (Kritická)</span>
+                        </div>
+                        <div style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; margin-bottom: 8px;">
+                            <strong>Problém na Rezervos:</strong> V module `Peňaženka, Kredit & SMS (sec-14)` treba zabezpečiť automatické odstraňovanie mäkčeňov a dĺžňov z textov SMS pred ich odoslaním cez bránu.<br>
+                            <strong>Prečo & V čom to bude výhoda:</strong> Booqme má predvolené šablóny s diakritikou ("Tešíme sa!"), čím prepína kódovanie na UCS-2 a účtuje salónom 2x toľko (0.14 € namiesto 0.07 €). Ak Rezervos dá salónom 160 znakov na 1 SMS, salón ušetrí 50 % nákladov. Je to náš najsilnejší predajný argument!
+                        </div>
+                        <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border); border-radius: 10px; padding: 10px; font-size: 0.8rem; color: #94a3b8;">
+                            <strong style="color: #818cf8;"><i class="fa-solid fa-lightbulb"></i> Návrh riešenia pre vývojárov:</strong>
+                            V nastaveniach SMS v `prevadzka` pridať prepínač: <code>[x] Úsporný režim bez diakritiky (160 znakov/SMS)</code>. V PHP pred volaním SMS brány (EuroSMS/BulkGate) spustiť funkciu: <code>$clean = iconv('UTF-8', 'ASCII//TRANSLIT', $text);</code>. Zároveň do editora SMS pridať živé počítadlo znakov presne ako v našej kalkulačke.
+                        </div>
+                    </div>
+
+                    <!-- Poznámka 3 -->
+                    <div class="glass-card card-inner" style="border-left: 4px solid #f59e0b;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 6px;">
+                            <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">3. Google Reviews Booster (Prepojenie 5★ hodnotení na Google Firemný Profil)</h4>
+                            <span class="pill pill-green" style="font-size: 0.75rem;">Priorita: P0 (Quick Win - 1 deň)</span>
+                        </div>
+                        <div style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; margin-bottom: 8px;">
+                            <strong>Problém na Rezervos:</strong> V sekcii `Hodnotenia a Recenzie (sec-12)` zbierame hviezdičky a textové recenzie iba do interného systému Rezervos.<br>
+                            <strong>Prečo & V čom to bude výhoda:</strong> Pre majiteľov salónov sú najcennejšie verejné recenzie priamo na <strong>Google Mapách (Google Business Profil)</strong>, pretože im priamo prinášajú nových platiacich klientov z lokálneho vyhľadávania a dvíhajú SEO pozíciu salónu zadarmo.
+                        </div>
+                        <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border); border-radius: 10px; padding: 10px; font-size: 0.8rem; color: #94a3b8;">
+                            <strong style="color: #fbbf24;"><i class="fa-solid fa-lightbulb"></i> Návrh riešenia pre vývojárov:</strong>
+                            V nastaveniach salónu v `prevadzka` pridať pole: <code>Priamy odkaz na Google recenziu (g.page/r/...)</code>. Keď spokojný zákazník po návšteve zaklikne v emaile/SMS 5 hviezdičiek, systém mu poďakuje a okamžite zobrazí pop-up: <em>"Veľmi si vážime vašu spokojnosť! Pomôžte nám a skopírujte hodnotenie aj na náš Google profil (1 kliknutie)"</em> s priamym tlačidlom na Google formulár recenzie.
+                        </div>
+                    </div>
+
+                    <!-- Poznámka 4 -->
+                    <div class="glass-card card-inner" style="border-left: 4px solid #06b6d4;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 6px;">
+                            <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">4. GTM & Meta Pixel integrácie v Rozšíreniach (sec-16)</h4>
+                            <span class="pill pill-green" style="font-size: 0.75rem;">Priorita: P1 (Do 1 týždňa)</span>
+                        </div>
+                        <div style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; margin-bottom: 8px;">
+                            <strong>Problém na Rezervos:</strong> V sekcii `Rozšírenia, Web Widget & iCal (sec-16)` máme generovanie widgetu, ale chýbajú polia pre Google Tag Manager (GTM) a Meta Pixel.<br>
+                            <strong>Prečo & V čom to bude výhoda:</strong> Každý moderný salón si dnes platí reklamu na Instagrame alebo spolupracuje s marketingovou agentúrou. Ak agentúra zistí, že Rezervos nevie odoslať konverziu do Facebook Ads, povie salónu: <em>"Prejdite na Booqme, tam to funguje na jedno kliknutie"</em>.
+                        </div>
+                        <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border); border-radius: 10px; padding: 10px; font-size: 0.8rem; color: #94a3b8;">
+                            <strong style="color: #22d3ee;"><i class="fa-solid fa-lightbulb"></i> Návrh riešenia pre vývojárov:</strong>
+                            V nastavení widgetu v `prevadzka` pridať dve textové polia: <code>GTM Container ID (GTM-XXXXX)</code> a <code>Meta Pixel ID (123456789)</code>. V embed kóde widgetu pri dokončení rezervácie automaticky zavolať: <code>fbq('track', 'Schedule', {value: price, currency: 'EUR'});</code> a do dataLayeru poslať <code>{'event': 'rezervos_booking_completed'}</code>.
+                        </div>
+                    </div>
+
+                    <!-- Poznámka 5 -->
+                    <div class="glass-card card-inner" style="border-left: 4px solid #a855f7;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 6px;">
+                            <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">5. Provízie personálu na úrovni konkrétnych služieb</h4>
+                            <span class="pill pill-blue" style="font-size: 0.75rem;">Priorita: P1 (Do 2 týždňov)</span>
+                        </div>
+                        <div style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; margin-bottom: 8px;">
+                            <strong>Problém na Rezervos:</strong> V sekcii `Tím, personál & rozvrhy (sec-07)` máme percentuálny podiel, ale iba paušálne na celého zamestnanca.<br>
+                            <strong>Prečo & V čom to bude výhoda:</strong> Pri melírovaní vlasov má salón vysoký priamy náklad na drahý materiál (Olaplex, toner, peroxid, fólie = 15–20 €), zatiaľ čo pri pánskom strihu nožnicami je materiálový náklad nula. Majiteľ prerába, ak dá zamestnancovi 40% z drahej chémie.
+                        </div>
+                        <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border); border-radius: 10px; padding: 10px; font-size: 0.8rem; color: #94a3b8;">
+                            <strong style="color: #c084fc;"><i class="fa-solid fa-lightbulb"></i> Návrh riešenia pre vývojárov:</strong>
+                            V detaile zamestnanca pridať prepínač: <code>[ ] Použiť vlastné provízie pre vybrané služby</code>. Ak sa zaškrtne, zobrazí sa zoznam služieb a pri každej možnosť zadať vlastné % (napr. Pánsky strih: 50%, Melír Balayage: 30%, Fúkaná: 45%). Uložiť do väzobnej tabuľky <code>user_services (user_id, service_id, custom_commission)</code>.
+                        </div>
+                    </div>
+
+                    <!-- Poznámka 6 -->
+                    <div class="glass-card card-inner" style="border-left: 4px solid #ec4899;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 6px;">
+                            <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">6. Vizuálny manažér Win-Backu v admine (Prepojenie existujúceho cronu do UI salónu)</h4>
+                            <span class="pill pill-green" style="font-size: 0.75rem;">Priorita: P1 (Quick Win – Backend už máme!)</span>
+                        </div>
+                        <div style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; margin-bottom: 8px;">
+                            <strong>Realita na Rezervos:</strong> Hĺbkový audit kódu potvrdil, že Rezervos <strong>už má kompletný Win-Back automat naprogramovaný a spustený</strong> v <code>cron_auto_ratings.php</code> cez funkciu <code>sendWinbackEmails()</code> v <code>api/auto_ratings_helper.php</code> s evidenciou v tabuľke <code>customer_winback_log</code>!<br>
+                            <strong>Prečo & V čom to bude výhoda pre salón:</strong> Hoci robot na pozadí už spoľahlivo pracuje, beží neviditeľne v PHP s fixným intervalom 60–90 dní. Majitelia salónov chcú vidieť výsledky a mať kontrolu:
+                            <ul style="margin: 6px 0 0 16px; padding: 0; font-size: 0.82rem; color: #cbd5e1;">
+                                <li>Vidieť štatistiku: <em>„Tento mesiac systém poslal 18 reaktivačných správ, vrátilo sa 6 klientov (tržba +190 €)“</em>.</li>
+                                <li>Možnosť prispôsobiť si text a zľavový kód priamo v záložke <code>dashboard-marketing.php</code>.</li>
+                                <li>Možnosť naviazať reaktiváciu na typ služby (napr. gélové nechty po 21 dňoch vs. balayage po 60 dňoch).</li>
+                            </ul>
+                        </div>
+                        <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border); border-radius: 10px; padding: 10px; font-size: 0.8rem; color: #94a3b8;">
+                            <strong style="color: #f472b6;"><i class="fa-solid fa-lightbulb"></i> Návrh technického riešenia pre vývojárov:</strong>
+                            Keďže backendová logika aj tabuľky v databáze už existujú, stačí do <code>dashboard-marketing.php</code> pridať kartu <em>„Automatická reaktivácia (Win-Back)“</em>: zobraziť prepínač zapnuté/vypnuté, počítadlo úspešne vrátených klientov a jednoduchý formulár na editáciu textu správy v <code>api/mailer.php</code>. Pracnosť je vďaka hotovému backendu len 1–2 dni!
+                        </div>
+                    </div>
+
+                    <!-- Poznámka 7 -->
+                    <div class="glass-card card-inner" style="border-left: 4px solid #f43f5e;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 6px;">
+                            <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">7. Apple Wallet & Google Wallet Vernostné Karty</h4>
+                            <span class="pill pill-amber" style="font-size: 0.75rem;">Priorita: P2 (Do 1-2 mesiacov)</span>
+                        </div>
+                        <div style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; margin-bottom: 8px;">
+                            <strong>Problém na Rezervos:</strong> Zákazníci dnes nechcú nosiť papierové pečiatkové kartičky v peňaženke.<br>
+                            <strong>Prečo & V čom to bude výhoda:</strong> Booqme to má vyriešené skvele. Karta sa uloží priamo do natívnej peňaženky iPhone a Androidu. Najväčšia zbraň: <strong>Cez Wallet vie salón posielať bezplatné PUSH správy priamo na displej mobilu</strong>, čo úplne nahrádza drahé SMSky!
+                        </div>
+                        <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border); border-radius: 10px; padding: 10px; font-size: 0.8rem; color: #94a3b8;">
+                            <strong style="color: #fb7185;"><i class="fa-solid fa-lightbulb"></i> Návrh riešenia pre vývojárov:</strong>
+                            Implementovať microservice na generovanie <code>.pkpass</code> archívov (Apple PassKit) a Google Wallet REST API. Do potvrdzujúceho emailu a na ďakovnú obrazovku pridať tlačidlo <em>"Pridať vernostnú kartu do Apple/Google Wallet"</em>. Po každej návšteve webhook aktualizuje počet bodov na karte priamo v mobile zákazníka.
+                        </div>
+                    </div>
+
+                    <!-- Poznámka 8 -->
+                    <div class="glass-card card-inner" style="border-left: 4px solid #38bdf8;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 6px;">
+                            <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">8. 60-sekundové "Video Návody" priamo v záhlaví modulov v admine</h4>
+                            <span class="pill pill-green" style="font-size: 0.75rem;">Priorita: P1 (Do 1 týždňa)</span>
+                        </div>
+                        <div style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; margin-bottom: 8px;">
+                            <strong>Problém na Rezervos:</strong> V `prevadzka/index.html` máme výborný podrobný textový manuál. Ale kaderníčky a barberi neradi čítajú 10-stranové texty, keď sú v strese počas prevádzky.<br>
+                            <strong>Prečo & V čom to bude výhoda:</strong> Booqme má v pravom hornom rohu modré tlačidlo <code>Video návod</code> s YouTube ikonou. Keď majiteľ nevie nastaviť SMS alebo pracovný čas, klikne a za 60 sekúnd vidí klikanie na obrazovke. Znižuje to zaťaženie zákazníckej podpory o 70%.
+                        </div>
+                        <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border); border-radius: 10px; padding: 10px; font-size: 0.8rem; color: #94a3b8;">
+                            <strong style="color: #38bdf8;"><i class="fa-solid fa-lightbulb"></i> Návrh riešenia pre vývojárov:</strong>
+                            Natočiť 10 krátkych 60-sekundových videí cez Loom alebo ScreenStudio (Ako pridať službu, Ako nastaviť pracovný čas, Ako poslať SMS, Ako nastaviť widget). Do hlavičky každej podstránky v `prevadzka/index.html` vložiť malé tlačidlo s ikonou play, ktoré otvorí čistý modal s YouTube videom.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- AKČNÁ ROADMAPA PRE REZERVOS -->
+            <div style="margin-top: 30px; background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(13, 148, 136, 0.3); border-radius: 16px; padding: 20px;">
+                <h3 style="font-size: 1.1rem; color: #fff; font-weight: 800; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-list-check" style="color: #2dd4bf;"></i> Akčná Roadmapa implementácie (Krok za krokom)
+                </h3>
+
+                <div class="table-scroll-wrapper" style="margin-top: 0;">
+                    <table class="comp-table">
+                        <thead>
+                            <tr>
+                                <th>Fáza / Sprint</th>
+                                <th>Úloha / Funkcionalita</th>
+                                <th>Pracnosť</th>
+                                <th>Biznis Dopad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="pill pill-rose">Sprint 1 (Týždeň 1)</span></td>
+                                <td><strong>GSM-7 strip diakritiky v SMS</strong> + živé počítadlo znakov v `Peňaženka`</td>
+                                <td>1 deň</td>
+                                <td><strong>Okamžitá 50% úspora na SMS</strong>, hlavný predajný argument proti Booqme.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="pill pill-rose">Sprint 1 (Týždeň 1)</span></td>
+                                <td><strong>Google Reviews Booster</strong> (prepojenie 5★ recenzií na Google Firemný Profil)</td>
+                                <td>1 deň</td>
+                                <td>Zvýšenie reputácie a prílev nových zákazníkov z Google Máp.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="pill pill-green">Sprint 2 (Týždeň 2)</span></td>
+                                <td><strong>GTM a Meta Pixel polia</strong> v module `Rozšírenia / Web Widget`</td>
+                                <td>2 dni</td>
+                                <td>Otvorenie dverí pre marketingové agentúry a platené reklamy salónov.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="pill pill-green">Sprint 2 (Týždeň 2)</span></td>
+                                <td><strong>60s Video návody</strong> priamo v záhlaví modulov administrácie</td>
+                                <td>2 dni</td>
+                                <td>Rýchly onboarding a zníženie otázok na zákaznícku podporu o 70%.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="pill pill-green">Sprint 3 (Týždeň 3-4)</span></td>
+                                <td><strong>WhatsApp Business API modul</strong> (Platený Add-on / Prémiový balík + jednorazový implementačný poplatok za nastavenie)</td>
+                                <td>4 dni</td>
+                                <td>Nový čistý zisk z implementácie + marža z každého dobitého kreditu pri 60% úspore salónu oproti SMS.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="pill pill-blue">Sprint 3 (Týždeň 3-4)</span></td>
+                                <td><strong>Split provízie personálu</strong> na úrovni jednotlivých služieb</td>
+                                <td>3 dni</td>
+                                <td>Férové marže majiteľov pri službách s drahou kozmetikou.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="pill pill-green">Sprint 4 (Mesiac 2)</span></td>
+                                <td><strong>Vizuálny UI manažér Win-Backu v admine</strong> (prepojenie existujúceho cronu s `dashboard-marketing.php` + štatistika vrátených klientov)</td>
+                                <td>2 dni</td>
+                                <td>Plná kontrola majiteľa salónu nad reaktiváciou a okamžitý prehľad zachránených tržieb.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="pill pill-amber">Sprint 5 (Mesiac 2-3)</span></td>
+                                <td><strong>Apple & Google Wallet Vernostné Karty</strong> + bezplatný Push</td>
+                                <td>8 dní</td>
+                                <td>Moderný zážitok v iPhone a trvalé ušetrenie nákladov na SMS správach.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox-modal" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightboxImg" class="lightbox-content" src="" alt="Screenshot">
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div style="max-width: 1560px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+            <div style="text-align: left;">
+                <div style="color: #fff; font-weight: 800; font-size: 0.95rem;">Rezervos / VoľnéKreslo</div>
+                <div>Master Competitor Intelligence – Booqme.app audit.</div>
+            </div>
+            <div style="display: flex; gap: 16px;">
+                <a href="../porovnanie-cennikov.html" style="color: var(--primary-light); text-decoration: none;">Cenníky</a>
+                <a href="../biznisplan.html" style="color: var(--primary-light); text-decoration: none;">Biznis plán</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        function openLightbox(src) {
+            document.getElementById('lightboxImg').src = src;
+            document.getElementById('lightbox').classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        // Search Filter
+        function filterModules(query) {
+            const q = query.toLowerCase().trim();
+            const sections = document.querySelectorAll('.audit-section');
+            sections.forEach(sec => {
+                if (!q) {
+                    sec.style.display = 'block';
+                    return;
+                }
+                const kw = (sec.getAttribute('data-search') || '') + ' ' + sec.innerText.toLowerCase();
+                sec.style.display = kw.includes(q) ? 'block' : 'none';
+            });
+        }
+
+        // SMS Live Calculator
+        const smsTemplates = {
+            pripomienka: "Blíži sa Váš termín: {date} o {time_from}. {property_name}",
+            potvrdenie: "Rezervácia potvrdená: {date} o {time_from}. Tešíme sa! {property_name}",
+            reaktivacia: "Dobrý deň, od Vašej poslednej návštevy už uplynul čas. Rezervujte si ďalší termín. Vaše {property_name}",
+            privitanie: "Dobrý deň, ďakujeme za Vašu prvú návštevu u nás. Veríme, že všetko prebehlo k Vašej spokojnosti. Tešíme sa na Vás aj nabudúce! Vaše {property_name}",
+            hodnotenie: "Páčila sa Vám návšteva? Odkaz na hodnotenie sme poslali e-mailom. {property_name}"
+        };
+
+        const gsmRegex = /^[@£$¥èéùìòÇ\nØø\rÅåΔ_ΦΓΛΩΠΨΣΘΞÆæßÉ !"#¤%&'()*+,\-.\/0123456789:;<=>?¡ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÑÜ§¿abcdefghijklmnopqrstuvwxyzäöñüà^{}\\[~\]|€]*$/;
+
+        function applySmsTemplate(key) {
+            if (smsTemplates[key]) {
+                document.getElementById('liveSmsInput').value = smsTemplates[key];
+            }
+            recalcSms();
+        }
+
+        function recalcSms() {
+            const text = document.getElementById('liveSmsInput').value;
+            const len = text.length;
+            const isGsm = gsmRegex.test(text);
+
+            let maxSingle = isGsm ? 160 : 70;
+            let maxConcat = isGsm ? 153 : 67;
+
+            let parts = len === 0 ? 0 : (len <= maxSingle ? 1 : Math.ceil(len / maxConcat));
+            let cost = (parts * 0.07).toFixed(2);
+
+            document.getElementById('valChars').textContent = len;
+            const encEl = document.getElementById('valEncoding');
+            if (isGsm) {
+                encEl.textContent = 'GSM-7 (160 zn.)';
+                encEl.style.color = '#34d399';
+            } else {
+                encEl.textContent = 'UCS-2 (70 zn.)';
+                encEl.style.color = '#f43f5e';
+            }
+
+            document.getElementById('valParts').textContent = parts;
+            document.getElementById('valCost').textContent = cost + ' €';
+
+            let preview = text.replace(/{date}/g, "15.09.")
+                              .replace(/{time_from}/g, "14:30")
+                              .replace(/{property_name}/g, "Salón Elite");
+            document.getElementById('phonePreviewText').textContent = preview || "Sem sa zobrazí náhľad SMS správy...";
+        }
+
+        function stripAccentsLive() {
+            const el = document.getElementById('liveSmsInput');
+            el.value = el.value.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            recalcSms();
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            applySmsTemplate('pripomienka');
+        });
+    </script>
+</body>
+</html>

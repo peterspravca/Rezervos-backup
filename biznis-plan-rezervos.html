@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <title>Biznis Plán & Finančný Model – Rezervos.eu / VoľnéKreslo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        @page {
+            size: A4;
+            margin: 18mm 15mm 18mm 15mm;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Outfit', sans-serif;
+            color: #1e293b;
+            background: #ffffff;
+            line-height: 1.5;
+            font-size: 9.5pt;
+        }
+        
+        .page-break {
+            page-break-before: always;
+        }
+
+        .no-break {
+            page-break-inside: avoid;
+        }
+
+        /* Hlavička dokumentu */
+        .doc-header {
+            border-bottom: 2px solid #0d9488;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .doc-title {
+            font-size: 20pt;
+            font-weight: 900;
+            color: #0f172a;
+            letter-spacing: -0.5px;
+        }
+        .doc-subtitle {
+            font-size: 10.5pt;
+            color: #0d9488;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+        .doc-meta {
+            text-align: right;
+            font-size: 8pt;
+            color: #64748b;
+        }
+
+        /* Sekcie a nadpisy */
+        h2 {
+            font-size: 12.5pt;
+            font-weight: 800;
+            color: #0f172a;
+            border-left: 4px solid #0d9488;
+            padding-left: 8px;
+            margin: 18px 0 10px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        h3 {
+            font-size: 10pt;
+            font-weight: 700;
+            color: #1e293b;
+            margin: 10px 0 6px 0;
+        }
+        p {
+            margin-bottom: 8px;
+            color: #334155;
+            text-align: justify;
+        }
+
+        /* Karty a boxy */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 10px 12px;
+        }
+        .card-highlight {
+            background: #f0fdf4;
+            border: 1px solid #a7f3d0;
+        }
+        .card-blue {
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+        }
+
+        /* Tabuľky */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0 14px 0;
+            font-size: 8.5pt;
+        }
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 6px 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f1f5f9;
+            color: #0f172a;
+            font-weight: 700;
+        }
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .bg-green { background-color: #ecfdf5; font-weight: 700; color: #065f46; }
+        .bg-total { background-color: #e2e8f0; font-weight: 800; }
+
+        /* Zoznamy tagov pre kategórie */
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 4px;
+        }
+        .tag {
+            background: #e2e8f0;
+            color: #334155;
+            font-size: 7.5pt;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        .tag-lead {
+            background: #ccfbf1;
+            color: #0f766e;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 1px 5px;
+            border-radius: 3px;
+            font-size: 7pt;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .badge-green { background: #dcfce7; color: #15803d; }
+        .badge-blue { background: #dbeafe; color: #1e40af; }
+        .badge-orange { background: #ffedd5; color: #c2410c; }
+    </style>
+</head>
+<body>
+
+    <!-- STRANA 1 -->
+    <div class="doc-header">
+        <div>
+            <div class="doc-title">REZERVOS.EU / VOĽNÉ KRESLO</div>
+            <div class="doc-subtitle">Komplexný Biznis Plán & Strategický Finančný Model (SK & CZ)</div>
+        </div>
+        <div class="doc-meta">
+            Dátum: August 2026<br>
+            Trhy: Slovensko & Česko<br>
+            Verzia: 2.1 (Multi-segment)
+        </div>
+    </div>
+
+    <h2>1. Exekutívne zhrnutie & Dvojstranný model trhu</h2>
+    <p>
+        <strong>Rezervos.eu / VoľnéKreslo</strong> funguje ako horizontálna platforma spájajúca B2B rezervačný systém a B2C inzertno-rezervačný portál. Na rozdiel od jednoúčelových softvérov typu Bookio pokrýva kompletný životný cyklus poskytovateľa služieb aj koncového klienta v desiatkach segmentov.
+    </p>
+
+    <div class="grid-2 no-break">
+        <div class="card card-blue">
+            <h3 style="color:#0369a1; margin-top:0;">🏢 B2B Pilier (Poskytovatelia služieb)</h3>
+            <p style="font-size:8.5pt; margin-bottom:4px;">
+                Komplexný operačný systém pre samostatných živnostníkov aj kliniky:
+            </p>
+            <ul style="font-size:8pt; padding-left:14px; color:#334155;">
+                <li>Neobmedzený tím zamestnancov vo VIP balíku za 18,90 € (Bookio max 5 osôb za 38,90 €).</li>
+                <li>Vlastné odosielanie e-mailov cez SMTP salónu (ochrana firemnej identity).</li>
+                <li>Interná Kanban tabuľa úloh a CRM integrované bezplatne.</li>
+                <li>Bezpoplatkové zálohy cez Pay by Square (SEPA QR).</li>
+            </ul>
+        </div>
+        <div class="card card-highlight">
+            <h3 style="color:#15803d; margin-top:0;">👥 B2C & Trhový Pilier (Klienti & Inzercia)</h3>
+            <p style="font-size:8.5pt; margin-bottom:4px;">
+                Spotrebiteľský portál s vysokou sieťovou retenciou:
+            </p>
+            <ul style="font-size:8pt; padding-left:14px; color:#334155;">
+                <li>Verejný katalóg a mapa prevádzok s AI asistentom termínov 24/7.</li>
+                <li><strong>Kreslo Hunter / Last Minute:</strong> Okamžité obsadzovanie zrušených termínov.</li>
+                <li><strong>Inzertná burza:</strong> Podnájom kresiel, predaj vybavenia salónov, ponuka práce.</li>
+                <li>Jeden zákaznícky účet pre kaderníka, zubára, trénera aj servis.</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>2. Pokrytie segmentov na platforme</h2>
+    <p>Platforma neobmedzuje svoje pôsobenie len na beauty segment, ale štruktúruje ponuku do 5 hlavných vertikál:</p>
+
+    <div class="grid-2 no-break" style="font-size:8pt;">
+        <div class="card">
+            <strong>💇 Beauty & Estetika</strong>
+            <div class="tag-container">
+                <span class="tag tag-lead">Vlasy & Barber</span>
+                <span class="tag">Kozmetika & Make-up</span>
+                <span class="tag">Nechty</span>
+                <span class="tag">Obočie & Mihalnice</span>
+                <span class="tag">Vrkoče & Dredy</span>
+                <span class="tag">Tetovanie & Piercing</span>
+                <span class="tag">Solárium</span>
+                <span class="tag">Depilácia</span>
+            </div>
+        </div>
+        <div class="card">
+            <strong>🩺 Zdravie, Medicína & Terapia</strong>
+            <div class="tag-container">
+                <span class="tag tag-lead">Lekárska estetika</span>
+                <span class="tag">Zubné & Ortodoncia</span>
+                <span class="tag">Fyzioterapia</span>
+                <span class="tag">Psychológia & Terapia</span>
+                <span class="tag">Výživové poradenstvo</span>
+                <span class="tag">Alternatívna medicína</span>
+            </div>
+        </div>
+        <div class="card">
+            <strong>🏃 Šport, Pohyb & Regenerácia</strong>
+            <div class="tag-container">
+                <span class="tag tag-lead">Masáže & Wellness</span>
+                <span class="tag">Joga & Pilates</span>
+                <span class="tag">Osobní tréneri</span>
+                <span class="tag">Zdravie a kondícia</span>
+            </div>
+        </div>
+        <div class="card">
+            <strong>🐾 Terénne, Odborné & Ostatné služby</strong>
+            <div class="tag-container">
+                <span class="tag tag-lead">Služby pre miláčikov</span>
+                <span class="tag">Domáce služby</span>
+                <span class="tag">Svadobné služby</span>
+                <span class="tag">Profesionálne služby</span>
+                <span class="tag tag-lead">Inzercia & Last Minute</span>
+            </div>
+        </div>
+    </div>
+
+    <h2>3. Veľkosť trhu a trhový potenciál (SK & CZ)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Segment trhu</th>
+                <th class="text-center">🇸🇰 Slovensko (SK)</th>
+                <th class="text-center">🇨🇿 Česko (CZ)</th>
+                <th class="text-center">Spolu (TAM)</th>
+                <th class="text-center">Digitálny trh (SAM)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Beauty, Barber, Kozmetika, Nechty, Tetovanie</td>
+                <td class="text-center">~22 000</td>
+                <td class="text-center">~52 000</td>
+                <td class="text-center"><strong>74 000</strong></td>
+                <td class="text-center">45 000</td>
+            </tr>
+            <tr>
+                <td>Zdravie, Masáže, Fyzioterapia, Terapie, Výživa</td>
+                <td class="text-center">~14 000</td>
+                <td class="text-center">~34 000</td>
+                <td class="text-center"><strong>48 000</strong></td>
+                <td class="text-center">25 000</td>
+            </tr>
+            <tr>
+                <td>Tréneri, Domáce, Svadobné, Auto-moto a Iné služby</td>
+                <td class="text-center">~12 000</td>
+                <td class="text-center">~33 000</td>
+                <td class="text-center"><strong>45 000</strong></td>
+                <td class="text-center">15 000</td>
+            </tr>
+            <tr class="bg-total">
+                <td>CELKOVÝ TRHOVÝ POTENCIÁL</td>
+                <td class="text-center">~48 000</td>
+                <td class="text-center">~119 000</td>
+                <td class="text-center"><strong>~167 000</strong></td>
+                <td class="text-center"><strong>~85 000</strong></td>
+            </tr>
+            <tr class="bg-green">
+                <td>3-ROČNÝ CIEĽ (SOM - cca 5,8 % SAM)</td>
+                <td class="text-center"><strong>1 500 firiem</strong></td>
+                <td class="text-center"><strong>3 500 firiem</strong></td>
+                <td class="text-center" colspan="2"><strong>5 000 aktívnych firiem</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="page-break"></div>
+
+    <!-- STRANA 2 -->
+    <h2>4. Cenotvorba & Jednotková ekonomika (Unit Economics)</h2>
+    <p>Rezervos volí agresívnu cenotvorbu s vysokou pridanou hodnotou, čím výrazne podsekáva etablované systémy:</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Balík</th>
+                <th class="text-center">Mesačná cena</th>
+                <th class="text-center">Ročná cena/mes.</th>
+                <th class="text-center">Limit rezervácií</th>
+                <th class="text-center">Používatelia</th>
+                <th>Kľúčové funkcie v cene</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>FREE</strong></td>
+                <td class="text-center">0,00 €</td>
+                <td class="text-center">0,00 €</td>
+                <td class="text-center">150 / mes.</td>
+                <td class="text-center">1</td>
+                <td>Kalendár, CRM klientov, profil prevádzky, Kanban tabuľa, AI asistent.</td>
+            </tr>
+            <tr>
+                <td><strong>START</strong></td>
+                <td class="text-center">4,90 €</td>
+                <td class="text-center">3,90 €</td>
+                <td class="text-center">300 / mes.</td>
+                <td class="text-center">1</td>
+                <td>Google Sync, vlastné logo, automatické potvrdzovanie, recenzie.</td>
+            </tr>
+            <tr class="bg-green">
+                <td><strong>PRO</strong> (Odporúčaný)</td>
+                <td class="text-center">9,90 €</td>
+                <td class="text-center">7,90 €</td>
+                <td class="text-center">1 500 / mes.</td>
+                <td class="text-center">1 – 3</td>
+                <td>Vlastné SMTP e-maily, Last Minute ponuky, UTM štatistiky, 3× inzercia zadarmo.</td>
+            </tr>
+            <tr>
+                <td><strong>VIP</strong></td>
+                <td class="text-center">18,90 €</td>
+                <td class="text-center">14,90 €</td>
+                <td class="text-center"><strong>Neobmedzene</strong></td>
+                <td class="text-center"><strong>Neobmedzene</strong></td>
+                <td>Viac pobočiek, vernostný systém, exporty pre účtovníka, prioritná podpora.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>5. Monetizačné toky (5 Piliérov príjmu)</h2>
+    <div class="grid-3 no-break" style="font-size:8pt;">
+        <div class="card">
+            <strong>1. B2B Predplatné</strong>
+            <p style="margin-top:4px;">Predplatné balíkov START, PRO a VIP. Priemerný výnos na platiacu firmu (ARPU) je kalkulovaný na <strong>~7,20 € / mesiac</strong>.</p>
+        </div>
+        <div class="card">
+            <strong>2. SMS Notifikácie</strong>
+            <p style="margin-top:4px;">Nákup SMS brány za 0,035 €, predaj salónom za 0,065 €. Marža ~45 % (čistý zisk ~2,50 € / aktívny salón / mes.).</p>
+        </div>
+        <div class="card">
+            <strong>3. Kreslo Hunter (B2C)</strong>
+            <p style="margin-top:4px;">VIP notifikácie uvoľnených termínov (2,90 € / mes.) alebo mikrotransakcia 1 € za bleskovú rezerváciu termínu.</p>
+        </div>
+    </div>
+    <div class="grid-2 no-break" style="font-size:8pt;">
+        <div class="card">
+            <strong>4. Inzercia VoľnéKreslo (B2B/B2C)</strong>
+            <p style="margin-top:4px;">Spoplatnené pridávanie inzerátov na prenájom kresiel, predaj salónneho nábytku, prístrojov a práce za <strong>0,50 € / inzerát</strong>.</p>
+        </div>
+        <div class="card">
+            <strong>5. Topovanie & Zvýraznenie</strong>
+            <p style="margin-top:4px;">Prednostné umiestnenie prevádzky v katalógu a na mape: <strong>2,90 € / týždeň</strong> (alebo 9,90 € / mesiac).</p>
+        </div>
+    </div>
+
+    <h2>6. Finančné projekcie a ziskovosť (P&L Odhad)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Finančný ukazovateľ</th>
+                <th class="text-center">100 firiem (Fáza SK)</th>
+                <th class="text-center">500 firiem (Rast SK)</th>
+                <th class="text-center">1 000 firiem (SK + CZ)</th>
+                <th class="text-center">5 000 firiem (Líder SK/CZ)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>B2C Báza koncových klientov (1:180)</td>
+                <td class="text-center">~18 000</td>
+                <td class="text-center">~90 000</td>
+                <td class="text-center">~180 000</td>
+                <td class="text-center">~900 000</td>
+            </tr>
+            <tr>
+                <td>1. B2B Predplatné (mix balíkov)</td>
+                <td class="text-center">558 €</td>
+                <td class="text-center">2 792 €</td>
+                <td class="text-center">5 585 €</td>
+                <td class="text-center">27 925 €</td>
+            </tr>
+            <tr>
+                <td>2. SMS Marža (čistý výnos)</td>
+                <td class="text-center">125 €</td>
+                <td class="text-center">625 €</td>
+                <td class="text-center">1 250 €</td>
+                <td class="text-center">6 250 €</td>
+            </tr>
+            <tr>
+                <td>3. Kreslo Hunter (B2C konverzia)</td>
+                <td class="text-center">522 €</td>
+                <td class="text-center">3 132 €</td>
+                <td class="text-center">7 830 €</td>
+                <td class="text-center">39 150 €</td>
+            </tr>
+            <tr>
+                <td>4. Inzercia & Topovanie salónov</td>
+                <td class="text-center">95 €</td>
+                <td class="text-center">520 €</td>
+                <td class="text-center">1 200 €</td>
+                <td class="text-center">6 500 €</td>
+            </tr>
+            <tr class="bg-total">
+                <td>CELKOVÝ MESAČNÝ OBRAT (MRR)</td>
+                <td class="text-center">1 300 € / mes.</td>
+                <td class="text-center">7 069 € / mes.</td>
+                <td class="text-center">15 865 € / mes.</td>
+                <td class="text-center">79 825 € / mes.</td>
+            </tr>
+            <tr class="bg-total">
+                <td>CELKOVÝ ROČNÝ OBRAT (ARR)</td>
+                <td class="text-center">15 600 € / rok</td>
+                <td class="text-center">84 828 € / rok</td>
+                <td class="text-center">190 380 € / rok</td>
+                <td class="text-center">~957 900 € / rok</td>
+            </tr>
+            <tr>
+                <td>Prevádzkové náklady (Servery, SMS, CAC, Support)</td>
+                <td class="text-center">805 €</td>
+                <td class="text-center">2 480 €</td>
+                <td class="text-center">4 580 €</td>
+                <td class="text-center">18 850 €</td>
+            </tr>
+            <tr class="bg-green">
+                <td>ČISTÝ ZISK EBITDA (Mesačne)</td>
+                <td class="text-center">+495 € / mes.</td>
+                <td class="text-center">+4 589 € / mes.</td>
+                <td class="text-center">+11 285 € / mes.</td>
+                <td class="text-center">+60 975 € / mes.</td>
+            </tr>
+            <tr class="bg-green">
+                <td>ČISTÝ ZISK EBITDA (Ročne)</td>
+                <td class="text-center"><strong>+5 940 € / rok</strong></td>
+                <td class="text-center"><strong>+55 068 € / rok</strong></td>
+                <td class="text-center"><strong>+135 420 € / rok</strong></td>
+                <td class="text-center"><strong>+731 700 € / rok</strong></td>
+            </tr>
+            <tr>
+                <td>Čistá zisková marža</td>
+                <td class="text-center">38 %</td>
+                <td class="text-center">65 %</td>
+                <td class="text-center">71 %</td>
+                <td class="text-center"><strong>76 %</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="page-break"></div>
+
+    <!-- STRANA 3 -->
+    <h2>7. Strategická vývojová roadmapa (Gap analýza vs. Bookio)</h2>
+    <p>Pre úplné prebratie klientov konkurencie je definovaný harmonogram dopracovania funkcií podľa ich trhovej dôležitosti:</p>
+
+    <div class="card no-break" style="margin-bottom:10px; border-left:4px solid #dc2626;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <strong>🔴 Priorita 1: Okamžitá konverzia a retencia (11 kľúčových funkcií)</strong>
+            <span class="badge badge-orange">Q3 – Q4 2026</span>
+        </div>
+        <p style="font-size:8pt; margin-top:4px; margin-bottom:0;">
+            • Opakované rezervácie • Manuálne schvaľovanie termínov prevádzkou • Automatické SMS pripomienky a e-maily pred termínom • iFrame widget do vlastného webu • Facebook integračný rezervačný panel • Doplnkové služby (upsell pri výbere termínu) • Online platby a nevratné zálohy (Stripe / GoPay) • Zľavové kódy a história zákazníckych termínov.
+        </p>
+    </div>
+
+    <div class="card no-break" style="margin-bottom:10px; border-left:4px solid #2563eb;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <strong>🔵 Priorita 2: Tímové a špecializované nástroje (17 funkcií)</strong>
+            <span class="badge badge-blue">Q1 – Q2 2027</span>
+        </div>
+        <p style="font-size:8pt; margin-top:4px; margin-bottom:0;">
+            • Poznámky k rezerváciám (interné/zákaznícke) • Časová rezerva pred a po službe • Skupinové rezervácie a kalendár pre kurzy • Správa oprávnení personálu • CSV import zákazníkov pri prechode z iného systému • Darčekové poukážky a prepojenie recenzií na Google Business profil.
+        </p>
+    </div>
+
+    <div class="card no-break" style="margin-bottom:10px; border-left:4px solid #64748b;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <strong>⚪ Priorita 3: Pokročilé možnosti & Whitelabel (14 funkcií)</strong>
+            <span class="badge">Q3 2027+</span>
+        </div>
+        <p style="font-size:8pt; margin-top:4px; margin-bottom:0;">
+            • Čakacia listina náhradníkov (automatické push notifikácie) • Viacjazyčnosť rezervačnej stránky (SK, CZ, EN, DE, HU) • Kompletný whitelabel (odstránenie loga systému pre prémiové kliniky) • Pokročilé API integrácie pre účtovníctvo.
+        </p>
+    </div>
+
+    <h2>8. Akvizičná a Go-To-Market stratégia</h2>
+    <div class="grid-2 no-break">
+        <div class="card">
+            <h3 style="margin-top:0;">🎯 Prechod z papiera a Instagramu (55 % trhu)</h3>
+            <p style="font-size:8pt;">
+                Väčšina malých prevádzok nepoužíva softvér kvôli cene a zložitosti. Kampaň stavia na bezplatnom balíku <strong>FREE (0 €)</strong> s vizuálnou Kanban tabuľou a balíku <strong>START (4,90 €)</strong>. Registrácia a spustenie kalendára trvá do 3 minút.
+            </p>
+        </div>
+        <div class="card">
+            <h3 style="margin-top:0;">🥊 Priamy útok na klientov Bookio</h3>
+            <p style="font-size:8pt;">
+                Porovnávací marketing: <em>„Prečo platiť 38,90 € za 5 ľudí, keď u nás máte až 10 zamestnancov za 21,90 € s vlastným e-mailom a bezpečnosťou?“</em> Ponuka bezplatného importu zákazníckej databázy z Bookio do Rezervos na 1 klik.
+            </p>
+        </div>
+    </div>
+
+    <div class="grid-2 no-break">
+        <div class="card">
+            <h3 style="margin-top:0;">🤝 Inzertný lievik (VoľnéKreslo)</h3>
+            <p style="font-size:8pt;">
+                Salóny a špecialisti využívajú inzertnú sekciu na ponuku podnájmu kresiel a vybavenia. Každý inzerujúci subjekt je okamžite konvertovaný do bezplatného rezervačného softvéru ako overený B2B partner.
+            </p>
+        </div>
+        <div class="card">
+            <h3 style="margin-top:0;">🇨🇿 Expanzia do Českej republiky</h3>
+            <p style="font-size:8pt;">
+                Český trh disponuje 2,4× väčšou kúpnou silou. Ceny v CZK (120 Kč, 250 Kč, 480 Kč) predstavujú pre prevádzky v Prahe a Brne zanedbateľný náklad, čo umožňuje dosiahnutie cieľa 3 500 CZ firiem s vysokou maržou.
+            </p>
+        </div>
+    </div>
+
+    <div style="margin-top:15px; padding:10px 14px; background:#f1f5f9; border-radius:6px; border:1px solid #cbd5e1; font-size:8pt; text-align:center;">
+        <strong>Rezervos.eu / VoľnéKreslo</strong> · Bod zvratu (Break-Even) pri dosiahnutí ~65 platiacich salónov · Vygenerované pre interné plánovanie.
+    </div>
+
+</body>
+</html>

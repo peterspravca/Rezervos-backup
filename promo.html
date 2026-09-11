@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Language" content="sk">
+    <meta name="language" content="Slovak">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kompletný Biznis Plán & Promo Stratégie – Rezervos.eu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --bg-card: #ffffff;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
+            --accent-blue: #3b82f6;
+            --accent-teal: #0d9488;
+            --accent-purple: #8b5cf6;
+            --accent-orange: #f97316;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --radius: 12px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            color: white;
+            padding: 80px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(13,148,136,0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(37,99,235,0.15) 0%, transparent 50%);
+            animation: heroGlow 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroGlow {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-5%, 5%); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #cbd5e1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 24px 60px 24px;
+        }
+
+        /* Sections */
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            margin-top: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--text);
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .section-title .badge-pill {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 16px;
+            background: rgba(13,148,136,0.1);
+            color: var(--accent-teal);
+            border: 1px solid rgba(13,148,136,0.2);
+        }
+
+        /* Grids */
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+
+        @media (max-width: 900px) {
+            .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 32px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-dark {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            border: none;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2);
+        }
+
+        .card-dark h3 { color: white; }
+        .card-dark p { color: #94a3b8; }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .card ul {
+            list-style: none;
+            margin-top: 16px;
+        }
+        
+        .card ul li {
+            padding: 8px 0;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card ul li:last-child { border-bottom: none; padding-bottom: 0; }
+        
+        .card-dark ul li { border-bottom-color: rgba(255,255,255,0.1); color: #e2e8f0; }
+
+        .icon-check {
+            color: var(--accent-green);
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .badge-blue { background: #dbeafe; color: #1d4ed8; }
+        .badge-green { background: #dcfce7; color: #15803d; }
+        .badge-orange { background: #ffedd5; color: #c2410c; }
+        .badge-purple { background: #f3e8ff; color: #7e22ce; }
+        .badge-red { background: #fee2e2; color: #b91c1c; }
+        
+        .code-pill {
+            font-family: monospace;
+            background: #1e293b;
+            color: #38bdf8;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        /* Alert Box */
+        .alert-box {
+            background: #fff1f2;
+            border: 1px solid #fecdd3;
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 40px;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+        
+        .alert-icon {
+            background: #ffe4e6;
+            color: #e11d48;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .alert-content h3 {
+            color: #be123c;
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .alert-content p {
+            color: #881337;
+            font-size: 0.95rem;
+        }
+
+        /* Tables */
+        .table-wrapper {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            margin-bottom: 40px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead th {
+            padding: 20px 24px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            text-align: left;
+            background: #f1f5f9;
+            color: var(--text);
+            border-bottom: 2px solid var(--border);
+        }
+
+        tbody td {
+            padding: 16px 24px;
+            font-size: 0.95rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        tbody tr:last-child td { border-bottom: none; }
+        
+        tbody tr:hover { background: #f8fafc; }
+
+        .col-center { text-align: center; }
+        
+        .highlight-cell {
+            background: #ecfdf5;
+            color: #065f46;
+            font-weight: 700;
+        }
+        .danger-cell {
+            background: #fef2f2;
+            color: #991b1b;
+        }
+
+        .price-big {
+            font-size: 1.4rem;
+            font-weight: 900;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Rezervos.eu / VoľnéKreslo</h1>
+            <p>Kompletný Biznis Plán, Promo Stratégie, Akvizičné Kódy & Rastové Mechanizmy pripravené pre 100% Bootstrap model na trhoch SK & CZ.</p>
+        </div>
+    </section>
+
+    <div class="container">
+        
+        <!-- Zlaté pravidlo Alert -->
+        <div class="alert-box">
+            <div class="alert-icon">⚠️</div>
+            <div class="alert-content">
+                <h3>ZLATÉ PRAVIDLO: Ochrana Cash-flow & 100% Pre-paid SMS</h3>
+                <p style="margin-bottom: 8px;"><strong>Žiadne SMS zadarmo:</strong> Platforma neposkytuje voľné SMS správy v rámci trial verzií, promo kódov ani balíkov. Salóny si nakupujú SMS ako predplatený kredit vopred z platobnej karty. Tým sa úplne eliminuje riziko straty z neaktívnych účtov.</p>
+                <p><strong>Rozdelená peňaženka:</strong> Striktné oddelenie reálnych peňazí od virtuálnych odmien. Kredit "Dobitý kartou" sa používa na základné služby (ako inzercia), kredit "Za zdieľanie" (virtuálny) výhradne na bonusové funkcie (topovanie, Kreslo Hunter).</p>
+            </div>
+        </div>
+
+        <!-- Sekcia 1: Konkurenčná výhoda -->
+        <div class="section-title">
+            <span class="badge-pill">Konkurenčná výhoda</span>
+            <h2>Rozbitie "Pasce na Zamestnancov"</h2>
+            <p>Kľúčový predajný argument proti iným systémom, ktoré tvrdo limitujú počet zamestnancov v balíkoch.</p>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Veľkosť tímu</th>
+                        <th class="col-center danger-cell">Konkurenčné Riešenie (Pasca)</th>
+                        <th class="col-center highlight-cell">Rezervos Riešenie (Sloboda)</th>
+                        <th class="col-center">Úspora salónu ročne</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>2 osoby</strong></td>
+                        <td class="col-center danger-cell">SMART (18,90 €)</td>
+                        <td class="col-center highlight-cell"><strong>PRO (11,90 €)</strong></td>
+                        <td class="col-center font-bold">84 € ročne</td>
+                    </tr>
+                    <tr>
+                        <td><strong>3 osoby</strong></td>
+                        <td class="col-center danger-cell">STANDARD (38,90 €)</td>
+                        <td class="col-center highlight-cell"><strong>PRO (11,90 €)</strong></td>
+                        <td class="col-center"><span style="color:#10b981; font-weight:800; font-size:1.1rem">324 € ročne</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>4 osoby</strong></td>
+                        <td class="col-center danger-cell">STANDARD (38,90 €)</td>
+                        <td class="col-center highlight-cell"><strong>PRO + 1 Add-on (16,80 €)</strong></td>
+                        <td class="col-center"><span style="color:#10b981; font-weight:800; font-size:1.1rem">265 € ročne</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Sekcia 2: Cenotvorba & Add-on -->
+        <div class="section-title">
+            <span class="badge-pill">Upsell Model</span>
+            <h2>Cenotvorba Softvéru a "Add-on" Stratégia</h2>
+            <p>Príplatkový model za zamestnancov a pobočky rieši plynulý rast firiem a nenápadne ich posúva k drahším paušálom bez skokového zdraženia.</p>
+        </div>
+
+        <div class="grid-4" style="margin-bottom: 24px;">
+            <div class="card">
+                <div class="card-header">
+                    <span class="badge badge-blue">START</span>
+                </div>
+                <div class="price-big">5,90 € <span style="font-size:0.9rem;color:var(--text-muted);font-weight:500">/ mes.</span></div>
+                <p style="font-size:0.8rem; margin-top:4px;">4,90 € pri ročnej platbe</p>
+                <ul>
+                    <li><span class="icon-check">✓</span> 1 osoba</li>
+                    <li><span class="icon-check">✓</span> 1 pobočka</li>
+                </ul>
+            </div>
+            <div class="card" style="border-color: var(--accent-green); box-shadow: 0 0 0 1px var(--accent-green);">
+                <div class="card-header">
+                    <span class="badge badge-green">PRO</span>
+                </div>
+                <div class="price-big" style="color:var(--accent-green)">11,90 € <span style="font-size:0.9rem;color:var(--text-muted);font-weight:500">/ mes.</span></div>
+                <p style="font-size:0.8rem; margin-top:4px;">9,90 € pri ročnej platbe</p>
+                <ul>
+                    <li><span class="icon-check">✓</span> 1 – 3 osoby</li>
+                    <li><span class="icon-check">✓</span> 1 pobočka</li>
+                </ul>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <span class="badge badge-purple">BUSINESS</span>
+                </div>
+                <div class="price-big">24,90 € <span style="font-size:0.9rem;color:var(--text-muted);font-weight:500">/ mes.</span></div>
+                <p style="font-size:0.8rem; margin-top:4px;">21,90 € pri ročnej platbe</p>
+                <ul>
+                    <li><span class="icon-check">✓</span> 1 – 10 osôb</li>
+                    <li><span class="icon-check">✓</span> 2 pobočky v cene</li>
+                </ul>
+            </div>
+            <div class="card card-dark">
+                <div class="card-header">
+                    <span class="badge" style="background:rgba(255,255,255,0.2);color:white">ENTERPRISE</span>
+                </div>
+                <div class="price-big" style="color:white">Na mieru</div>
+                <p style="font-size:0.8rem; margin-top:4px; color:#94a3b8">Individuálna cenotvorba</p>
+                <ul>
+                    <li><span class="icon-check">✓</span> ∞ Neobmedzene osôb</li>
+                    <li><span class="icon-check">✓</span> ∞ Neobmedzene pobočiek</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card" style="background:#f1f5f9; border-color:#cbd5e1; padding: 24px;">
+            <h3 style="font-size:1.1rem; display:flex; align-items:center; gap:8px;">💡 Flexibilný rast tímu a pobočiek (Add-on Pricing):</h3>
+            <ul style="margin-top:12px;">
+                <li><span class="icon-check">✓</span> <strong>Ďalší zamestnanec:</strong> Kedykoľvek za <strong>+4,90 € / mesiac</strong> (resp. +3,90 € ročne). Ak klient v balíku PRO narastie na 6 ľudí, systém mu automaticky ponúkne prechod na výhodnejší BUSINESS balík.</li>
+                <li><span class="icon-check">✓</span> <strong>Ďalšia pobočka (od BUSINESS):</strong> Kedykoľvek za <strong>+9,90 € / mesiac</strong>. Rovnaká cena ako balík PRO dáva pocit férovosti. Pri viac ako 4 pobočkách nasleduje upsell na ENTERPRISE.</li>
+            </ul>
+        </div>
+
+        <!-- Sekcia 3: B2B Akvizičné Kódy -->
+        <div class="section-title">
+            <span class="badge-pill">B2B Akvizícia</span>
+            <h2>B2B Akvizičné Kódy & Promo Lieviky</h2>
+            <p>Nástroje na získavanie poskytovateľov služieb s prísnou ochranou cash-flow.</p>
+        </div>
+
+        <div class="grid-2">
+            <div class="card">
+                <div class="card-header">
+                    <span class="code-pill">PRECHOD50</span>
+                    <span class="badge badge-blue">Útok na konkurenciu</span>
+                </div>
+                <h3>Úniková cesta z drahých systémov</h3>
+                <p>Cielenie: „Máte 3 zamestnancov a platíte 38,90 €? Prejdite na PRO balík za 11,90 € a ušetrite.“</p>
+                <ul>
+                    <li><span class="icon-check">✓</span> <strong>Ponuka:</strong> 6 mesiacov balíka PRO za cenu START (alebo 50 % zľava na 1. rok).</li>
+                    <li><span class="icon-check">✓</span> <strong>Bonus:</strong> Zadarmo asistovaný import databázy z CSV.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="code-pill">AKADEMIA</span>
+                    <span class="badge badge-green">Lektori & Kurzy</span>
+                </div>
+                <h3>Štartovacie balíčky pre absolventov</h3>
+                <p>Hromadný nábor nových živnostníkov z odborných beauty kurzov a škôl.</p>
+                <ul>
+                    <li><span class="icon-check">✓</span> <strong>Pre absolventa:</strong> 6 mesiacov START zadarmo (SMS si platí sám).</li>
+                    <li><span class="icon-check">✓</span> <strong>Pre lektora:</strong> 20 € provízia pri prechode absolventa na platený plán.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="code-pill">KRESLO30</span>
+                    <span class="badge badge-orange">Bez-kartový Trial</span>
+                </div>
+                <h3>Nulová bariéra na vstup</h3>
+                <p>Pre 55% trhu, ktorý používa papier a telefón. Záchytný lievik.</p>
+                <ul>
+                    <li><span class="icon-check">✓</span> <strong>Ponuka:</strong> Plný prístup START na 30 dní len za email (bez karty).</li>
+                    <li><span class="icon-check">✓</span> <strong>Lock-in po 30 dňoch:</strong> „Vybavili ste 42 rezervácií. Pokračujte za 5,90 €/mes.“</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="code-pill">KOLEGA</span>
+                    <span class="badge badge-purple">B2B Referral</span>
+                </div>
+                <h3>Odporuč kolegu z branže</h3>
+                <p>Salón s aktívnym predplatným pošle kód kolegovi v inej štvrti.</p>
+                <ul>
+                    <li><span class="icon-check">✓</span> <strong>Mechanika:</strong> Obaja získavajú k cyklu <strong>+1 mesiac ZADARMO</strong> pri ročnej aktivácii. Nulový dopad na cash-flow.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Sekcia 4: Growth Hacking -->
+        <div class="section-title">
+            <span class="badge-pill">Growth Hacking</span>
+            <h2>Inovatívne Rastové Mechanizmy & B2C Gamifikácia</h2>
+        </div>
+
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-header">
+                    <span class="badge badge-blue">IČO Lead Magnet</span>
+                </div>
+                <h3>Prvý Inzerát Zadarmo</h3>
+                <p>Inzercia stojí 0,50€/týždeň. Prvý inzerát je na 1 mesiac zadarmo <strong>výlučne pre B2B (IČO filter)</strong>. Slúži na zber firemných dát a bráni spamu.</p>
+            </div>
+            
+            <div class="card" style="border-color:var(--accent-orange); background:#fffaf5;">
+                <div class="card-header">
+                    <span class="badge badge-orange">Trójsky Kôň</span>
+                </div>
+                <h3>Marketplace Synergia</h3>
+                <p>Firma vloží inzerát na prenájom kresla. Keď sa spojí s podnájomníkom, systém im ponúkne spoločný kalendár. Salón si aktivuje PRO balík pre správu priestoru.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="badge badge-green">Offline ➔ Online</span>
+                </div>
+                <h3>Fyzický QR balíček</h3>
+                <p>Vygenerovaný dizajn pre salón (stojan): <strong>„Objednajte sa na VoľnéKreslo.sk“</strong> s QR kódom. Klient sa stáva súčasťou B2C databázy bez nákladov na PPC.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="badge badge-purple">Viralita</span>
+                </div>
+                <h3>Zober Kamošku</h3>
+                <p>Po návšteve dostane klient e-mail: Ak ho prezdieľa kamoške a tá sa objedná do 24h, obe získajú zľavu v salóne. Platforma získava organický B2C dosah.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="badge badge-red">Ochranný limit</span>
+                </div>
+                <h3>Strop pre virtuálny kredit</h3>
+                <p>Maximálny zostatok "kreditu za zdieľanie" je <strong>5,00 €</strong>. Bráni to farmárčeniu kreditu botmi (odmena za kliky max 2× denne).</p>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="badge badge-blue">B2C Promo</span>
+                </div>
+                <h3>Kód OBJAVMESTO</h3>
+                <p>Zákazník získa pri prvej registrácii 3 € virtuálny kredit na aktiváciu Kreslo Huntera. Rýchla aktivácia užívateľa pri náklade 0 €.</p>
+            </div>
+        </div>
+
+        <!-- Sekcia 5: Provízny systém -->
+        <div class="section-title">
+            <span class="badge-pill">Affiliate</span>
+            <h2>Provízny Systém pre Virtuálnych Obchodníkov</h2>
+            <p>Obchodníci predávajú výhradne <strong>ročné predplatné</strong>. Odmena sa vypláca okamžite z prijatých peňazí, čo zabezpečuje 100 % samofinancovanie.</p>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Predaný Ročný Balík</th>
+                        <th class="col-center">Cena pre salón (Ročne)</th>
+                        <th class="col-center highlight-cell" style="background:#dcfce7">Provízia obchodníkovi</th>
+                        <th class="col-center highlight-cell" style="background:#e0f2fe;color:#0369a1">Čistý príjem platformy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>START (1 osoba)</strong></td>
+                        <td class="col-center">58,80 € / rok</td>
+                        <td class="col-center highlight-cell" style="font-size:1.1rem;background:#ecfdf5">20,00 €</td>
+                        <td class="col-center" style="font-weight:700;color:#0369a1;background:#f0f9ff">38,80 €</td>
+                    </tr>
+                    <tr>
+                        <td><strong>PRO (1 – 3 osoby)</strong></td>
+                        <td class="col-center">118,80 € / rok</td>
+                        <td class="col-center highlight-cell" style="font-size:1.1rem;background:#ecfdf5">35,00 €</td>
+                        <td class="col-center" style="font-weight:700;color:#0369a1;background:#f0f9ff">83,80 €</td>
+                    </tr>
+                    <tr>
+                        <td><strong>BUSINESS (10 osôb)</strong></td>
+                        <td class="col-center">262,80 € / rok</td>
+                        <td class="col-center highlight-cell" style="font-size:1.1rem;background:#ecfdf5">60,00 €</td>
+                        <td class="col-center" style="font-weight:700;color:#0369a1;background:#f0f9ff">202,80 €</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ENTERPRISE</strong></td>
+                        <td class="col-center">Individuálne</td>
+                        <td class="col-center" style="font-weight:800;color:var(--accent-teal)">25 % z ročnej zmluvy</td>
+                        <td class="col-center" style="font-weight:700;color:#0369a1">Zvyšných 75 %</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="grid-2">
+            <div class="card card-dark">
+                <h3 style="color:white">Kto je ideálny obchodník?</h3>
+                <ul>
+                    <li><span class="icon-check">✓</span> Obchodní zástupcovia s kozmetikou a farbami.</li>
+                    <li><span class="icon-check">✓</span> Školitelia a lektori beauty kurzov.</li>
+                    <li><span class="icon-check">✓</span> Freelanceri pracujúci z domu (akvizícia cez Google Mapy).</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Vybavenie obchodníka</h3>
+                <ul>
+                    <li><span class="icon-check">✓</span> Vlastný promo kód / partnerský registračný odkaz.</li>
+                    <li><span class="icon-check">✓</span> Prehľadný dashboard so stavom provízií a výplatami.</li>
+                    <li><span class="icon-check">✓</span> Silný predajný argument: Ušetrenie až 50% oproti konkurencii pri tímoch 3+ ľudí.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Sekcia 6: Kampane -->
+        <div class="section-title">
+            <span class="badge-pill">Marketing</span>
+            <h2>Kampane na Sociálnych Sieťach (Meta / TikTok)</h2>
+            <p>Koncepty kampaní zacielené na špecifické výhody platformy.</p>
+        </div>
+
+        <div class="grid-3">
+            <div class="card" style="border-top: 4px solid var(--accent-blue);">
+                <div class="card-header">
+                    <span class="badge badge-blue">Kampaň 1</span>
+                </div>
+                <h3 style="color:var(--accent-blue)">„Zošit vs. Mobil“</h3>
+                <p><strong>Formát:</strong> Krátke video (Reels/TikTok).</p>
+                <p>Na jednej strane kaderníčka škrtá v papierovom diári a frustrovane dvíha zvoniaci telefón. Na druhej strane spokojne pracuje, zatiaľ čo jej pípne notifikácia o online rezervácii cez Rezervos.</p>
+            </div>
+
+            <div class="card" style="border-top: 4px solid var(--accent-green);">
+                <div class="card-header">
+                    <span class="badge badge-green">Kampaň 2</span>
+                </div>
+                <h3 style="color:var(--accent-green)">„Kalkulačka úspory“</h3>
+                <p><strong>Formát:</strong> Grafická statická reklama.</p>
+                <p>Odhaľuje pascu na zamestnancov konkurencie: <em>"Iný systém pre 3 ľudí: 38,90 € mesačne vs. Rezervos PRO pre 3 ľudí: 11,90 € mesačne."</em> Matematika, ktorá predáva sama.</p>
+            </div>
+
+            <div class="card" style="border-top: 4px solid var(--accent-orange);">
+                <div class="card-header">
+                    <span class="badge badge-orange">Kampaň 3</span>
+                </div>
+                <h3 style="color:var(--accent-orange)">„Inzercia pre profíkov“</h3>
+                <p><strong>Formát:</strong> Inzertné video zamerané na B2B trh.</p>
+                <p><strong>Text:</strong> <em>„Prenajmite kreslo špecialistovi vo vašom salóne. Len za 1,50 € / mesiac. Prvý inzerát zadarmo pri zadaní IČO.“</em></p>
+            </div>
+        </div>
+
+        <!-- Sekcia 7: Pravidlá promo kódov -->
+        <div class="section-title">
+            <span class="badge-pill">Pravidlá</span>
+            <h2>Pravidlá pre Nasadzovanie a Expiráciu Kódov</h2>
+        </div>
+
+        <div class="card" style="background:#f1f5f9; border-color:#cbd5e1; padding: 24px; margin-bottom: 24px;">
+            <ul style="margin-top:0;">
+                <li><span class="icon-check">✓</span> <strong>FOMO Efekt (Umelý limit):</strong> Každý propagačný kód komunikovať s obmedzenou platnosťou alebo obmedzeným počtom použití. <em>(Napr. „Platí len pre prvých 50 salónov v meste“)</em></li>
+                <li><span class="icon-check">✓</span> <strong>Automatická aktivácia cez link:</strong> Zákazník ani salón nemusí ručne prepisovať zľavový kód. Kliknutie na reklamu alebo partnerský odkaz ho automaticky predvyplní v registračnom formulári.</li>
+                <li><span class="icon-check">✓</span> <strong>Zákaz kumulácie:</strong> Promo kódy na bezplatné obdobia sa nesmú navzájom kombinovať, aby bola chránená základná jednotková ekonomika a cash-flow predplatného.</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin-top: 60px; padding-top: 30px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem;">
+            <strong>Rezervos.eu / VoľnéKreslo</strong> &copy; 2026 &mdash; Pokročilý Biznis Plán a Promo Stratégie
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rezervos vs Konkurencia — Syntéza 4 Auditov & Fact-Check</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-main:#0b0f17; --bg-surface:#111827; --bg-card:#1a2234; --bg-card-hover:#222d44;
+    --border:#2d3748; --text-main:#f3f4f6; --text-muted:#9ca3af; --text-hi:#60a5fa;
+    --blue:#2563eb; --cyan:#06b6d4; --emerald:#10b981; --amber:#f59e0b; --rose:#f43f5e; --purple:#8b5cf6;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg-main); color:var(--text-main); line-height:1.6; padding-bottom:80px; }
+  code,pre { font-family:'JetBrains Mono',monospace; }
+  a { color:var(--text-hi); }
+
+  .top-nav { position:sticky; top:0; z-index:100; background:rgba(17,24,39,.94); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); padding:14px 28px; display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; }
+  .brand { font-weight:800; font-size:16px; display:flex; align-items:center; gap:8px; }
+  .brand span.tag { font-size:10px; font-weight:700; padding:3px 8px; border-radius:6px; background:rgba(37,99,235,.18); color:var(--text-hi); border:1px solid rgba(37,99,235,.35); text-transform:uppercase; letter-spacing:.5px; }
+  .nav-links { display:flex; gap:18px; flex-wrap:wrap; }
+  .nav-links a { color:var(--text-muted); text-decoration:none; font-size:13px; font-weight:600; }
+  .nav-links a:hover { color:var(--text-main); }
+
+  .hero { max-width:1100px; margin:0 auto; padding:56px 28px 20px; }
+  .eyebrow { display:inline-flex; align-items:center; gap:8px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; color:var(--emerald); background:rgba(16,185,129,.1); border:1px solid rgba(16,185,129,.3); padding:5px 12px; border-radius:999px; margin-bottom:18px; }
+  h1 { font-size:clamp(28px,4vw,42px); font-weight:800; line-height:1.15; margin-bottom:16px; }
+  h1 span { color:var(--text-hi); }
+  .lede { font-size:16px; color:var(--text-muted); max-width:760px; }
+
+  section { max-width:1100px; margin:0 auto; padding:48px 28px; }
+  h2 { font-size:26px; font-weight:800; margin-bottom:6px; }
+  .section-sub { color:var(--text-muted); font-size:14px; margin-bottom:28px; max-width:700px; }
+
+  .grid5 { display:grid; grid-template-columns:repeat(5,1fr); gap:14px; }
+  @media (max-width:1000px){ .grid5{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:560px){ .grid5{grid-template-columns:1fr;} }
+
+  .card { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:18px; }
+  .plat-card h3 { font-size:15px; font-weight:800; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+  .dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+  .plat-card .stat { display:flex; justify-content:space-between; font-size:12.5px; padding:6px 0; border-top:1px solid var(--border); }
+  .plat-card .stat b { color:var(--text-main); font-weight:700; }
+  .plat-card .stat span.lbl { color:var(--text-muted); }
+  .plat-card a.lnk { display:inline-block; margin-top:12px; font-size:12px; font-weight:700; text-decoration:none; }
+
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  .table-wrap { overflow-x:auto; border:1px solid var(--border); border-radius:14px; }
+  th,td { padding:11px 14px; text-align:left; border-bottom:1px solid var(--border); white-space:nowrap; }
+  thead th { background:var(--bg-surface); font-size:11px; text-transform:uppercase; letter-spacing:.4px; color:var(--text-muted); position:sticky; top:0; }
+  tbody tr:hover { background:var(--bg-card-hover); }
+  td.win { color:var(--emerald); font-weight:700; }
+  td.lose { color:var(--text-muted); }
+  .rez-col { background:rgba(16,185,129,.05); }
+
+  .badge { display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:700; padding:3px 9px; border-radius:6px; white-space:nowrap; }
+  .b-ok { background:rgba(16,185,129,.15); color:var(--emerald); border:1px solid rgba(16,185,129,.3); }
+  .b-no { background:rgba(244,63,94,.15); color:var(--rose); border:1px solid rgba(244,63,94,.3); }
+  .b-partial { background:rgba(245,158,11,.15); color:var(--amber); border:1px solid rgba(245,158,11,.3); }
+
+  .fact-row td:first-child { white-space:normal; max-width:320px; font-weight:600; }
+  .fact-row td:nth-child(2) { white-space:normal; max-width:340px; color:var(--text-muted); }
+
+  .callout { background:var(--bg-card); border:1px solid var(--border); border-left:3px solid var(--amber); border-radius:10px; padding:16px 18px; font-size:13.5px; color:var(--text-muted); margin-bottom:24px; }
+  .callout b { color:var(--text-main); }
+  .callout.info { border-left-color:var(--blue); }
+
+  .phase { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:20px 22px; margin-bottom:16px; }
+  .phase-head { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:14px; flex-wrap:wrap; }
+  .phase-head h3 { font-size:16px; font-weight:800; }
+  .phase-head .meta { font-size:11px; color:var(--text-muted); font-weight:700; text-transform:uppercase; letter-spacing:.4px; }
+  .task { display:grid; grid-template-columns:1fr auto auto; gap:10px; align-items:center; padding:10px 0; border-top:1px solid var(--border); font-size:13px; }
+  .task:first-of-type { border-top:none; }
+  .task .name { font-weight:600; }
+  .task .why { color:var(--text-muted); font-size:12px; display:block; margin-top:2px; font-weight:400; }
+  .pill { font-size:10.5px; font-weight:700; padding:3px 9px; border-radius:6px; text-align:center; white-space:nowrap; }
+  .p-low { background:rgba(16,185,129,.15); color:var(--emerald); }
+  .p-med { background:rgba(245,158,11,.15); color:var(--amber); }
+  .p-high { background:rgba(244,63,94,.15); color:var(--rose); }
+  @media (max-width:640px){ .task{grid-template-columns:1fr;} }
+
+  .src-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  @media (max-width:800px){ .src-grid{grid-template-columns:repeat(2,1fr);} }
+  .src-card { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:18px; text-decoration:none; color:var(--text-main); display:block; transition:.15s; }
+  .src-card:hover { background:var(--bg-card-hover); border-color:var(--text-hi); }
+  .src-card .n { font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px; }
+  .src-card .t { font-weight:800; font-size:15px; margin-bottom:8px; }
+  .src-card .d { font-size:12px; color:var(--text-muted); }
+
+  footer { max-width:1100px; margin:0 auto; padding:30px 28px; color:var(--text-muted); font-size:12px; border-top:1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <div class="brand">Rezervos <span class="tag">Prehľad · Meta-Audit</span></div>
+  <div class="nav-links">
+    <a href="#prehlad">Prehľad</a>
+    <a href="#matica">Veľká matica</a>
+    <a href="#factcheck">Fact-check</a>
+    <a href="#roadmapa">Roadmapa</a>
+    <a href="#rozbor2">Druhý rozbor (ChatGPT)</a>
+    <a href="#novinky">Novinky od auditu</a>
+    <a href="#zdroje">Zdrojové audity</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="eyebrow">● Syntéza 4 hĺbkových auditov + overenie voči reálnemu kódu Rezervos</div>
+  <h1>Bookio · Booqme · Planivo · EasyBooking <span>vs Rezervos</span></h1>
+  <p class="lede">Táto stránka nekopíruje predchádzajúce 4 audity (tie ostávajú nezmenené v priečinkoch <code>bookio/</code>, <code>booqme/</code>, <code>planivo/</code>, <code>easybooking/</code>) — spája ich do jednej prehľadnej matice, a čo je najdôležitejšie: <b>každé tvrdenie o tom, čo "Rezervos už má", bolo overené priamo v zdrojovom kóde</b>, nie len prevzaté z marketingového textu auditov. Tam, kde si pôvodné audity protirečili (matica tvrdila "ÁNO", no v tej istej stránke bola rovnaká funkcia navrhnutá ako budúci sprint), je to nižšie jasne opravené.</p>
+</div>
+
+<section id="prehlad">
+  <h2>Prehľad 5 platforiem</h2>
+  <p class="section-sub">Rýchly záber na najdôležitejšie čísla z každého auditu.</p>
+  <div class="grid5">
+    <div class="card plat-card">
+      <h3><span class="dot" style="background:#ea580c"></span>Bookio Services</h3>
+      <div class="stat"><span class="lbl">Základ</span><b>0 € (do 100 t.)</b></div>
+      <div class="stat"><span class="lbl">Strop rezervácií</span><b>100 / 150 / 300</b></div>
+      <div class="stat"><span class="lbl">Strop personálu</span><b>1 – 5 osôb</b></div>
+      <div class="stat"><span class="lbl">SMS</span><b>0,075 € (2 SMS s diak.)</b></div>
+      <div class="stat"><span class="lbl">Skóre auditu</span><b>6,8 / 10</b></div>
+      <a class="lnk" href="../bookio/index.html">Celý audit →</a>
+    </div>
+    <div class="card plat-card">
+      <h3><span class="dot" style="background:#8b5cf6"></span>Booqme.app</h3>
+      <div class="stat"><span class="lbl">Základ</span><b>9,90 € (LITE)</b></div>
+      <div class="stat"><span class="lbl">Strop rezervácií</span><b>100 / 500 / ∞</b></div>
+      <div class="stat"><span class="lbl">Provízia platieb</span><b>+0,49 % Stripe fee</b></div>
+      <div class="stat"><span class="lbl">SMS</span><b>0,07 € / 70 zn.</b></div>
+      <div class="stat"><span class="lbl">Silná stránka</span><b>Wallet + Meta Action Btn</b></div>
+      <a class="lnk" href="../booqme/index.html">Celý audit →</a>
+    </div>
+    <div class="card plat-card">
+      <h3><span class="dot" style="background:#06b6d4"></span>Planivo.sk</h3>
+      <div class="stat"><span class="lbl">Základ</span><b>0 € (do 30 t.)</b></div>
+      <div class="stat"><span class="lbl">Strop rezervácií</span><b>30 / 150 / ∞</b></div>
+      <div class="stat"><span class="lbl">Strop personálu</span><b>1 / 2 / 5 osôb</b></div>
+      <div class="stat"><span class="lbl">SMS</span><b>0,07–0,14 € (diak.)</b></div>
+      <div class="stat"><span class="lbl">Silná stránka</span><b>Čistý 3-krokový flow</b></div>
+      <a class="lnk" href="../planivo/index.html">Celý audit →</a>
+    </div>
+    <div class="card plat-card">
+      <h3><span class="dot" style="background:#f59e0b"></span>EasyBooking.sk</h3>
+      <div class="stat"><span class="lbl">Základ</span><b>9,90 € (Regular)</b></div>
+      <div class="stat"><span class="lbl">Personál v Regular</span><b>Iba 1 osoba</b></div>
+      <div class="stat"><span class="lbl">Provízia platieb</span><b>2,5 % + 0,35 €</b></div>
+      <div class="stat"><span class="lbl">SMS</span><b>0,083 € (0,166 € diak.)</b></div>
+      <div class="stat"><span class="lbl">Silná stránka</span><b>AI import cenníka z foto</b></div>
+      <a class="lnk" href="../easybooking/index.html">Celý audit →</a>
+    </div>
+    <div class="card plat-card" style="border-color:var(--emerald);">
+      <h3><span class="dot" style="background:#10b981"></span>REZERVOS</h3>
+      <div class="stat"><span class="lbl">Základ</span><b>0 € natrvalo</b></div>
+      <div class="stat"><span class="lbl">Strop rezervácií</span><b>Neobmedzene</b></div>
+      <div class="stat"><span class="lbl">Provízia platieb</span><b>0 %</b></div>
+      <div class="stat"><span class="lbl">SMS</span><b>0,049 € (bez GSM-7* zatiaľ)</b></div>
+      <div class="stat"><span class="lbl">Overené výhody</span><b>Win-Back, Hunter, 2FA, iCal</b></div>
+    </div>
+  </div>
+  <div class="callout" style="margin-top:22px;">
+    *Hviezdička pri SMS cene Rezervos je zámerná — pozri sekciu <a href="#factcheck">Fact-check</a>: automatické orezanie diakritiky (GSM-7) je v pôvodných auditoch prezentované ako hotová funkcia, v kóde ale zatiaľ chýba.
+  </div>
+</section>
+
+<section id="matica">
+  <h2>Veľká zjednotená matica — 5 platforiem</h2>
+  <p class="section-sub">Zlúčenie všetkých kritérií zo 4 auditov do jednej porovnateľnej tabuľky. Zelený stĺpec = Rezervos.</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Kritérium</th><th>Bookio</th><th>Booqme</th><th>Planivo</th><th>EasyBooking</th><th class="rez-col">Rezervos</th></tr></thead>
+    <tbody>
+      <tr><td>Mesačný paušál (základ)</td><td class="lose">0 € / do 100 t.</td><td class="lose">9,90 €</td><td class="lose">0 € / do 30 t.</td><td class="lose">9,90 €</td><td class="win rez-col">0 € natrvalo</td></tr>
+      <tr><td>Strop rezervácií / mes.</td><td class="lose">100–300</td><td class="lose">100–500</td><td class="lose">30–150</td><td class="lose">Neobmedzene</td><td class="win rez-col">Neobmedzene</td></tr>
+      <tr><td>Strop počtu zamestnancov</td><td class="lose">1–5</td><td class="lose">1–5</td><td class="lose">1–5</td><td class="lose">1 (v Regular)</td><td class="win rez-col">Neobmedzene</td></tr>
+      <tr><td>Provízia z online platieb</td><td class="lose">cez GoPay (?)</td><td class="lose">+0,49 %</td><td class="lose">cez bránu (?)</td><td class="lose">2,5 % + 0,35 €</td><td class="win rez-col">0 %</td></tr>
+      <tr><td>Cena SMS (základ)</td><td class="lose">0,075 €</td><td class="lose">0,07 €</td><td class="lose">0,07 €</td><td class="lose">0,083 €</td><td class="win rez-col">0,049 €</td></tr>
+      <tr><td>Diakritika predražuje SMS 2×</td><td class="lose">Áno</td><td class="lose">Áno</td><td class="lose">Áno</td><td class="lose">Áno (0,166 €)</td><td class="b-partial" style="display:table-cell;">Čiastočne — treba dostaviť, pozri fact-check</td></tr>
+      <tr><td>Vlastné meno odosielateľa SMS</td><td class="lose">Nie</td><td class="lose">30 € + 2 €/mes.</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="win rez-col">Áno, v API pripravené (max 11 zn.)</td></tr>
+      <tr><td>Apple / Google Wallet karty</td><td class="lose">Nie</td><td class="win" style="color:#8b5cf6;">Áno</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="b-partial" style="display:table-cell;">Nie zatiaľ — v roadmape</td></tr>
+      <tr><td>Darčekové poukazy</td><td class="lose">len vyšší balík</td><td class="lose">áno, +0,49 % fee</td><td class="lose">vôbec nie</td><td class="lose">áno, +2,5 % fee</td><td class="win rez-col">Áno, QR platba priamo na účet, 0 % fee</td></tr>
+      <tr><td>Permanentky (balíky vstupov)</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="win rez-col">Áno</td></tr>
+      <tr><td>Duálny Buffer Time (pred + po)</td><td class="lose">len po</td><td class="lose">len po</td><td class="lose">len po</td><td class="lose">nevidno v UI</td><td class="win rez-col">Áno, overené v kóde</td></tr>
+      <tr><td>Skupinová kapacita (workshopy)</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="win rez-col">Áno, overené v kóde</td></tr>
+      <tr><td>Obedňajšia prestávka personálu</td><td class="lose">ručne cez blokácie</td><td class="lose">ručne</td><td class="lose">ručne cez blokácie</td><td class="lose">áno v nastaveniach</td><td class="win rez-col">Áno, automaticky v rozvrhu</td></tr>
+      <tr><td>Presun rezervácie na kolegu pri PN</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="b-partial" style="display:table-cell;">Nie zatiaľ — v roadmape (viď fact-check)</td></tr>
+      <tr><td>Waitlist / obsadzovanie voľných termínov</td><td class="lose">pasívny</td><td class="lose">pasívny, v drahom balíku</td><td class="lose">len v PRO</td><td class="lose">manuálne dopyty</td><td class="win rez-col">Kreslo Hunter — aktívny radar, overené</td></tr>
+      <tr><td>Last Minute výpredaj termínov</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="win rez-col">Áno, overené v kóde</td></tr>
+      <tr><td>Automatický Win-Back (reaktivácia)</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="win rez-col">Áno, nočný cron, overené v kóde</td></tr>
+      <tr><td>Google Reviews auto-redirect</td><td class="lose">zbiera interne</td><td class="lose">zbiera interne</td><td class="lose">zbiera interne</td><td class="lose">zbiera interne</td><td class="b-partial" style="display:table-cell;">Nie zatiaľ — v roadmape (viď fact-check)</td></tr>
+      <tr><td>GTM / Meta Pixel integrácia</td><td class="lose">áno (chýba GDPR banner v iframe)</td><td class="win" style="color:#8b5cf6;">Áno</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="b-partial" style="display:table-cell;">Nie zatiaľ — v roadmape</td></tr>
+      <tr><td>Meta Action Button (IG/FB "Rezervovať")</td><td class="lose">Nie</td><td class="win" style="color:#8b5cf6;">Áno</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="lose">Nie zatiaľ</td></tr>
+      <tr><td>Provízie personálu per-služba</td><td class="lose">Nie</td><td class="win" style="color:#8b5cf6;">Áno</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="lose">Nie zatiaľ — v roadmape</td></tr>
+      <tr><td>WhatsApp Business notifikácie</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="lose">Nie zatiaľ — v roadmape (nikto z konkurencie to nemá)</td></tr>
+      <tr><td>AI import cenníka z foto/PDF</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="win" style="color:#f59e0b;">Áno</td><td class="lose">Nie zatiaľ — v roadmape</td></tr>
+      <tr><td>Audit log zmien personálu</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="win" style="color:#f59e0b;">Áno</td><td class="lose">Nie zatiaľ — v roadmape</td></tr>
+      <tr><td>Zákaznícke dopyty (žiadny voľný termín)</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="win" style="color:#f59e0b;">Áno</td><td class="lose">Nie zatiaľ — čiastočne pokryté Kreslo Hunterom</td></tr>
+      <tr><td>Iframe / embed widget na web</td><td class="lose">1,88 MB, pomalý</td><td class="lose">áno</td><td class="lose">áno</td><td class="lose">áno, problém so scrollom</td><td class="win rez-col">Áno, ľahký iframe</td></tr>
+      <tr><td>iCal synchronizácia kalendára</td><td class="lose">len Google</td><td class="lose">nevidno</td><td class="lose">chýba úplne</td><td class="lose">len iCal export</td><td class="b-partial" style="display:table-cell;">Iba jednosmerný export (Google/Apple/Outlook) — opravené, pozri Fact-check</td></tr>
+      <tr><td>2FA zabezpečenie účtu</td><td class="lose">Nie</td><td class="lose">nevidno</td><td class="lose">nevidno</td><td class="lose">nevidno</td><td class="win rez-col">Áno, overené v kóde</td></tr>
+      <tr><td>White-label bez loga systému</td><td class="lose">len vyšší balík</td><td class="lose">príplatok</td><td class="lose">len BUSINESS balík</td><td class="lose">29,90 € jednorazovo</td><td class="win rez-col">V cene, žiadny príplatok</td></tr>
+      <tr><td>Trhovisko / inzercia prenájmu kresiel</td><td class="lose">Nie</td><td class="lose">len interná evidencia</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="b-partial" style="display:table-cell;">Základ existuje (Inzercia) — plnohodnotný marketplace je Fáza 6.5 / rebrand, viď poznámka nižšie</td></tr>
+      <tr><td>Affiliate program + promo kódy</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="lose">Nie</td><td class="win rez-col">Áno, dokončené v tejto sérii úprav</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="factcheck">
+  <h2>Fact-check: čo je overené a čo je zatiaľ len plán</h2>
+  <p class="section-sub">Pôvodné 4 audity boli písané tak, že porovnávacia matica na konci každého z nich tvrdila "Rezervos: ÁNO" pri viacerých funkciách — no v tej istej stránke nižšie v sekcii "roadmapa" bola tá istá funkcia navrhnutá ako niečo, čo sa má ešte len postaviť. Táto tabuľka to opravuje priamym pohľadom do zdrojového kódu (overené 2026-09-05).</p>
+
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Tvrdenie z pôvodných auditov</th><th>Realita po overení v kóde</th><th>Stav</th></tr></thead>
+    <tbody>
+      <tr class="fact-row"><td>Automatický Win-Back Engine — nočný cron reaktivuje spiacich klientov po 60–90 dňoch</td><td><code>cron_auto_ratings.php</code> + <code>api/auto_ratings_helper.php</code> — funkcia <code>sendWinbackEmails()</code> reálne existuje a beží</td><td><span class="badge b-ok">✓ Overené</span></td></tr>
+      <tr class="fact-row"><td>Kreslo Hunter & Last Minute radar na uvoľnené termíny</td><td><code>api/hunter.php</code>, <code>api/public_last_minute.php</code>, <code>dashboard-last-minute.php</code> — modul reálne existuje</td><td><span class="badge b-ok">✓ Overené</span></td></tr>
+      <tr class="fact-row"><td>2FA dvojfaktorové overenie účtu</td><td><code>api/profile_security.php</code>, <code>dashboard-zabezpecenie.php</code>, stĺpec <code>two_factor_enabled</code> — reálne existuje</td><td><span class="badge b-ok">✓ Overené</span></td></tr>
+      <tr class="fact-row"><td>iCal synchronizácia do Google/Apple/Outlook kalendára</td><td><code>calendar_feed.php</code>, <code>api/download_ics.php</code> — reálne existuje</td><td><span class="badge b-ok">✓ Overené</span></td></tr>
+      <tr class="fact-row"><td>Duálny Buffer Time (čas pred aj po službe) a skupinová kapacita</td><td>Nájdené priamo v <code>api/services.php</code> a <code>dashboard-cennik.php</code></td><td><span class="badge b-ok">✓ Overené</span></td></tr>
+      <tr class="fact-row"><td>Obedňajšia prestávka personálu automaticky v rozvrhu</td><td>Nájdené v <code>dashboard-tym.php</code></td><td><span class="badge b-ok">✓ Overené</span></td></tr>
+      <tr class="fact-row"><td>Darčekové poukazy a Permanentky s QR platbou (Pay by square), 0 % poplatok</td><td><code>api/gift_vouchers.php</code>, <code>api/memberships.php</code>, dedikovaný <code>includes/qr_helper.php</code> — reálne existuje</td><td><span class="badge b-ok">✓ Overené</span></td></tr>
+      <tr class="fact-row"><td>Marketing Hub s AI copywriterom a segmentáciou (meniny/narodeniny)</td><td>Nájdené v <code>dashboard-marketing.php</code> a <code>api/marketing.php</code></td><td><span class="badge b-ok">✓ Overené</span></td></tr>
+      <tr class="fact-row"><td>Vlastné meno odosielateľa SMS (alphanumeric sender, max 11 znakov)</td><td>API klient <code>includes/eurosms.php</code> parameter <code>$sender</code> túto funkciu podporuje</td><td><span class="badge b-ok">✓ Overené (API pripravené)</span></td></tr>
+      <tr class="fact-row"><td>Automatické orezanie diakritiky pri SMS (GSM-7, úspora 50 %)</td><td><code>eurosms.php</code> posiela text <b>bez akéhokoľvek stripovania</b> — žiadny <code>iconv</code>/<code>preg_replace</code> na diakritiku sa v odosielacom reťazci nenašiel</td><td><span class="badge b-no">✗ Zatiaľ nefunguje</span></td></tr>
+      <tr class="fact-row"><td>Apple Wallet & Google Wallet karty s bezplatným push</td><td>V kóde sa nenašla žiadna zmienka o <code>.pkpass</code>/PassKit ani Google Wallet API</td><td><span class="badge b-no">✗ Zatiaľ nefunguje</span></td></tr>
+      <tr class="fact-row"><td>Google Reviews Booster — auto-redirect 5★ hodnotení na Google Firemný Profil</td><td>V <code>dashboard-hodnotenia.php</code> ani v marketingových API sa nenašlo pole na Google recenzný odkaz ani redirect logika</td><td><span class="badge b-no">✗ Zatiaľ nefunguje</span></td></tr>
+      <tr class="fact-row"><td>Okamžitý presun rezervácie na voľného kolegu pri PN/dovolenke zamestnanca</td><td>V <code>api/team.php</code> sa nenašla žiadna funkcia na presun/reassign rezervácie medzi zamestnancami</td><td><span class="badge b-no">✗ Zatiaľ nefunguje</span></td></tr>
+      <tr class="fact-row"><td>iCal synchronizácia je "obojsmerná" (vlastné tvrdenie z prvej verzie tejto stránky)</td><td><code>calendar_feed.php</code> iba generuje <code>VCALENDAR</code>/ICS feed na export — žiadny import ani zápis späť z Google/Apple/Outlook kalendára sa v kóde nenašiel. Je to jednosmerný export, nie 2-way sync. <i>(Táto nepresnosť bola opravená po nezávislom druhom rozbore — pozri nižšie.)</i></td><td><span class="badge b-partial">◐ Opravené</span></td></tr>
+      <tr class="fact-row"><td>Trhovisko VoľnéKreslo — verejná burza prenájmu kresiel</td><td><code>inzercia.php</code>/<code>dashboard-inzercia.php</code> existuje ako inzertná nástenka (klasifikované riadky), no nemá dedikovanú štruktúru burzy kresiel s filtrami/lokalitou — to je zámerne odložená budúca fáza</td><td><span class="badge b-partial">◐ Čiastočne</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout info" style="margin-top:20px;">
+    Trhovisko kresiel a rebrand na Rezervos sú už zaznamenané ako samostatné budúce iniciatívy v projektovej pamäti (<i>project_idea_chair_marketplace.md</i>, <i>project_rebrand_to_rezervos.md</i>) — zámerne sa nezačínajú bez explicitného pokynu. Táto stránka ich len potvrdzuje ako súčasť dlhodobej vízie, nie ako niečo na okamžité spustenie.
+  </div>
+</section>
+
+<section id="roadmapa">
+  <h2>Zjednotená roadmapa — Fáza 6: Konkurenčný dobeh</h2>
+  <p class="section-sub">Zlúčenie a deduplikácia návrhov zo všetkých 4 auditov, zoradené podľa reálnej pracnosti a biznis dopadu. Nadväzuje na už dokončené Fázy 1–5.</p>
+
+  <div class="phase">
+    <div class="phase-head">
+      <h3>6.1 — Rýchle víťazstvá (dokončiť do 1 týždňa)</h3>
+      <span class="meta">Vysoký dopad · Nízka pracnosť</span>
+    </div>
+    <div class="task"><div><span class="name">Skutočne dostaviť GSM-7 orezanie diakritiky pred odoslaním SMS</span><span class="why">eurosms.php dnes posiela text bez úpravy — toto je najsilnejší predajný argument oproti všetkým 4 konkurentom a v kóde reálne chýba</span></div><span class="pill p-low">~1 deň</span><span class="pill p-high">Vysoký</span></div>
+    <div class="task"><div><span class="name">Google Reviews Booster — pole na odkaz + redirect po 5★ hodnotení</span><span class="why">Žiadny z 4 konkurentov toto nerobí verejne, je to lacný a rýchly spôsob prílevu nových klientov cez Google Mapy</span></div><span class="pill p-low">~1 deň</span><span class="pill p-high">Vysoký</span></div>
+    <div class="task"><div><span class="name">Polia pre GTM Container ID a Meta Pixel ID vo widgete</span><span class="why">Bez toho marketingové agentúry odporúčajú Booqme, ktorý toto má na jedno kliknutie</span></div><span class="pill p-low">~2 dni</span><span class="pill p-med">Stredný</span></div>
+    <div class="task"><div><span class="name">60-sekundové video návody v hlavičke zložitejších modulov admina</span><span class="why">Booqme týmto znižuje záťaž podpory o 70 %; u nás stačí Loom nahrávky + malý modal prehrávač</span></div><span class="pill p-low">~2 dni</span><span class="pill p-med">Stredný</span></div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-head">
+      <h3>6.2 — Prevádzková odolnosť (2–4 týždne)</h3>
+      <span class="meta">Ochrana tržieb salónu</span>
+    </div>
+    <div class="task"><div><span class="name">Presun rezervácie na voľného kolegu pri PN/dovolenke</span><span class="why">Dnes pri absencii zamestnanca hrozí iba storno a strata klienta — 3 zo 4 auditov toto vyzdvihujú ako chýbajúcu funkciu u konkurencie aj nás</span></div><span class="pill p-med">~4 dni</span><span class="pill p-high">Vysoký</span></div>
+    <div class="task"><div><span class="name">Provízie personálu na úrovni jednotlivej služby (nie len paušál)</span><span class="why">Booqme toto rieši špičkovo — pri drahej chémii chce majiteľ nižšie % ako pri strihu bez materiálu</span></div><span class="pill p-med">~3 dni</span><span class="pill p-med">Stredný</span></div>
+    <div class="task"><div><span class="name">Audit log administrátorských zmien (kto zmazal/presunul termín)</span><span class="why">EasyBooking toto má a chráni majiteľa pred spormi s personálom "to spravil systém"</span></div><span class="pill p-med">~3 dni</span><span class="pill p-med">Stredný</span></div>
+    <div class="task"><div><span class="name">Vizuálny UI panel pre existujúci Win-Back cron v dashboard-marketing.php</span><span class="why">Backend (cron_auto_ratings.php) už beží — chýba mu len viditeľnosť a štatistika vrátených klientov pre majiteľa</span></div><span class="pill p-low">~2 dni</span><span class="pill p-med">Stredný</span></div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-head">
+      <h3>6.3 — Modernizácia komunikácie (1–2 mesiace)</h3>
+      <span class="meta">Nový platený add-on modul</span>
+    </div>
+    <div class="task"><div><span class="name">WhatsApp Business API s hybridným smart-routingom + SMS fallback</span><span class="why">Ani jeden zo 4 konkurentov to nemá; 68 % SR populácie aktívne používa WhatsApp s 98 % čítanosťou do 5 minút, generácia 50+ dostane spoľahlivý SMS fallback</span></div><span class="pill p-high">~4 dni + Meta setup</span><span class="pill p-high">Vysoký (nový príjem)</span></div>
+    <div class="task"><div><span class="name">Apple & Google Wallet vernostné karty + bezplatný push</span><span class="why">Booqme toto má ako top funkciu — karta v mobile nahrádza platené SMS aj papierové pečiatkovacie kartičky</span></div><span class="pill p-high">~8 dní</span><span class="pill p-med">Stredný až vysoký</span></div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-head">
+      <h3>6.4 — Onboarding a akvizícia (priebežne)</h3>
+      <span class="meta">Znížiť bariéru prechodu od konkurencie</span>
+    </div>
+    <div class="task"><div><span class="name">AI import cenníka z fotky/PDF (Vision API)</span><span class="why">EasyBooking týmto rieši najväčší strach pri prechode systému — ručné prepisovanie 40 služieb</span></div><span class="pill p-med">~5 dní</span><span class="pill p-high">Vysoký (konverzia)</span></div>
+    <div class="task"><div><span class="name">Sprievodca importom kontaktov (CSV) z Bookio/Booqme/Planivo/EasyBooking</span><span class="why">Znižuje psychologickú bariéru zmeny systému, presne ako to robí EasyBooking</span></div><span class="pill p-med">~4 dni</span><span class="pill p-med">Stredný</span></div>
+    <div class="task"><div><span class="name">Verejná kalkulačka úspor "koľko ušetríte prechodom na Rezervos"</span><span class="why">Ukázať reálne čísla (SMS, provízie, poplatky za logo) z tejto matice priamo marketingovo na webe</span></div><span class="pill p-low">~2 dni</span><span class="pill p-med">Stredný</span></div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-head">
+      <h3>6.5 — Dlhodobé (viazané na už zaznamenané budúce fázy)</h3>
+      <span class="meta">Nezačínať bez explicitného pokynu</span>
+    </div>
+    <div class="task"><div><span class="name">Plnohodnotný marketplace prenájmu kresiel (VoľnéKreslo)</span><span class="why">Existujúca Inzercia je základ, no žiadny zo 4 konkurentov ani toto nemá — najsilnejší dlhodobý diferenciátor. Už zaznamenané v pamäti projektu.</span></div><span class="pill p-high">Fáza 4/5+</span><span class="pill p-high">Strategický</span></div>
+    <div class="task"><div><span class="name">Rebrand VoľnéKreslo → Rezervos</span><span class="why">Prebieha plánovanie, viaže sa na marketplace aj nový branding naprieč celou appkou. Už zaznamenané v pamäti projektu.</span></div><span class="pill p-high">Plánované</span><span class="pill p-high">Strategický</span></div>
+    <div class="task"><div><span class="name">Meta Action Button (IG/FB "Rezervovať") a per-service provízie ako doplnok k 6.2/6.3</span><span class="why">Vyžaduje Meta Business overenie a je zmysluplné až po tom, čo salóny budú mať vyplnené GTM/Pixel dáta z Fázy 6.1</span></div><span class="pill p-med">Po Fáze 6.3</span><span class="pill p-med">Stredný</span></div>
+  </div>
+</section>
+
+<section id="rozbor2">
+  <h2>Druhý nezávislý rozbor (ChatGPT)</h2>
+  <p class="section-sub">Používateľ dal spraviť samostatný konkurenčný rozbor aj v ChatGPT (súbor <code>prehladgpt/index.html</code>, iný autor aj iná metodika — produktovo-manažérsky rámec s prioritami P0–P3, exit kritériami a "north-star" metrikami). Je to <b>druhý, oddelený názor</b> — zámerne ho nezlievame do matice ani roadmapy vyššie. Nižšie je len to, čo je v ňom naozaj nové oproti nášmu rozboru, plus moje vlastné overenie v kóde tam, kde to bolo rýchlo možné.</p>
+
+  <div class="callout info">
+    ChatGPT rozbor sám v sekcii "Zdroje a limity" priznáva, že vychádza len z dodaných lokálnych auditov a čitateľného kódu, nie z nového živého testovania konkurencie — rovnaké obmedzenie ako náš rozbor. Jeho hlavný prínos nie je v cenách konkurencie (tie sú rovnaké 4 zdroje ako u nás), ale v <b>inom uhle pohľadu na samotný Rezervos</b>: viac sa pýta "funguje to naozaj v praxi?" namiesto "existuje to v kóde?".
+  </div>
+
+  <h3 style="font-size:18px;font-weight:800;margin:28px 0 12px;">Čo je tu naozaj nové (nebolo v našej Fáze 6)</h3>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Zistenie z rozboru #2</th><th>Moje overenie v kóde (2026-09-05)</th><th>Stav</th></tr></thead>
+    <tbody>
+      <tr class="fact-row"><td>Kalendár nemá drag & drop presun ani resize ťahaním za okraj — zmena termínu ide len cez formulár/detail</td><td>Potvrdené: v <code>dashboard.php</code> sa nenašla konfigurácia <code>editable</code>/<code>eventDrop</code>/<code>eventResize</code> pre FullCalendar</td><td><span class="badge b-no">✗ Potvrdené — chýba</span></td></tr>
+      <tr class="fact-row"><td>Kalendár nemá skutočný "resource" pohľad po pracovníkoch (stĺpec na osobu) — meno pracovníka je len text v udalosti</td><td>Neoverované priamo (vyžaduje hlbšiu kontrolu JS konfigurácie FullCalendar), ale konzistentné s tým, čo je vidieť v aktuálnom UI</td><td><span class="badge b-partial">◐ Podľa rozboru #2</span></td></tr>
+      <tr class="fact-row"><td>PWA service worker len cachuje súbory, žiadne skutočné web push notifikácie (VAPID/subscription)</td><td>Potvrdené: <code>sw.js</code> neobsahuje žiadny <code>push</code> event listener ani VAPID logiku</td><td><span class="badge b-no">✗ Potvrdené — chýba</span></td></tr>
+      <tr class="fact-row"><td>Chýbajú farebné CRM štítky zákazníkov (VIP, Alergia, Problémový a pod.)</td><td>Potvrdené: v <code>dashboard-kontakty.php</code> sa nenašla žiadna implementácia štítkov</td><td><span class="badge b-no">✗ Potvrdené — chýba</span></td></tr>
+      <tr class="fact-row"><td>Chýba nemenný audit log kritických zmien (rezervácie, ceny, tím, oprávnenia)</td><td>Zhoduje sa s naším vlastným zistením vo Fáze 6.2</td><td><span class="badge b-ok">✓ Zhoda s Fázou 6</span></td></tr>
+      <tr class="fact-row"><td>Chýba REST API a podpísané webhooky pre vývojárov/integrátorov</td><td>Neoverované priamo v tejto session — vierohodné, žiadny modul <code>api/webhooks.php</code> ani podobný sa v repozitári nenašiel pri bežnom prehľadávaní</td><td><span class="badge b-partial">◐ Podľa rozboru #2</span></td></tr>
+      <tr class="fact-row"><td>No-show ochrana je len QR/manuálna záloha, nie skutočná predautorizácia karty (Stripe Guard) — treba najprv rozhodnúť dizajn (záloha vs. predautorizácia) než čokoľvek sľubovať</td><td>Zhoduje sa s tým, čo sme si všimli aj my — Stripe/platobná brána nie je v kóde zapojená</td><td><span class="badge b-ok">✓ Zhoda</span></td></tr>
+      <tr class="fact-row"><td>Chýba produktová analytika/meranie (funnel rezervácie, no-show rate, čas manuálnej rezervácie, obsadenosť Kreslo Hunter slotov)</td><td>Nekontrolované — ide skôr o chýbajúci proces/nástroj (napr. Plausible, GA4 eventy) než o kód na overenie</td><td><span class="badge b-partial">◐ Podľa rozboru #2</span></td></tr>
+      <tr class="fact-row"><td>Rezervačný widget je bežný iframe, nie odľahčený "PWA <60 kB" widget, ako tvrdil pôvodný Bookio audit o Rezervos</td><td>Nezávisle sme aj my v tejto sérii ciest nenašli žiadny samostatný PWA widget bundle — konzistentné</td><td><span class="badge b-ok">✓ Zhoda</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 style="font-size:18px;font-weight:800;margin:28px 0 12px;">Fáza 7 — Doplnkové úlohy z rozboru #2 (samostatná, nespája sa s Fázou 6)</h3>
+  <div class="phase" style="border-color:#8b5cf6;">
+    <div class="phase-head">
+      <h3>7.1 — Operačný kalendár (najvyššia priorita rozboru #2)</h3>
+      <span class="meta">Denné jadro produktu</span>
+    </div>
+    <div class="task"><div><span class="name">Drag & drop presun termínu + resize ťahaním za okraj</span><span class="why">Potvrdené missing v kóde. Recepcia/majiteľ dnes musí na každú zmenu termínu otvoriť celý formulár — toto používateľ sám označil, že sa mu na tom páči u konkurencie</span></div><span class="pill p-med">Stredná</span><span class="pill p-high">Vysoký</span></div>
+    <div class="task"><div><span class="name">Resource pohľad kalendára po jednotlivých pracovníkoch (stĺpce)</span><span class="why">Dnes je meno pracovníka len text v bloku termínu, nie samostatný stĺpec — pri viacerých kreslách/zamestnancoch horšia prehľadnosť</span></div><span class="pill p-med">Stredná</span><span class="pill p-med">Stredný</span></div>
+    <div class="task"><div><span class="name">Vizuálne odlíšenie Buffer Time bloku od samotnej služby v kalendári</span><span class="why">Duálny buffer už existuje v dátach (api/services.php), len sa v kalendári vizuálne nerozlišuje od skutočnej rezervácie</span></div><span class="pill p-low">Nízka</span><span class="pill p-med">Stredný</span></div>
+  </div>
+  <div class="phase" style="border-color:#8b5cf6;">
+    <div class="phase-head">
+      <h3>7.2 — Dôveryhodnosť a meranie</h3>
+      <span class="meta">Predtým než sa čokoľvek verejne sľúbi</span>
+    </div>
+    <div class="task"><div><span class="name">Zaviesť základnú produktovú analytiku (funnel rezervácie, no-show rate, obsadenosť Kreslo Hunter slotov)</span><span class="why">Bez merania nevieme dokázať, že Kreslo Hunter/Last Minute alebo Win-Back reálne fungujú a koľko peňazí zachraňujú — dnes je to len "kód existuje", nie odmerané</span></div><span class="pill p-med">Stredná</span><span class="pill p-high">Vysoký</span></div>
+    <div class="task"><div><span class="name">Prejsť verejný web/cenník a overiť, že nikde netvrdíme hotové funkcie, ktoré ešte nie sú (Wallet, push, 2-way iCal, GSM-7)</span><span class="why">Priama zhoda s fact-checkom vyššie — v tejto session sme si overili, že "Pripravujeme" odznak dnes reálne visí len pri nákupe SMS kreditov (components/extensions.php), nie pri Wallet/API, čo je v poriadku, ale oplatí sa to periodicky kontrolovať pri každej novej marketingovej stránke</span></div><span class="pill p-low">Nízka</span><span class="pill p-high">Vysoký</span></div>
+  </div>
+  <div class="phase" style="border-color:#8b5cf6;">
+    <div class="phase-head">
+      <h3>7.3 — Rozšírenia (po stabilizácii jadra)</h3>
+      <span class="meta">Nezačínať pred Fázou 7.1</span>
+    </div>
+    <div class="task"><div><span class="name">Farebné CRM štítky zákazníkov (VIP, Alergia, Problémový...)</span><span class="why">Booqme aj rozbor #2 to zhodne vyzdvihujú, jednoduché na postavenie nad existujúcou CRM tabuľkou</span></div><span class="pill p-low">Nízka</span><span class="pill p-med">Stredný</span></div>
+    <div class="task"><div><span class="name">Podpísané webhooky (booking.created/updated/cancelled) pred verejným REST API</span><span class="why">Rozbor #2 odporúča webhooky ako prvý krok pred plným API — jednoduchšie na zabezpečenie a menšia plocha na zneužitie</span></div><span class="pill p-high">Vysoká</span><span class="pill p-med">Stredný</span></div>
+    <div class="task"><div><span class="name">Skutočné web push notifikácie (VAPID) ako lacnejšia alternatíva k Wallet kartám</span><span class="why">Service worker dnes iba cachuje — skutočný push vyžaduje subscription flow a je jednoduchší na nasadenie než Apple/Google Wallet z Fázy 6.3</span></div><span class="pill p-high">Vysoká</span><span class="pill p-med">Stredný</span></div>
+  </div>
+</section>
+
+<section id="novinky">
+  <h2>Novinky od auditu (overené 2026-09-11)</h2>
+  <p class="section-sub">Fázy 6 aj 7 vyššie ostávajú bezo zmeny presné — žiadna z ich úloh sa odvtedy nepostavila (commity od 5.9. riešili preklady, cron a UI opravy). Znova som ale prešiel kód a potvrdil, že kľúčové medzery z fact-checku stále chýbajú, a zároveň našiel 3 hotové funkcie, ktoré vznikli mimo tejto série auditov a žiaden zo 4 konkurentov ich nemá.</p>
+
+  <div class="callout info">
+    Opätovne overené ako stále chýbajúce, bez zmeny oproti fact-checku vyššie: GSM-7 orezanie diakritiky pri SMS (<code>eurosms.php</code>), Google Reviews auto-redirect, presun rezervácie na kolegu (<code>api/team.php</code>), drag&drop kalendár, web push (<code>sw.js</code>), webhooky. Farebné CRM štítky zákazníkov (<code>dashboard-kontakty.php</code>) majú zatiaľ len voľný textový poznámkový riadok ("napr. alergia na latex"), nie štruktúrované štítky ako VIP/Alergia — plán v Fáze 7.3 to rieši správne.
+  </div>
+
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Nová funkcia (nie je v žiadnom zo 4 auditov)</th><th>Kde v kóde</th><th>Prečo je to dôležité</th></tr></thead>
+    <tbody>
+      <tr class="fact-row"><td>Multi-prevádzka / Owner Groups — prepojenie viacerých vlastných účtov do skupiny so súhrnným pohľadom a rýchlym prepínaním</td><td><code>api/owner_group.php</code>, <code>dashboard-prevadzky.php</code></td><td>Žiadny zo 4 konkurentov toto nemá — silný argument pre majiteľov reťazcov/viacerých pobočiek, chýba mu zatiaľ vlastný riadok v matici vyššie</td></tr>
+      <tr class="fact-row"><td>Reálna zákaznícka segmentácia podľa návštev a útraty (Fáza 3, dokončená)</td><td>commit <code>7503660</code>, <code>dashboard-marketing.php</code></td><td>Posilňuje riadok "Marketing Hub" vo fact-checku — segmentácia už nie je len meniny/narodeniny, ale aj skutočné RFM-podobné delenie</td></tr>
+      <tr class="fact-row"><td>Samostatný systém promo kódov popri affiliate programe</td><td><code>admin-promo-kody.php</code>, <code>includes/promo_code_helper.php</code></td><td>Rozširuje akvizičné nástroje nad rámec toho, čo audity porovnávali — treba doplniť do verejného cenníka/marketingu ako ďalší dôvod prechodu</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="phase" style="border-color:var(--emerald);margin-top:20px;">
+    <div class="phase-head">
+      <h3>Doplnok k plánu — vyplývajúci z týchto zistení</h3>
+      <span class="meta">Nová úloha, nadväzuje na Fázu 6.4</span>
+    </div>
+    <div class="task"><div><span class="name">Pridať Multi-prevádzku a Promo kódy do verejnej matice/cenníka ako diferenciátory</span><span class="why">Obe funkcie reálne existujú a fungujú, no nie sú nikde marketingovo komunikované ani zahrnuté v porovnaní s konkurenciou vyššie — ide o "hotové, ale nepredávané" výhody</span></div><span class="pill p-low">~1 deň</span><span class="pill p-med">Stredný</span></div>
+  </div>
+</section>
+
+<section id="zdroje">
+  <h2>Zdrojové audity</h2>
+  <p class="section-sub">Plné pôvodné hĺbkové audity (26–17–15–16 modulov s desiatkami screenshotov) ostávajú nezmenené — táto stránka ich len syntetizuje a fact-checkuje.</p>
+  <div class="src-grid">
+    <a class="src-card" href="../bookio/index.html">
+      <div class="n">26 modulov · 26 screenshotov</div>
+      <div class="t">Bookio Services</div>
+      <div class="d">Forenzný audit trhového lídra — obfuskované API, iframe cookie trik, SEO kanibalizácia.</div>
+    </a>
+    <a class="src-card" href="../booqme/index.html">
+      <div class="n">17 modulov · 54 screenshotov</div>
+      <div class="t">Booqme.app</div>
+      <div class="d">Wallet karty, Meta Action Button, provízie per-služba, kompletná roadmapa so šprintmi.</div>
+    </a>
+    <a class="src-card" href="../planivo/index.html">
+      <div class="n">15 modulov · 27 screenshotov</div>
+      <div class="t">Planivo.sk</div>
+      <div class="d">Čistý 3-krokový rezervačný flow, pasívna CRM segmentácia, plošný blacklist.</div>
+    </a>
+    <a class="src-card" href="../easybooking/index.html">
+      <div class="n">16 modulov · 24 screenshotov</div>
+      <div class="t">EasyBooking.sk</div>
+      <div class="d">AI import cenníka, audit log, dopyty klientov, skryté platobné provízie 2,5 % + 0,35 €.</div>
+    </a>
+    <a class="src-card" href="../prehladgpt/index.html" style="border-color:#8b5cf6;">
+      <div class="n">Druhý rozbor · iná metodika</div>
+      <div class="t">Prehľad (ChatGPT)</div>
+      <div class="d">Produktovo-manažérsky rámec s prioritami P0–P3, exit kritériami a north-star metrikami. Oddelený od tejto stránky — pozri sekciu vyššie.</div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  Prehľad — Meta-syntéza konkurenčnej inteligencie pre REZERVOS / VoľnéKreslo. Zdrojové audity: September 2026. Fact-check voči zdrojovému kódu vykonaný priamym prehľadaním repozitára (nie zo screenshotov ani marketingového textu). Priečinok: <code>c:\VolneKreslo\prehlad\index.html</code>
+</footer>
+
+</body>
+</html>

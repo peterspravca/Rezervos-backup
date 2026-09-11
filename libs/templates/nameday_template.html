@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap">
+    <style>
+        body { font-family: 'Outfit', 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; background-color: #f7f9fc; color: #333; }
+        .wrapper { width: 100%; max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 25px rgba(0,0,0,0.08); border: 1px solid #eee; }
+        .header { background: #111827; padding: 25px; text-align: center; }
+        .hero { padding: 0; text-align: center; background: #ffffff; }
+        .hero-img { width: 100%; max-width: 600px; height: auto; display: block; border: 0; }
+        .content { padding: 35px 30px; line-height: 1.8; font-size: 16px; color: #4a4a4a; }
+        .footer { padding: 25px; background: #fdfdfd; text-align: center; font-size: 13px; color: #999; border-top: 1px solid #eee; }
+        .btn { display: inline-block; padding: 12px 28px; background-color: #b08042; color: #ffffff !important; text-decoration: none; border-radius: 10px; font-weight: 600; margin-top: 20px; }
+        h1 { font-weight: 700; color: #111827; margin-bottom: 15px; font-size: 24px; }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="header">
+            {{HEADER_HTML}}
+        </div>
+        <div class="hero">
+            <!-- Variant image -->
+            <img src="{{ROOT_URL}}{{IMAGE_PATH}}" class="hero-img" alt="Oslava">
+        </div>
+        <div class="content">
+            <h1>Všetko najlepšie k meninám, {{NAME}}! </h1>
+            <div style="font-size: 15px; color: #444; margin-top: 15px; line-height: 1.7;">
+                {{MESSAGE}}
+            </div>
+            <p style="margin-top: 25px; font-style: italic; color: #777;">
+                S úctou,<br>
+                <strong>{{ESTABLISHMENT_NAME}}</strong>
+            </p>
+        </div>
+        <div class="footer">
+            <div style="margin-bottom: 10px; font-weight: 600;">
+                <a href="https://rezervos.eu" style="color: #b08042; text-decoration: none; margin: 0 8px;">rezervos.eu</a>
+            </div>
+            &copy; {{YEAR}} Rezervos – Všetky práva vyhradené.
+            {{UNSUBSCRIBE_HTML}}
+        </div>
+    </div>
+</body>
+</html>

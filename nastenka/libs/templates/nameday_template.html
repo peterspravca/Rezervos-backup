@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; background-color: #f7f9fc; color: #333; }
+        .wrapper { width: 100%; max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .header { background: #1a1d27; padding: 30px; text-align: center; }
+        .hero { padding: 0; text-align: center; background: #ffffff; }
+        .hero-img { width: 100%; max-width: 600px; height: auto; display: block; border: 0; }
+        .content { padding: 40px; line-height: 1.8; font-size: 16px; color: #4a4a4a; }
+        .footer { padding: 30px; background: #fdfdfd; text-align: center; font-size: 13px; color: #999; border-top: 1px solid #eee; }
+        .btn { display: inline-block; padding: 12px 30px; background-color: #6366f1; color: #ffffff !important; text-decoration: none; border-radius: 8px; font-weight: 600; margin-top: 20px; }
+        h1 { font-weight: 300; letter-spacing: -0.5px; }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <img src="{{ROOT_URL}}logo-white.png" alt="VUETO Logo" style="height: 35px; border:0;">
+        </div>
+        <div class="hero">
+            <!-- Variant image will be swapped here -->
+            <img src="{{ROOT_URL}}libs/templates/images/{{VARIANT}}" class="hero-img" alt="Oslava">
+        </div>
+        <div class="content">
+            <h1 style="color: #1a1d27; margin-bottom: 20px; font-size: 28px;">Všetko najlepšie k meninám, {{NAME}}!</h1>
+            <div style="font-size: 16px; color: #444; margin-top: 20px;">
+                {{MESSAGE}}
+            </div>
+            <p style="margin-top: 30px; font-style: italic;">
+                Váš tím VUETO
+            </p>
+        </div>
+        <div class="footer">
+            <div style="margin-bottom: 15px; font-weight: 600;">
+                <a href="https://vueto.sk" style="color: #6366f1; text-decoration: none; margin: 0 8px;">vueto.sk</a> 
+                <span style="color: #ccc;">|</span>
+                <a href="https://www.facebook.com/vueto.sk" style="color: #6366f1; text-decoration: none; margin: 0 8px;">Facebook</a>
+                <span style="color: #ccc;">|</span>
+                <a href="https://www.instagram.com/vueto.sk" style="color: #6366f1; text-decoration: none; margin: 0 8px;">Instagram</a>
+            </div>
+            &copy; 2026 VUETO CRM.
+        </div>
+    </div>
+</body>
+</html>

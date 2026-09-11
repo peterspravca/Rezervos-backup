@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+    body {
+        background-color: #0f111a; /* Tmavé farby z vášho CRM */
+        color: #e2e8f0;
+        font-family: 'Outfit', sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 50px;
+    }
+    .container {
+        display: flex;
+        gap: 50px;
+        margin-top: 30px;
+    }
+    .panel {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 30px;
+        border-radius: 12px;
+        text-align: center;
+    }
+    .btn-group {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    
+    /* Vzhľad tlačidiel */
+    .btn {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    /* OBYČAJNÉ EMOJI (Starý štýl) */
+    .btn-emoji {
+        font-size: 1.25rem;
+    }
+
+    /* NOVÝ ŠTÝL - Minimalizmus (Všetko sivé, farba len po ukázaní myšou) */
+    .btn-minimal {
+        color: #64748b; /* Tlmená šedá */
+        background: rgba(255, 255, 255, 0.02);
+        border-color: rgba(255, 255, 255, 0.05);
+    }
+    .btn-minimal:hover {
+        background: rgba(255, 255, 255, 0.06);
+    }
+    
+    /* Vnútro farbiace pri hoveri */
+    .btn-minimal-pin:hover { color: #e2e8f0; } /* Svetlejšia pri hoveri */
+    .btn-minimal-edit:hover { color: #f59e0b; } /* Oranžová */
+    .btn-minimal-trash:hover { color: #ef4444; } /* Červená */
+
+    /* Pre pripnutý stav */
+    .btn-minimal-pinned {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+</head>
+<body>
+
+    <h2>Porovnanie dizajnu ikon</h2>
+    <p style="color: #94a3b8; max-width: 600px; text-align: center;">
+        Priamo v prostredí rovnakých farieb, aké máte na Nástenke. Pozrite sa, aký obrovský rozdiel robí moderný prístup s farbenými vektormi oproti klasickým (hrubým) Windows emoji.
+    </p>
+
+    <div class="container">
+        
+        <!-- Starý štýl (Emoji) -->
+        <div class="panel">
+            <h3 style="margin-top:0;">Súčasné Emoji</h3>
+            <p style="font-size: 0.85rem; color:#64748b;">(Ako z detskej omaľovánky,<br>v prehliadači vyzerajú hrubo)</p>
+            <div class="btn-group">
+                <div class="btn btn-emoji" title="Pripnúť">📌</div>
+                <div class="btn btn-emoji" title="Upraviť">✏️</div>
+                <div class="btn btn-emoji" title="Zmazať">🗑️</div>
+            </div>
+        </div>
+
+        <!-- Nový štýl (Vektory so Soft Colors) -->
+        <div class="panel" style="border-color: #6366f1; box-shadow: 0 4px 20px rgba(99, 102, 241, 0.1);">
+            <h3 style="margin-top:0; color: #818cf8;">Navrhovaný Profi Štýl (Minimal)</h3>
+            <p style="font-size: 0.85rem; color:#64748b;">(Úplne sivé a potichu, pútajú<br>pozornosť len farbou pri <b>prejdení myšou</b>.)</p>
+            <div class="btn-group">
+                <!-- Nepripnuté (šedé a nenápadné) -->
+                <div style="display:flex; flex-direction:column; align-items:center; gap:5px;">
+                    <span style="font-size:0.6rem; color:#64748b; text-transform:uppercase;">Nepripnuté<br>(Skúste myšou)</span>
+                    <div class="btn btn-minimal btn-minimal-pin" title="Pripnúť na vrch">
+                        <i class="ti ti-pin"></i>
+                    </div>
+                </div>
+
+                <!-- Pripnuté (klasická emoji ikona) -->
+                <div style="display:flex; flex-direction:column; align-items:center; gap:5px;">
+                    <span style="font-size:0.6rem; color:#818cf8; text-transform:uppercase; font-weight:bold;">Pripnuté<br>&nbsp;</span>
+                    <div class="btn btn-minimal btn-minimal-pinned" title="Odopnúť">
+                        <span style="font-size: 1.1rem; filter: saturate(1.2);">📌</span>
+                    </div>
+                </div>
+                
+                <div style="display:flex; flex-direction:column; align-items:center; gap:5px;">
+                    <span style="font-size:0.6rem; color:transparent;">-<br>-</span>
+                    <div class="btn btn-minimal btn-minimal-edit" title="Upraviť">
+                        <i class="ti ti-pencil"></i>
+                    </div>
+                </div>
+                
+                <div style="display:flex; flex-direction:column; align-items:center; gap:5px;">
+                    <span style="font-size:0.6rem; color:transparent;">-<br>-</span>
+                    <div class="btn btn-minimal btn-minimal-trash" title="Zmazať">
+                        <i class="ti ti-trash"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

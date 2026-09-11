@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signature Debug</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .pad-wrap {
+            width: 100%; max-width: 500px; height: 300px;
+            border: 2px dashed #ccc; position: relative;
+            touch-action: none; background: #fafafa;
+        }
+        canvas { width: 100%; height: 100%; touch-action: none; }
+        .btns { margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h3>Podpíšte sa sem:</h3>
+    <div class="pad-wrap">
+        <canvas id="sig"></canvas>
+    </div>
+    <div class="btns">
+        <button onclick="clearPad()">Vymazať</button>
+        <button onclick="savePad()">Uložiť</button>
+    </div>
+    <div id="status" style="margin-top:10px; color: blue;"></div>
+
+    <script>
+        const canvas = document.getElementById('sig');
+        const ctx = canvas.getContext('2d');
+        let drawing = false;
+
+        function resize() {
+            const ratio = window.devicePixelRatio || 1;
+            canvas.width = canvas.offsetWidth * ratio;
+            canvas.height = canvas.offsetHeight * ratio;
+            ctx.scale(ratio, ratio);
+            ctx.strokeStyle = "red"; // Red for visibility in debug
+            ctx.lineWidth = 3;
+            ctx.lineCap = "round";
+            console.log('Resized to:', canvas.width, canvas.height, 'ratio:', ratio);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        function getPos(e) {
+            const rect = canvas.getBoundingClientRect();
+            // Mouse/Pointer events have clientX/Y
+            // Touch events have touches[0].clientX/Y
+            const cx = e.clientX || (e.touches ? e.touches[0].clientX : 0);
+            const cy = e.clientY || (e.touches ? e.touches[0].clientY : 0);
+            return { x: cx - rect.left, y: cy - rect.top };
+        }
+
+        const start = (e) => {
+            drawing = true;
+            const p = getPos(e);
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            // Don't prevent default on desktop unless it's touch
+            if (e.type.startsWith('touch')) e.preventDefault();
+        };
+
+        const draw = (e) => {
+            if (!drawing) return;
+            const p = getPos(e);
+            ctx.lineTo(p.x, p.y);
+            ctx.stroke();
+            if (e.type.startsWith('touch')) e.preventDefault();
+        };
+
+        const stop = () => { drawing = false; };
+
+        // Try the most basic listeners first
+        canvas.addEventListener('mousedown', start);
+        canvas.addEventListener('mousemove', draw);
+        window.addEventListener('mouseup', stop);
+
+        canvas.addEventListener('touchstart', start, {passive:false});
+        canvas.addEventListener('touchmove', draw, {passive:false});
+        window.addEventListener('touchend', stop);
+
+        function clearPad() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            document.getElementById('status').innerText = 'Vymazané';
+        }
+
+        function savePad() {
+            const dataUrl = canvas.toDataURL();
+            document.getElementById('status').innerText = 'Uložené (dĺžka: ' + dataUrl.length + ')';
+            console.log(dataUrl);
+        }
+    </script>
+</body>
+</html>

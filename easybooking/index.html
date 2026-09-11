@@ -1,0 +1,2523 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Language" content="sk">
+    <meta name="language" content="Slovak">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>EasyBooking.sk – Master Analýza & Kompletný Hĺbkový Audit | REZERVOS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap&subset=latin,latin-ext" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-body: #0a0e17;
+            --bg-card: rgba(17, 24, 39, 0.88);
+            --bg-card-hover: rgba(26, 36, 56, 0.95);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-active: rgba(99, 102, 241, 0.4);
+            
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --primary-glow: rgba(99, 102, 241, 0.35);
+            
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f43f5e;
+            --accent-cyan: #06b6d4;
+            --accent-purple: #a855f7;
+            
+            --text-main: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 10%, rgba(99, 102, 241, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 90% 20%, rgba(245, 158, 11, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 50% 70%, rgba(16, 185, 129, 0.07) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-card:hover {
+            border-color: var(--border-active);
+        }
+
+        /* Sticky Nav Header - Fully Mobile Responsive */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(10, 14, 23, 0.92);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 16px;
+        }
+
+        .nav-container {
+            max-width: 1560px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-main);
+            flex-shrink: 0;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary), #4f46e5);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.1rem;
+            box-shadow: 0 0 16px var(--primary-glow);
+        }
+
+        .brand-title {
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .brand-subtitle {
+            font-size: 0.72rem;
+            color: var(--accent-amber);
+            font-weight: 700;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Search input in header */
+        .search-box-header {
+            position: relative;
+            flex: 1;
+            max-width: 280px;
+        }
+
+        .search-box-header input {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 7px 12px 7px 34px;
+            color: #fff;
+            font-size: 0.82rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-box-header input:focus {
+            border-color: var(--primary);
+            background: rgba(15, 23, 42, 0.95);
+        }
+
+        .search-box-header i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .nav-link-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .nav-link-btn:hover {
+            color: #fff;
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .nav-link-btn.highlight {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        /* Mobile Header */
+        @media (max-width: 820px) {
+            .nav-btn-text {
+                display: none !important;
+            }
+            .nav-link-btn {
+                padding: 7px 11px;
+                font-size: 0.95rem;
+                border-radius: 9px;
+                justify-content: center;
+            }
+            .nav-links {
+                gap: 6px;
+            }
+            .search-box-header {
+                max-width: 170px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .brand-subtitle {
+                display: none;
+            }
+            .logo-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 0.95rem;
+                border-radius: 8px;
+            }
+            .brand-title {
+                font-size: 0.95rem;
+            }
+            .brand-badge {
+                gap: 8px;
+            }
+            .search-box-header {
+                max-width: 110px;
+            }
+            .search-box-header input {
+                padding: 6px 8px 6px 28px;
+                font-size: 0.74rem;
+            }
+            .search-box-header i {
+                left: 9px;
+                font-size: 0.72rem;
+            }
+            .nav-link-btn {
+                padding: 7px 9px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1560px;
+            margin: 0 auto;
+            padding: 20px 14px 80px;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                padding: 30px 24px 80px;
+            }
+        }
+
+        /* Hero */
+        .hero {
+            padding: 24px 0 16px;
+            text-align: center;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(99, 102, 241, 0.12);
+            color: var(--primary-light);
+            border: 1px solid rgba(99, 102, 241, 0.25);
+            padding: 5px 14px;
+            border-radius: 30px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .hero h1 {
+            font-size: clamp(1.8rem, 5vw, 2.9rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1.18;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: clamp(0.9rem, 2.5vw, 1.15rem);
+            color: var(--text-secondary);
+            max-width: 860px;
+            margin: 0 auto 20px;
+            line-height: 1.5;
+        }
+
+        /* Target Meta Bar */
+        .target-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 14px;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .target-bar strong {
+            color: #fff;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .meta-tag {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+        }
+
+        /* Top KPI Stats Grid */
+        .stats-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        @media (min-width: 900px) {
+            .stats-summary-grid {
+                grid-template-columns: repeat(5, 1fr);
+                gap: 16px;
+            }
+        }
+
+        .stat-box {
+            padding: 14px;
+            border-radius: 14px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .stat-icon-wrap {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.05rem;
+            flex-shrink: 0;
+        }
+
+        .stat-val {
+            font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.1;
+        }
+
+        .stat-label {
+            font-size: 0.68rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            margin-top: 2px;
+        }
+
+        /* Sticky Navigation Pills */
+        .module-nav-wrapper {
+            position: sticky;
+            top: 58px;
+            z-index: 900;
+            background: rgba(10, 14, 23, 0.96);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 8px 0;
+            margin: 0 -14px 24px;
+            padding-left: 14px;
+            padding-right: 14px;
+            border-bottom: 1px solid var(--border);
+            overflow-x: auto;
+            white-space: nowrap;
+            display: flex;
+            gap: 6px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .mod-pill {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .mod-pill:hover, .mod-pill.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        .mod-pill.pill-star {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border-color: rgba(16, 185, 129, 0.35);
+        }
+
+        /* Section Layout */
+        .audit-section {
+            margin-bottom: 40px;
+            scroll-margin-top: 110px;
+        }
+
+        .section-headline {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        @media (min-width: 640px) {
+            .section-headline {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+
+        .section-headline-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-num-badge {
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--primary-light);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+
+        .section-title {
+            font-size: clamp(1.2rem, 3.5vw, 1.5rem);
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .section-route {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.04);
+            padding: 3px 8px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            align-self: flex-start;
+        }
+
+        /* Audit Grid */
+        .audit-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        @media (min-width: 1024px) {
+            .audit-grid {
+                grid-template-columns: 1.15fr 0.85fr;
+                gap: 24px;
+            }
+        }
+
+        .card-inner {
+            padding: 16px;
+        }
+
+        @media (min-width: 640px) {
+            .card-inner {
+                padding: 24px;
+            }
+        }
+
+        .card-title {
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feature-bullet {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            line-height: 1.45;
+        }
+
+        .feature-bullet i {
+            color: var(--accent-green);
+            font-size: 0.8rem;
+            margin-top: 4px;
+            flex-shrink: 0;
+        }
+
+        .feature-bullet strong {
+            color: #fff;
+        }
+
+        /* Preview Screenshot Container */
+        .preview-shot-container {
+            position: relative;
+            background: #090d16;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+
+        .preview-shot-container img {
+            width: 100%;
+            height: auto;
+            max-height: 380px;
+            object-fit: cover;
+            object-position: top;
+            display: block;
+        }
+
+        .shot-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(10, 14, 23, 0.95) 100%);
+            padding: 12px 10px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            font-size: 0.75rem;
+            color: #cbd5e1;
+        }
+
+        .shot-zoom-tag {
+            background: rgba(99, 102, 241, 0.85);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        /* Switcher sub-buttons for images */
+        .thumb-switcher {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+
+        .thumb-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .thumb-btn:hover, .thumb-btn.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        /* Verdict Box */
+        .verdict-box {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (min-width: 550px) {
+            .verdict-box {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .verdict-col {
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-size: 0.8rem;
+        }
+
+        .verdict-col.pro { border-left: 3px solid var(--accent-green); }
+        .verdict-col.con { border-left: 3px solid var(--accent-rose); }
+
+        .verdict-col h5 {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .verdict-col.pro h5 { color: #34d399; }
+        .verdict-col.con h5 { color: #fb7185; }
+
+        .verdict-col ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .verdict-col li {
+            margin-bottom: 3px;
+            color: #cbd5e1;
+            line-height: 1.35;
+        }
+
+        /* Pill tags */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 7px;
+            border-radius: 5px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .pill-blue { background: rgba(59, 130, 246, 0.15); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.3); }
+        .pill-green { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .pill-amber { background: rgba(245, 158, 11, 0.15); color: #fde68a; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .pill-rose { background: rgba(244, 63, 94, 0.15); color: #fda4af; border: 1px solid rgba(244, 63, 94, 0.3); }
+        .pill-purple { background: rgba(168, 85, 247, 0.15); color: #d8b4fe; border: 1px solid rgba(168, 85, 247, 0.3); }
+        .pill-cyan { background: rgba(6, 182, 212, 0.15); color: #67e8f9; border: 1px solid rgba(6, 182, 212, 0.3); }
+
+        /* Pricing Grid */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        @media (min-width: 850px) {
+            .pricing-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .price-card {
+            padding: 20px;
+            border-radius: 16px;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .price-card.featured {
+            border-color: var(--primary);
+            background: linear-gradient(180deg, rgba(99, 102, 241, 0.08) 0%, rgba(15, 23, 42, 0.8) 100%);
+        }
+
+        .price-amount {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #fff;
+            margin: 8px 0 2px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .price-period {
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+        }
+
+        .price-limits {
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            font-size: 0.78rem;
+            color: #cbd5e1;
+            margin-bottom: 12px;
+        }
+
+        .price-features-list {
+            list-style: none;
+            padding: 0;
+            font-size: 0.82rem;
+            color: #cbd5e1;
+        }
+
+        .price-features-list li {
+            padding: 5px 0;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        /* Interactive Simulator & Calculator */
+        .calc-textarea {
+            width: 100%;
+            height: 90px;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px;
+            color: #fff;
+            font-size: 0.85rem;
+            outline: none;
+        }
+
+        .calc-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px;
+            margin: 12px 0;
+        }
+
+        @media (min-width: 600px) {
+            .calc-stats {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .calc-stat {
+            text-align: center;
+        }
+
+        .calc-stat-label {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .calc-stat-val {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-main);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Phone mockup */
+        .phone-mockup {
+            width: 100%;
+            max-width: 300px;
+            height: 480px;
+            background: #000;
+            border-radius: 36px;
+            padding: 10px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.15);
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .phone-screen {
+            background: #18191c;
+            flex: 1;
+            border-radius: 26px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .phone-header {
+            padding: 24px 12px 8px;
+            background: #23252b;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .phone-chat {
+            flex: 1;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .sms-bubble {
+            background: #2d323e;
+            color: #f1f5f9;
+            padding: 10px 12px;
+            border-radius: 14px 14px 14px 4px;
+            font-size: 0.78rem;
+            line-height: 1.4;
+            word-break: break-word;
+        }
+
+        /* Mobile Scrollable Tables */
+        .table-scroll-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-top: 14px;
+        }
+
+        .comp-table {
+            width: 100%;
+            min-width: 640px;
+            border-collapse: collapse;
+            font-size: 0.84rem;
+            text-align: left;
+        }
+
+        .comp-table th, .comp-table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comp-table th {
+            background: rgba(15, 23, 42, 0.9);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-secondary);
+        }
+
+        .comp-table td.col-rezervos {
+            background: rgba(13, 148, 136, 0.08);
+            font-weight: 600;
+            color: #2dd4bf;
+        }
+
+        .comp-table td.col-competitor {
+            background: rgba(245, 158, 11, 0.05);
+            color: #fde68a;
+        }
+
+        /* Lightbox */
+        .lightbox-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 99999;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .lightbox-modal.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 8px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.9);
+            object-fit: contain;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 14px;
+            right: 16px;
+            color: #fff;
+            font-size: 28px;
+            cursor: pointer;
+            background: rgba(255,255,255,0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 60px;
+            border-top: 1px solid var(--border);
+            padding: 30px 16px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            background: rgba(10, 14, 23, 0.95);
+        }
+    </style>
+</head>
+<body>
+<a href="../prehlad/index.html" style="position:fixed;bottom:20px;right:20px;z-index:99999;display:inline-flex;align-items:center;gap:8px;background:#111827;color:#60a5fa;border:1px solid #2d3748;border-radius:10px;padding:10px 16px;font:700 13px/1.2 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.4);">&larr; Späť na Prehľad</a>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="brand-badge">
+                <div class="logo-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <div>
+                    <div class="brand-title">Rezervos</div>
+                    <span class="brand-subtitle">vs EasyBooking.sk</span>
+                </div>
+            </a>
+
+            <div class="search-box-header">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="moduleFilterInput" placeholder="Hľadať funkciu..." oninput="filterModules(this.value)">
+            </div>
+
+            <div class="nav-links">
+                <a href="../booqme/index.html" class="nav-link-btn" style="background: rgba(99, 102, 241, 0.15); color: #a5b4fc; border-color: rgba(99, 102, 241, 0.3);" title="Prejsť na Audit Booqme.app"><i class="fa-solid fa-cube"></i> <span class="nav-btn-text">Audit Booqme</span></a>
+                <a href="#lepsie-ako-my" class="nav-link-btn highlight" title="Čo majú lepšie?"><i class="fa-solid fa-star"></i> <span class="nav-btn-text">Čo majú lepšie?</span></a>
+                <a href="#porovnanie-rezervos" class="nav-link-btn highlight" style="background: rgba(13, 148, 136, 0.2); color: #2dd4bf; border-color: rgba(13, 148, 136, 0.4);" title="Návrhy pre Rezervos"><i class="fa-solid fa-rocket"></i> <span class="nav-btn-text">Návrhy pre Rezervos</span></a>
+                <a href="#tarify" class="nav-link-btn" title="Cenník & Balíky"><i class="fa-solid fa-tags"></i> <span class="nav-btn-text">Cenník</span></a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Hero Header -->
+        <section class="hero">
+            <div class="hero-tag">
+                <i class="fa-solid fa-microchip"></i> 100% Kompletný audit všetkých funkcií & nastavení EasyBooking
+            </div>
+            <h1>EasyBooking.sk – Master Analýza</h1>
+            <p>
+                Technická a biznis dekonštrukcia všetkých 16 modulov, 24 obrazoviek, porovnávacia matrica, cenová pitva a <strong>otvorené zhodnotenie toho, čo má EasyBooking lepšie spracované než Rezervos a kde brutálne zlyháva</strong>.
+            </p>
+
+            <div class="target-bar">
+                <span>Cieľový portál: <strong>system.easybooking.sk/app</strong></span>
+                <span class="meta-tag">Konto: <strong>karernictvo@hotapobv.eu</strong></span>
+                <span class="meta-tag">Prevádzka: <strong>KadernickyServis s.r.o.</strong></span>
+                <span class="meta-tag">SMS cena: <strong>0.083 € / SMS</strong></span>
+                <span class="meta-tag">Provízia platieb: <strong>2,5% + 0,35 €</strong></span>
+                <span class="meta-tag">Screenshoty: <strong>24 originálov</strong></span>
+            </div>
+        </section>
+
+        <!-- High-Level Stats -->
+        <div class="stats-summary-grid">
+            <div class="stat-box">
+                <div class="stat-icon-wrap" style="background: rgba(99, 102, 241, 0.15); color: #818cf8;">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+                <div>
+                    <div class="stat-val">16</div>
+                    <div class="stat-label">Modulov</div>
+                </div>
+            </div>
+
+            <div class="stat-box">
+                <div class="stat-icon-wrap" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24;">
+                    <i class="fa-solid fa-comment-sms"></i>
+                </div>
+                <div>
+                    <div class="stat-val">0.083 €</div>
+                    <div class="stat-label">Cena za 1 SMS</div>
+                </div>
+            </div>
+
+            <div class="stat-box">
+                <div class="stat-icon-wrap" style="background: rgba(244, 63, 94, 0.15); color: #f43f5e;">
+                    <i class="fa-solid fa-credit-card"></i>
+                </div>
+                <div>
+                    <div class="stat-val">2.5% + 0.35€</div>
+                    <div class="stat-label">Platobná provízia</div>
+                </div>
+            </div>
+
+            <div class="stat-box">
+                <div class="stat-icon-wrap" style="background: rgba(234, 179, 8, 0.15); color: #eab308;">
+                    <i class="fa-solid fa-eye-slash"></i>
+                </div>
+                <div>
+                    <div class="stat-val">29.90 €</div>
+                    <div class="stat-label">Poplatok za logo</div>
+                </div>
+            </div>
+
+            <div class="stat-box">
+                <div class="stat-icon-wrap" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
+                    <i class="fa-solid fa-images"></i>
+                </div>
+                <div>
+                    <div class="stat-val">24</div>
+                    <div class="stat-label">Screenshotov</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sticky Module Navigation -->
+        <div class="module-nav-wrapper">
+            <a href="#lepsie-ako-my" class="mod-pill pill-star"><i class="fa-solid fa-star"></i> ČO MAJÚ LEPŠIE AKO MY</a>
+            <a href="#porovnanie-rezervos" class="mod-pill pill-star" style="background: rgba(13, 148, 136, 0.2); color: #2dd4bf; border-color: rgba(13, 148, 136, 0.4);"><i class="fa-solid fa-rocket"></i> ZHODNOTENIE PRE REZERVOS</a>
+            <a href="#sms-deepdive" class="mod-pill"><i class="fa-solid fa-comment-dots"></i> SMS Engine & Kalkulačka</a>
+            <a href="#mod-1" class="mod-pill"><i class="fa-solid fa-calendar-days"></i> 1. Kalendár</a>
+            <a href="#mod-2" class="mod-pill"><i class="fa-solid fa-calendar-plus"></i> 2. Nová rezervácia</a>
+            <a href="#mod-3" class="mod-pill"><i class="fa-solid fa-list-check"></i> 3. Zoznam termínov</a>
+            <a href="#mod-4" class="mod-pill"><i class="fa-solid fa-inbox"></i> 4. Dopyty klientov</a>
+            <a href="#mod-5" class="mod-pill"><i class="fa-solid fa-users"></i> 5. Zákazníci & Štítky</a>
+            <a href="#mod-6" class="mod-pill"><i class="fa-solid fa-scissors"></i> 6. Služby & Kategórie</a>
+            <a href="#mod-7" class="mod-pill"><i class="fa-solid fa-user-gear"></i> 7. Zamestnanci & Tím</a>
+            <a href="#mod-8" class="mod-pill"><i class="fa-solid fa-gift"></i> 8. Poukážky & Zľavy</a>
+            <a href="#mod-9" class="mod-pill"><i class="fa-solid fa-star-half-stroke"></i> 9. Recenzie</a>
+            <a href="#mod-10" class="mod-pill"><i class="fa-solid fa-chart-line"></i> 10. Štatistiky</a>
+            <a href="#mod-11" class="mod-pill"><i class="fa-solid fa-wallet"></i> 11. Peňaženka & Balíky</a>
+            <a href="#mod-12" class="mod-pill"><i class="fa-solid fa-sliders"></i> 12. Rezervačný formulár</a>
+            <a href="#mod-13" class="mod-pill"><i class="fa-solid fa-clock"></i> 13. Otváracie hodiny</a>
+            <a href="#mod-14" class="mod-pill"><i class="fa-solid fa-shield-halved"></i> 14. Audit Log zmien</a>
+            <a href="#mod-15" class="mod-pill"><i class="fa-solid fa-file-import"></i> 15. Import dát</a>
+            <a href="#mod-16" class="mod-pill"><i class="fa-solid fa-building"></i> 16. Profil salónu</a>
+            <a href="#tarify" class="mod-pill"><i class="fa-solid fa-tags"></i> Tarify & Poplatky</a>
+            <a href="#matrix" class="mod-pill"><i class="fa-solid fa-scale-balanced"></i> Porovnanie</a>
+        </div>
+
+        <!-- SPECIAL HERO SECTION: ČO MAJÚ LEPŠIE AKO MY -->
+        <section class="audit-section" id="lepsie-ako-my" style="background: rgba(245, 158, 11, 0.05); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 20px; padding: 20px; margin-bottom: 50px;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                <div style="width: 36px; height: 36px; border-radius: 10px; background: #f59e0b; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.1rem;">
+                    <i class="fa-solid fa-eye"></i>
+                </div>
+                <div>
+                    <h2 style="font-size: clamp(1.3rem, 4vw, 1.8rem); font-weight: 800; color: #fff;">Čo má EasyBooking spracované LEPŠIE ako my?</h2>
+                    <div style="font-size: 0.8rem; color: #fbbf24; font-weight: 600;">Úprimná sebareflexia a zoznam 8 konkrétnych funkcií, kde má EasyBooking dobré nápady</div>
+                </div>
+            </div>
+
+            <p style="font-size: 0.88rem; color: #cbd5e1; margin-bottom: 20px; line-height: 1.5;">
+                Aby sme EasyBooking na slovenskom trhu porazili a prebrali ich zákazníkov, musíme presne poznať ich silné zbrane. Toto je <strong>8 konkrétnych funkcionalít a riešení</strong>, kde EasyBooking zabodoval a ktoré odporúčam v modernejšej podobe implementovať do Rezervos:
+            </p>
+
+            <div style="display: grid; grid-template-columns: 1fr; gap: 14px;">
+                <!-- Better 1 -->
+                <div class="glass-card card-inner" style="border-left: 4px solid #10b981;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                        <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">1. AI nahrávanie cenníka z fotografie alebo PDF dokumentu</h4>
+                        <span class="pill pill-green">Top Funkcia #1</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.45;">
+                        Založenie nového účtu je pre kaderníčku nočná mora, keď musí ručne prepisovať 40 služieb s časmi a cenami. EasyBooking má vstavané OCR / AI rozpoznávanie cenníka. Majiteľka odfotí svoj papierový cenník z nástenky salónu alebo nahrá PDF a systém automaticky extrahuje názvy, kategórie a ceny do tabuľky na schválenie. 
+                        <strong>Odporúčanie pre Rezervos:</strong> Integrovať Gemini Vision API pre 1-klikové načítanie cenníka z fotky do 3 sekúnd!
+                    </p>
+                </div>
+
+                <!-- Better 2 -->
+                <div class="glass-card card-inner" style="border-left: 4px solid #f59e0b;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                        <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">2. Samostatný modul "Zákaznícke dopyty" (Inquiries / Waitlist zber)</h4>
+                        <span class="pill pill-amber">Záchranná Sieť</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.45;">
+                        Keď má salón plný kalendár na 3 týždne dopredu, zákazník na webe bežne odíde ku konkurencii. EasyBooking ponúka vo formulári možnosť: <em>"Nenašli ste termín? Zanechajte dopyt."</em> Tieto požiadavky padajú do prehľadného zoznamu v menu <code>/inquiries</code>. Kaderníčka tak vie okamžite zaplniť dieru po stornovanej rezervácii.
+                    </p>
+                </div>
+
+                <!-- Better 3 -->
+                <div class="glass-card card-inner" style="border-left: 4px solid #3b82f6;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                        <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">3. Transparentný Audit Log systémových aktivít tímu</h4>
+                        <span class="pill pill-blue">Bezpečnosť Prevádzky</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.45;">
+                        Na podstránke <code>/audit-log</code> EasyBooking zaznamenáva každú zmenu: kto vytvoril rezerváciu, kto posunul čas, kto zmazal termín alebo kto prepísal cenu služby. V salónoch s 3-5 zamestnancami sa často stáva, že niekto omylom vymaže klientku a zvalí to na systém. Tento log okamžite ukáže pravdu.
+                    </p>
+                </div>
+
+                <!-- Better 4 -->
+                <div class="glass-card card-inner" style="border-left: 4px solid #a855f7;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                        <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">4. Flexibilné pravidlá časového predstihu (Lead Time Control)</h4>
+                        <span class="pill pill-purple">Praktické Nastavenie</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.45;">
+                        V základných nastaveniach má EasyBooking jednoduché posuvníky: <em>Minimálny predstih pre vytvorenie termínu (napr. min. 2 hodiny vopred)</em> a <em>Maximálny predstih (napr. max. 60 dní vopred)</em>. Taktiež termín bezplatného storna (napr. max. 24 hodín pred termínom). Zabraňuje to situáciám, kedy sa klient objedná 10 minút pred začiatkom, keď je kaderníčka na obede.
+                    </p>
+                </div>
+
+                <!-- Better 5 -->
+                <div class="glass-card card-inner" style="border-left: 4px solid #06b6d4;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                        <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">5. Jednoduché prepínanie týždenného rozvrhu prevádzky a pauzy</h4>
+                        <span class="pill pill-cyan">Prehľadné UI</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.45;">
+                        Otváracie hodiny sú v EasyBooking riešené veľmi ergonomicky: 7 riadkov pre dni v týždni, prepínač otvorené/zatvorené, od-do a obedná prestávka od-do. Žiadne zbytočné klikanie do hĺbkových modalov.
+                    </p>
+                </div>
+
+                <!-- Better 6 -->
+                <div class="glass-card card-inner" style="border-left: 4px solid #ec4899;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                        <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">6. Dopytové a skupinové služby priamo v cenníku</h4>
+                        <span class="pill pill-rose">Rozšírenie Služieb</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.45;">
+                        Pri každej službe je možné zaškrtnúť, či ide o štandardnú rezerváciu, alebo <em>"Dopytovú službu"</em> (klient pošle požiadavku a salón potvrdí cenu individuálne, napr. svadobný účes), alebo <em>"Skupinový termín"</em> (napr. jóga, workshop s limitom 10 účastníkov).
+                    </p>
+                </div>
+
+                <!-- Better 7 -->
+                <div class="glass-card card-inner" style="border-left: 4px solid #eab308;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                        <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">7. Farebný vzorkovník a okamžitý náhľad rezervačného widgetu</h4>
+                        <span class="pill pill-amber">Vzhľad</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.45;">
+                        V sekcii nastavenia formulára si majiteľ vyberá farbu z pripravenej palety alebo zadá vlastný HEX kód. Okamžite vedľa vidí živý náhľad, ako bude widget vyzerať na jeho webovej stránke.
+                    </p>
+                </div>
+
+                <!-- Better 8 -->
+                <div class="glass-card card-inner" style="border-left: 4px solid #6366f1;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                        <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">8. Sprievodca importom dát z iných systémov</h4>
+                        <span class="pill pill-blue">Migrácia</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.45;">
+                        EasyBooking má vyhradenú stránku <code>/Onboarding/Import</code>, kde majiteľom sľubuje asistenciu pri prechode zo systémov Reservio, Booqme či papiera. Znižuje to psychologickú bariéru zmeny systému.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: SMS ENGINE & KALKULAČKA -->
+        <section class="audit-section" id="sms-deepdive" data-search="sms kalkulacka premenne sablony alias credit 70 znakov diakritika cena">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge"><i class="fa-solid fa-comment-dots"></i></span>
+                    <h2 class="section-title">SMS Notifikačný Engine & Interaktívna Kalkulačka</h2>
+                </div>
+                <span class="section-route">system.easybooking.sk/sms-settings</span>
+            </div>
+
+            <div class="audit-grid">
+                <!-- Left: Simulator & Calculator -->
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-calculator" style="color: var(--accent-cyan);"></i> Testovací simulátor dĺžky a ceny SMS (EasyBooking: 0.083 € / ks)</div>
+                    
+                    <div style="margin-bottom: 12px;">
+                        <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 4px;">Vyberte predvolenú šablónu z EasyBooking:</label>
+                        <select id="smsTemplateSelect" onchange="applySmsTemplate(this.value)" style="width: 100%; background: #0f172a; border: 1px solid var(--border); color: #fff; padding: 8px 10px; border-radius: 8px; font-size: 0.82rem;">
+                            <option value="pripomienka">Pripomienka: Dobrý deň, pripomíname Váš termín zajtra o {cas} v {salon}. Tešíme sa!</option>
+                            <option value="potvrdenie">Potvrdenie: Vaša rezervácia v salóne {salon} dňa {datum} o {cas} bola úspešne potvrdená.</option>
+                            <option value="storno">Zrušenie: Dobrý deň, Vaša rezervácia dňa {datum} bola zrušená. V prípade otázok volajte {telefon}.</option>
+                            <option value="dopyt">Dopyt: Uvoľnil sa termín na službu {sluzba} dňa {datum}. Ak máte záujem, odpovedzte na SMS.</option>
+                        </select>
+                    </div>
+
+                    <textarea id="liveSmsInput" class="calc-textarea" oninput="recalcSms()">Dobrý deň, pripomíname Váš termín zajtra o 14:30 v KadernickyServis. Tešíme sa!</textarea>
+
+                    <div style="display: flex; gap: 8px; margin-top: 8px;">
+                        <button onclick="stripAccentsLive()" style="background: rgba(99, 102, 241, 0.2); border: 1px solid var(--primary); color: #818cf8; padding: 6px 12px; border-radius: 8px; font-size: 0.78rem; font-weight: 700; cursor: pointer;">
+                            <i class="fa-solid fa-spell-check"></i> Odstrániť diakritiku (GSM Strip - Úspora 50%)
+                        </button>
+                    </div>
+
+                    <div class="calc-stats">
+                        <div class="calc-stat">
+                            <div class="calc-stat-label">Znaky</div>
+                            <div class="calc-stat-val" id="valChars">78</div>
+                        </div>
+                        <div class="calc-stat">
+                            <div class="calc-stat-label">Kódovanie</div>
+                            <div class="calc-stat-val" id="valEncoding" style="font-size: 0.85rem; color: #f43f5e;">UCS-2</div>
+                        </div>
+                        <div class="calc-stat">
+                            <div class="calc-stat-label">Časti SMS</div>
+                            <div class="calc-stat-val" id="valParts" style="color: #fbbf24;">2</div>
+                        </div>
+                        <div class="calc-stat">
+                            <div class="calc-stat-label">Cena v EasyBooking</div>
+                            <div class="calc-stat-val" id="valCost" style="color: #f43f5e;">0.166 €</div>
+                        </div>
+                    </div>
+
+                    <div style="background: rgba(244, 63, 94, 0.08); border: 1px solid rgba(244, 63, 94, 0.25); border-radius: 10px; padding: 10px; font-size: 0.78rem; color: #cbd5e1; line-height: 1.4;">
+                        <strong style="color: #fb7185;"><i class="fa-solid fa-triangle-exclamation"></i> Prečo EasyBooking zarába na diakritike:</strong> 
+                        Základná sadzba EasyBooking je <strong>0,083 € za SMS</strong>. Predvolené texty obsahujú diakritiku ("Dobrý deň", "Tešíme sa!"). Kvôli tomu má 1 správa limit len <strong>70 znakov namiesto 160</strong>! Bežná pripomienka má 78 znakov a operátor ju rozdelí na <strong>2 SMS</strong>. Salón tak za každú jedinú pripomienku zaplatí <strong>0,166 €</strong>! Pri 250 rezerváciách mesačne to robí neuveriteľných <strong>41,50 € len na SMS</strong>.
+                    </div>
+                </div>
+
+                <!-- Right: Phone Preview & Live Bubble -->
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-mobile-screen-button" style="color: #fbbf24;"></i> Živý Náhľad na Zamykacej Obrazovke</div>
+                    
+                    <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border); border-radius: 10px; padding: 10px; margin-bottom: 12px; font-size: 0.8rem; color: #cbd5e1;">
+                        <div>Cena EasyBooking: <strong style="color: #f43f5e;">0,083 € / SMS</strong> | Rezervos: <strong style="color: #10b981;">0,045 € / SMS</strong></div>
+                        <div>Odosielateľ: <strong>Štandardné mobilné číslo alebo EasyBooking</strong></div>
+                    </div>
+
+                    <div class="phone-mockup">
+                        <div class="phone-screen">
+                            <div class="phone-header">
+                                <div style="font-size: 0.72rem; font-weight: 700; color: #fff;">EasyBooking</div>
+                                <div style="font-size: 0.62rem; color: #94a3b8;">SMS Správa</div>
+                            </div>
+                            <div class="phone-chat">
+                                <div class="sms-bubble">
+                                    <span id="phonePreviewText">Dobrý deň, pripomíname Váš termín zajtra o 14:30 v KadernickyServis. Tešíme sa!</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 1: KALENDÁR -->
+        <section class="audit-section" id="mod-1" data-search="kalendar booking tyzden den mesiac zamestnanci manualna rezervacia">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">01</span>
+                    <h2 class="section-title">Kalendár & Plánovanie (Týždeň, Deň, Mesiac)</h2>
+                </div>
+                <span class="section-route">/planning & /planning?view=day</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-calendar-days" style="color: #6366f1;"></i> Štruktúra a funkcie kalendára</div>
+                    
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Tri zobrazenia:</strong> Prepínanie medzi Týždenným pohľadom (predvolený), Denným rozpisom a Mesačným prehľadom obsadenosti.</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Časová os:</strong> Zobrazenie v hodinových blokoch od 08:00 do 20:00 s možnosťou kliknutia na voľný slot pre rýchlu rezerváciu.</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Filter pracovníkov:</strong> Dropdown zoznam v hornej lište umožňujúci zobraziť termíny konkrétneho zamestnanca.</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Blokácia času:</strong> Rýchle zablokovanie časového úseku (obed, súkromné voľno, lekár) bez vytvárania falošného zákazníka.</div>
+                    </div>
+
+                    <div class="verdict-box">
+                        <div class="verdict-col pro">
+                            <h5><i class="fa-solid fa-thumbs-up"></i> Výhody</h5>
+                            <ul>
+                                <li>Jednoduché a priamočiare rozhranie</li>
+                                <li>Rýchly skok na aktuálny deň tlačidlom "Dnes"</li>
+                                <li>Možnosť rýchlej blokácie voľna</li>
+                            </ul>
+                        </div>
+                        <div class="verdict-col con">
+                            <h5><i class="fa-solid fa-thumbs-down"></i> Slabiny</h5>
+                            <ul>
+                                <li>Absencia moderného Drag & Drop presúvania termínov</li>
+                                <li>Neviditeľný Buffer Time (čas na dezinfekciu)</li>
+                                <li>Slabá mobilná responzivita s nutnosťou horizontálneho scrollu</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox(document.getElementById('cal-img-main').src)">
+                        <img id="cal-img-main" src="screenshots/calendar_week.png" alt="Kalendár EasyBooking">
+                        <div class="shot-overlay">
+                            <span>Týždenný / Denný / Mesačný kalendár</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                    <div class="thumb-switcher">
+                        <button class="thumb-btn active" onclick="switchImg('cal-img-main', 'screenshots/calendar_week.png', this)">Týždeň</button>
+                        <button class="thumb-btn" onclick="switchImg('cal-img-main', 'screenshots/calendar_day.png', this)">Deň</button>
+                        <button class="thumb-btn" onclick="switchImg('cal-img-main', 'screenshots/calendar_month.png', this)">Mesiac</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 2: NOVÁ REZERVÁCIA -->
+        <section class="audit-section" id="mod-2" data-search="nova rezervacia modal formular zakaznik sluzba zamestnanec opakovanie">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">02</span>
+                    <h2 class="section-title">Formulár Novej Rezervácie (Modal)</h2>
+                </div>
+                <span class="section-route">/planning (New Booking Modal)</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-calendar-plus" style="color: #10b981;"></i> Vstupné polia a validačná logika</div>
+                    
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Výber personálu a služby:</strong> Dropdown pre výber kaderníčky a kaskádový výber služby s automatickým nastavením dĺžky.</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Kontaktné údaje zákazníka:</strong> Meno, priezvisko, telefónne číslo a e-mailová adresa.</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Opakovaná rezervácia:</strong> Nastavenie periodicity (napr. každé 4 týždne v utorok o 15:00) pre verných klientov.</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Poznámka k termínu:</strong> Interné poznámky pre personál (napr. číslo použitej farby).</div>
+                    </div>
+
+                    <div class="verdict-box">
+                        <div class="verdict-col pro">
+                            <h5><i class="fa-solid fa-thumbs-up"></i> Výhody</h5>
+                            <ul>
+                                <li>Prehľadný dvojstĺpcový formulár</li>
+                                <li>Nastavenie opakovania na pár klikov</li>
+                            </ul>
+                        </div>
+                        <div class="verdict-col con">
+                            <h5><i class="fa-solid fa-thumbs-down"></i> Slabiny</h5>
+                            <ul>
+                                <li>Chýba autocomplete klientov s okamžitým náhľadom na históriu</li>
+                                <li>Nemožno priamo vystaviť link na online zálohu kartou</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/new_reservation_modal.png')">
+                        <img src="screenshots/new_reservation_modal.png" alt="Nová rezervácia modal">
+                        <div class="shot-overlay">
+                            <span>Vyskakovacie okno novej rezervácie</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 3: ZOZNAM REZERVOV -->
+        <section class="audit-section" id="mod-3" data-search="zoznam rezervacii filtre stavy export excel vybavená čaká zrušená">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">03</span>
+                    <h2 class="section-title">Zoznam Rezervácií & Filtrovanie</h2>
+                </div>
+                <span class="section-route">/reservations</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-list-check" style="color: #06b6d4;"></i> Tabuľkový prehľad a správa stavov</div>
+                    
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Filtrovanie podľa stavu:</strong> Rýchle záložky: <em>Všetky, Vybavená, Schválená, Čaká na schválenie, Zrušená</em>.</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Vyhľadávanie:</strong> Filter podľa mena klienta, telefónu alebo čísla rezervácie.</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Export do Excelu:</strong> Možnosť stiahnuť filtrovaný zoznam do XLS súboru pre účtovníctvo.</div>
+                    </div>
+
+                    <div class="verdict-box">
+                        <div class="verdict-col pro">
+                            <h5><i class="fa-solid fa-thumbs-up"></i> Výhody</h5>
+                            <ul>
+                                <li>Okamžité zobrazenie celkovej sumy termínov</li>
+                                <li>Farebné odlíšenie stavov</li>
+                            </ul>
+                        </div>
+                        <div class="verdict-col con">
+                            <h5><i class="fa-solid fa-thumbs-down"></i> Slabiny</h5>
+                            <ul>
+                                <li>Chýbajú hromadné operácie (napr. označiť 10 termínov a posunúť)</li>
+                                <li>Tabuľka je na mobiloch neprehľadná</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/reservations_list.png')">
+                        <img src="screenshots/reservations_list.png" alt="Zoznam rezervácií">
+                        <div class="shot-overlay">
+                            <span>Tabuľkový prehľad rezervácií s filtrami</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 4: ZÁKAZNÍCKE DOPYTY -->
+        <section class="audit-section" id="mod-4" data-search="dopyty cakacia listina waitlist poziadavky terminy">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">04</span>
+                    <h2 class="section-title">Zákaznícke Dopyty & Čakacia Listina</h2>
+                </div>
+                <span class="section-route">/inquiries</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-inbox" style="color: #f59e0b;"></i> Záchytná sieť pre plné termíny</div>
+                    
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Evidencia dopytov:</strong> Klienti, ktorí nenašli termín v kalendári, zadajú požiadavku s preferovaným dňom a časom.</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Prevod na rezerváciu:</strong> Jedným klikom z dopytu vytvoríte regulárny termín v kalendári.</div>
+                    </div>
+
+                    <div class="verdict-box">
+                        <div class="verdict-col pro">
+                            <h5><i class="fa-solid fa-thumbs-up"></i> Výhody</h5>
+                            <ul>
+                                <li>Salón neprichádza o klientov, keď je plno</li>
+                                <li>Jednoduché kontaktovanie čakateľa</li>
+                            </ul>
+                        </div>
+                        <div class="verdict-col con">
+                            <h5><i class="fa-solid fa-thumbs-down"></i> Slabiny</h5>
+                            <ul>
+                                <li>Úplne manuálny proces (systém nepošle automatickú SMS pri uvoľnení termínu)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/customer_queries.png')">
+                        <img src="screenshots/customer_queries.png" alt="Zákaznícke dopyty">
+                        <div class="shot-overlay">
+                            <span>Prehľad dopytov čakateľov na termín</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 5: ZÁKAZNÍCI CRM -->
+        <section class="audit-section" id="mod-5" data-search="zakaznici crm stitky tags historia navstev kontakty">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">05</span>
+                    <h2 class="section-title">Zákazníci (CRM), Štítky & História</h2>
+                </div>
+                <span class="section-route">/customers & /customers/tags</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-users" style="color: #a855f7;"></i> Databáza klientov a farebné štítky</div>
+                    
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Adresár kontaktov:</strong> Meno, telefón, e-mail, dátum poslednej návštevy, celkový počet rezervácií.</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Farebné štítkovanie:</strong> Definícia vlastných štítkov (napr. <code>VIP</code>, <code>Problémový</code>, <code>Študent</code>) s vlastnou farbou.</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Karta zákazníka:</strong> História absolvovaných a zrušených termínov.</div>
+                    </div>
+
+                    <div class="verdict-box">
+                        <div class="verdict-col pro">
+                            <h5><i class="fa-solid fa-thumbs-up"></i> Výhody</h5>
+                            <ul>
+                                <li>Vlastné farebné štítky sprehľadňujú prácu</li>
+                                <li>Automatické ukladanie každého nového klienta</li>
+                            </ul>
+                        </div>
+                        <div class="verdict-col con">
+                            <h5><i class="fa-solid fa-thumbs-down"></i> Slabiny</h5>
+                            <ul>
+                                <li>Chýba zobrazenie celkovej útraty (LTV v €) v hlavnom zozname</li>
+                                <li>Žiadna automatická reaktivácia neaktívnych klientov</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox(document.getElementById('crm-img-main').src)">
+                        <img id="crm-img-main" src="screenshots/customers_list.png" alt="Zákazníci CRM">
+                        <div class="shot-overlay">
+                            <span>Zoznam zákazníkov & Správa štítkov</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                    <div class="thumb-switcher">
+                        <button class="thumb-btn active" onclick="switchImg('crm-img-main', 'screenshots/customers_list.png', this)">Zoznam Klientov</button>
+                        <button class="thumb-btn" onclick="switchImg('crm-img-main', 'screenshots/customer_tags.png', this)">Správa Štítkov</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 6: SLUŽBY -->
+        <section class="audit-section" id="mod-6" data-search="sluzby kategorie cennik ceny buffer time trvanie akciove ceny">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">06</span>
+                    <h2 class="section-title">Katalóg Služieb, Cenník & Kategórie</h2>
+                </div>
+                <span class="section-route">/services & /services/categories</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-scissors" style="color: #ec4899;"></i> Správa portfólia služieb</div>
+                    
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Kategórie služieb:</strong> Triedenie do prehľadných skupín (napr. Dámske strihy, Pánske strihy, Farbenie, Kúra).</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Nastavenie ceny a trvania:</strong> Dĺžka v minútach (od 5 min. po 8 hodín), cena s DPH a možnosť akciovej preškrtnutej ceny.</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Priradenie personálu:</strong> Voľba, ktoré kaderníčky danú službu vykonávajú.</div>
+                    </div>
+
+                    <div class="verdict-box">
+                        <div class="verdict-col pro">
+                            <h5><i class="fa-solid fa-thumbs-up"></i> Výhody</h5>
+                            <ul>
+                                <li>Prehľadné radenie služieb v kategóriách</li>
+                                <li>Podpora akciovej zľavnenej ceny</li>
+                            </ul>
+                        </div>
+                        <div class="verdict-col con">
+                            <h5><i class="fa-solid fa-thumbs-down"></i> Slabiny</h5>
+                            <ul>
+                                <li>Chýbajú dynamické príplatkové varianty (dĺžka vlasov sa musí zadávať ako nová služba)</li>
+                                <li>Nemožno nastaviť rôzny čas a cenu podľa skúseností pracovníka</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox(document.getElementById('srv-img-main').src)">
+                        <img id="srv-img-main" src="screenshots/services_list.png" alt="Služby v EasyBooking">
+                        <div class="shot-overlay">
+                            <span>Katalóg služieb, formulár úpravy a kategórie</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                    <div class="thumb-switcher">
+                        <button class="thumb-btn active" onclick="switchImg('srv-img-main', 'screenshots/services_list.png', this)">Zoznam Služieb</button>
+                        <button class="thumb-btn" onclick="switchImg('srv-img-main', 'screenshots/service_add_edit_form.png', this)">Formulár Služby</button>
+                        <button class="thumb-btn" onclick="switchImg('srv-img-main', 'screenshots/service_categories.png', this)">Kategórie</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 7: ZAMESTNANCI -->
+        <section class="audit-section" id="mod-7" data-search="zamestnanci personal tim prava roly provizie pracovnici">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">07</span>
+                    <h2 class="section-title">Zamestnanci & Tím</h2>
+                </div>
+                <span class="section-route">/employees</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-user-gear" style="color: #6366f1;"></i> Správa personálu a prístupov</div>
+                    
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Profil pracovníka:</strong> Meno, priezvisko, telefón, e-mail, fotografia a priradené služby.</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Notifikačné kanály:</strong> Možnosť posielať SMS / E-mail zamestnancovi o novom termíne.</div>
+                    </div>
+
+                    <div class="verdict-box">
+                        <div class="verdict-col pro">
+                            <h5><i class="fa-solid fa-thumbs-up"></i> Výhody</h5>
+                            <ul>
+                                <li>Jednoduché priradenie služieb konkrétnej osobe</li>
+                                <li>Vlastné prihlasovacie údaje pre pracovníkov</li>
+                            </ul>
+                        </div>
+                        <div class="verdict-col con">
+                            <h5><i class="fa-solid fa-thumbs-down"></i> Slabiny</h5>
+                            <ul>
+                                <li>Drsné cenové obmedzenie: Balík Regular má IBA 1 zamestnanca!</li>
+                                <li>Chýba mzdový a provízny výpočet na konci mesiaca</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/staff_management.png')">
+                        <img src="screenshots/staff_management.png" alt="Zamestnanci v EasyBooking">
+                        <div class="shot-overlay">
+                            <span>Zoznam personálu a správa tímu</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 8: POUKÁŽKY & ZĽAVY -->
+        <section class="audit-section" id="mod-8" data-search="poukazky darcekove poukazy kupony zlavy zlavove kody eshop">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">08</span>
+                    <h2 class="section-title">Darčekové Poukážky & Zľavy</h2>
+                </div>
+                <span class="section-route">/vouchers</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-gift" style="color: #10b981;"></i> Generovanie a uplatňovanie poukazov</div>
+                    
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Tvorba poukážok:</strong> Názov, hodnota v eurách, unikátny kód a doba platnosti.</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Uplatnenie v rezervácii:</strong> Klient zadá kód poukazu priamo vo formulári a cena sa poníži.</div>
+                    </div>
+
+                    <div class="verdict-box">
+                        <div class="verdict-col pro">
+                            <h5><i class="fa-solid fa-thumbs-up"></i> Výhody</h5>
+                            <ul>
+                                <li>Overenie unikátneho kódu v reálnom čase</li>
+                            </ul>
+                        </div>
+                        <div class="verdict-col con">
+                            <h5><i class="fa-solid fa-thumbs-down"></i> Slabiny</h5>
+                            <ul>
+                                <li>EasyBooking si berie 2,5% + 0,35€ províziu z každého predaného poukazu!</li>
+                                <li>V pláne Basic (0 €) je táto funkcia úplne zablokovaná</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/vouchers_discounts.png')">
+                        <img src="screenshots/vouchers_discounts.png" alt="Poukážky a zľavy">
+                        <div class="shot-overlay">
+                            <span>Evidencia zľavových kódov a darčekových poukazov</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 9: RECENZIE -->
+        <section class="audit-section" id="mod-9" data-search="recenzie hodnotenia reputacia hviezdicky feedback">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">09</span>
+                    <h2 class="section-title">Hodnotenia & Zákaznícke Recenzie</h2>
+                </div>
+                <span class="section-route">/reviews</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-star-half-stroke" style="color: #f59e0b;"></i> Zber a moderovanie spätnej väzby</div>
+                    
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Automatická výzva:</strong> Zákazník dostane po absolvovaní termínu výzvu na udelenie hviezdičiek a textového komentára.</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Schvaľovací proces:</strong> Majiteľ môže recenziu pred zverejnením schváliť alebo skryť.</div>
+                    </div>
+
+                    <div class="verdict-box">
+                        <div class="verdict-col pro">
+                            <h5><i class="fa-solid fa-thumbs-up"></i> Výhody</h5>
+                            <ul>
+                                <li>Ochrana pred falošnými recenziami (iba overení klienti)</li>
+                            </ul>
+                        </div>
+                        <div class="verdict-col con">
+                            <h5><i class="fa-solid fa-thumbs-down"></i> Slabiny</h5>
+                            <ul>
+                                <li>Recenzie zostávajú v EasyBooking a nepropagujú Google Profil salónu na Google Maps</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/reviews_ratings.png')">
+                        <img src="screenshots/reviews_ratings.png" alt="Recenzie a hodnotenia">
+                        <div class="shot-overlay">
+                            <span>Prehľad recenzií a hodnotení klientov</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 10: ŠTATISTIKY -->
+        <section class="audit-section" id="mod-10" data-search="statistiky trzby grafy prehlad prijem reporty">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">10</span>
+                    <h2 class="section-title">Štatistiky, Tržby & Výkonnosť</h2>
+                </div>
+                <span class="section-route">/statistics</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-chart-line" style="color: #06b6d4;"></i> Biznis reporty salónu</div>
+                    
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Tržby a počet termínov:</strong> Grafický vývoj tržieb za zvolené časové obdobie (týždeň, mesiac, rok).</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Vyťaženosť služieb:</strong> Koláčový graf najčastejšie objednávaných služieb v salóne.</div>
+                    </div>
+
+                    <div class="verdict-box">
+                        <div class="verdict-col pro">
+                            <h5><i class="fa-solid fa-thumbs-up"></i> Výhody</h5>
+                            <ul>
+                                <li>Prehľadné grafy tržieb a návštevnosti</li>
+                            </ul>
+                        </div>
+                        <div class="verdict-col con">
+                            <h5><i class="fa-solid fa-thumbs-down"></i> Slabiny</h5>
+                            <ul>
+                                <li>Nedostupné v bezplatnom balíku Basic</li>
+                                <li>Chýbajú hĺbkové KPI ako priemerná obsadenosť kresla a miera návratnosti klientov</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/statistics.png')">
+                        <img src="screenshots/statistics.png" alt="Štatistiky EasyBooking">
+                        <div class="shot-overlay">
+                            <span>Grafy tržieb a analytické prehľady</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 11: PEŇAŽENKA & BALÍKY -->
+        <section class="audit-section" id="mod-11" data-search="penazenka kredity predplatne baliky licencie dobijanie faktury">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">11</span>
+                    <h2 class="section-title">Predplatné Balíky & Peňaženka (Kredity)</h2>
+                </div>
+                <span class="section-route">/subscription & /wallet</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-wallet" style="color: #a855f7;"></i> Fakturačný systém a kreditný zostatok</div>
+                    
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Prehľad balíka:</strong> Zobrazenie aktívnej tarify (Basic, Regular, Advanced, Extra) s dátumom exspirácie.</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>SMS Kredity:</strong> Dobíjanie kreditu (10 €, 20 €, 50 €), z ktorého sa automaticky strháva 0,083 € za každú SMS správu.</div>
+                    </div>
+
+                    <div class="verdict-box">
+                        <div class="verdict-col pro">
+                            <h5><i class="fa-solid fa-thumbs-up"></i> Výhody</h5>
+                            <ul>
+                                <li>Prehľadná fakturačná história v PDF</li>
+                            </ul>
+                        </div>
+                        <div class="verdict-col con">
+                            <h5><i class="fa-solid fa-thumbs-down"></i> Slabiny</h5>
+                            <ul>
+                                <li>Extrémna cena 0,083 € / SMS</li>
+                                <li>Pri vyčerpaní kreditu systém okamžite prestane odosielať pripomienky</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox(document.getElementById('sub-img-main').src)">
+                        <img id="sub-img-main" src="screenshots/credits_subscription.png" alt="Predplatné balíky">
+                        <div class="shot-overlay">
+                            <span>Balíky licencií a stav peňaženky</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                    <div class="thumb-switcher">
+                        <button class="thumb-btn active" onclick="switchImg('sub-img-main', 'screenshots/credits_subscription.png', this)">Balíky Licencií</button>
+                        <button class="thumb-btn" onclick="switchImg('sub-img-main', 'screenshots/wallet_overview.png', this)">Peňaženka & Kredity</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 12: FORMULÁR & WIDGET -->
+        <section class="audit-section" id="mod-12" data-search="rezervacny formular widget iframe farby logo banner socialne siete nastavenia">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">12</span>
+                    <h2 class="section-title">Online Rezervačný Formulár & Prispôsobenie</h2>
+                </div>
+                <span class="section-route">/booking-form-settings</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-sliders" style="color: #ec4899;"></i> Nastavenie vzhľadu a generátor iFrame</div>
+                    
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Výber farby:</strong> Možnosť nastaviť hlavnú farbu tlačidiel a prvkov rezervačného formulára podľa vizuálu salónu.</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>iFrame kód:</strong> Pripravený HTML kód na vloženie widgetu do webovej stránky (WordPress, Webnode, Wix).</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Odkazy na sociálne siete:</strong> Ikony pre Instagram a Facebook priamo v pätičke rezervácie.</div>
+                    </div>
+
+                    <div class="verdict-box">
+                        <div class="verdict-col pro">
+                            <h5><i class="fa-solid fa-thumbs-up"></i> Výhody</h5>
+                            <ul>
+                                <li>Jednoduché generovanie embed kódu</li>
+                                <li>Živý náhľad vybranej farby</li>
+                            </ul>
+                        </div>
+                        <div class="verdict-col con">
+                            <h5><i class="fa-solid fa-thumbs-down"></i> Slabiny</h5>
+                            <ul>
+                                <li>Poplatok 29,90 € za odstránenie ich loga!</li>
+                                <li>iFrame spôsobuje problémy so scrollovaním na smartfónoch</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/booking_form_settings.png')">
+                        <img src="screenshots/booking_form_settings.png" alt="Nastavenie formulára">
+                        <div class="shot-overlay">
+                            <span>Konfigurácia vzhľadu a farieb formulára</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 13: OTVÁRACIE HODINY -->
+        <section class="audit-section" id="mod-13" data-search="otvaracie hodiny rozvrh tyzden obed pauza sviatky prestavka">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">13</span>
+                    <h2 class="section-title">Otváracie Hodiny, Prestávky & Sviatky</h2>
+                </div>
+                <span class="section-route">/opening-hours</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-clock" style="color: #6366f1;"></i> Správa pracovného času prevádzky</div>
+                    
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Pondelok až Nedeľa:</strong> Samostatné nastavenie otváracej doby pre každý deň v týždni.</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Obedná prestávka:</strong> Nastavenie pravidelnej prestávky, počas ktorej systém neponúka voľné termíny.</div>
+                    </div>
+
+                    <div class="verdict-box">
+                        <div class="verdict-col pro">
+                            <h5><i class="fa-solid fa-thumbs-up"></i> Výhody</h5>
+                            <ul>
+                                <li>Veľmi rýchle a prehľadné nastavenie na 1 obrazovke</li>
+                            </ul>
+                        </div>
+                        <div class="verdict-col con">
+                            <h5><i class="fa-solid fa-thumbs-down"></i> Slabiny</h5>
+                            <ul>
+                                <li>Nemožno automaticky nastaviť striedanie krátky / dlhý týždeň u personálu</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/opening_hours.png')">
+                        <img src="screenshots/opening_hours.png" alt="Otváracie hodiny">
+                        <div class="shot-overlay">
+                            <span>Rozpis otváracích hodín a obedných prestávok</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 14: AUDIT LOG -->
+        <section class="audit-section" id="mod-14" data-search="audit log historia zmien bezpecnost aktivita personal">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">14</span>
+                    <h2 class="section-title">Audit Log Aktivít & História Úprav</h2>
+                </div>
+                <span class="section-route">/audit-log</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-shield-halved" style="color: #10b981;"></i> Bezpečnostný chronologický záznam</div>
+                    
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Záznam operácií:</strong> Kto, kedy a čo upravil (vytvorenie termínu, prepísanie ceny, vymazanie rezervácie).</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Kontrola zamestnancov:</strong> Zabraňuje neoprávnenému mazaniu záznamov personálom.</div>
+                    </div>
+
+                    <div class="verdict-box">
+                        <div class="verdict-col pro">
+                            <h5><i class="fa-solid fa-thumbs-up"></i> Výhody</h5>
+                            <ul>
+                                <li>Skvelá transparentnosť pre majiteľa salónu</li>
+                            </ul>
+                        </div>
+                        <div class="verdict-col con">
+                            <h5><i class="fa-solid fa-thumbs-down"></i> Slabiny</h5>
+                            <ul>
+                                <li>Chýba možnosť okamžitej obnovy zmazaného termínu priamo z logu (Undo / Restore)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/activity_log.png')">
+                        <img src="screenshots/activity_log.png" alt="Audit log aktivít">
+                        <div class="shot-overlay">
+                            <span>Zoznam systémových zmien a zásahov personálu</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 15: IMPORT DÁT -->
+        <section class="audit-section" id="mod-15" data-search="import dat migracia csv excel kontakty prechod">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">15</span>
+                    <h2 class="section-title">Import Dát & Migrácia z Iných Systémov</h2>
+                </div>
+                <span class="section-route">/Onboarding/Import</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-file-import" style="color: #06b6d4;"></i> Sprievodca importom kontaktov z CSV</div>
+                    
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Nahratie CSV súboru:</strong> Sprievodca pre prenos telefónnych čísel a mien z tabuliek.</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Asistencia pri migrácii:</strong> Ponuka manuálnej pomoci pri prechode z iných rezervačných platforiem.</div>
+                    </div>
+
+                    <div class="verdict-box">
+                        <div class="verdict-col pro">
+                            <h5><i class="fa-solid fa-thumbs-up"></i> Výhody</h5>
+                            <ul>
+                                <li>Rýchle nahratie kontaktov z Excelu</li>
+                            </ul>
+                        </div>
+                        <div class="verdict-col con">
+                            <h5><i class="fa-solid fa-thumbs-down"></i> Slabiny</h5>
+                            <ul>
+                                <li>Časté chyby pri rôznych formátoch telefónnych čísel (+421 vs 09xx)</li>
+                                <li>Neimportuje históriu minulých rezervácií ani štítky</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/data_import.png')">
+                        <img src="screenshots/data_import.png" alt="Import dát z CSV">
+                        <div class="shot-overlay">
+                            <span>Sprievodca migráciou kontaktov z iného systému</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 16: ZÁKLADNÉ NASTAVENIA -->
+        <section class="audit-section" id="mod-16" data-search="nastavenia prevadzky profil ico adresa predstih storno pravidla">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge">16</span>
+                    <h2 class="section-title">Profil Salónu & Pravidlá Predstihu</h2>
+                </div>
+                <span class="section-route">/settings</span>
+            </div>
+
+            <div class="audit-grid">
+                <div class="glass-card card-inner">
+                    <div class="card-title"><i class="fa-solid fa-building" style="color: #a855f7;"></i> Firemné údaje a časové obmedzenia</div>
+                    
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Firemný profil:</strong> Názov salónu, IČO, DIČ, ulica, mesto, PSČ, kontaktný telefón a e-mail.</div>
+                    </div>
+
+                    <div class="feature-bullet">
+                        <i class="fa-solid fa-check"></i>
+                        <div><strong>Pravidlá predstihu:</strong> Minimálny čas pre vytvorenie rezervácie (napr. 2 hodiny vopred) a storno termínu.</div>
+                    </div>
+
+                    <div class="verdict-box">
+                        <div class="verdict-col pro">
+                            <h5><i class="fa-solid fa-thumbs-up"></i> Výhody</h5>
+                            <ul>
+                                <li>Ochrana pred nečakanými rezerváciami na poslednú chvíľu</li>
+                            </ul>
+                        </div>
+                        <div class="verdict-col con">
+                            <h5><i class="fa-solid fa-thumbs-down"></i> Slabiny</h5>
+                            <ul>
+                                <li>Chýba podpora pre viacero pobočiek pod jedným účtom</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card card-inner">
+                    <div class="preview-shot-container" onclick="openLightbox('screenshots/basic_settings.png')">
+                        <img src="screenshots/basic_settings.png" alt="Základné nastavenia prevádzky">
+                        <div class="shot-overlay">
+                            <span>Profil salónu a nastavenie limitov rezervácií</span>
+                            <span class="shot-zoom-tag"><i class="fa-solid fa-expand"></i> Zväčšiť</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TARIFY & CENOVÁ PITVA -->
+        <section class="audit-section" id="tarify" data-search="cennik tarify baliky poplatky provizia stripe cena sms white label">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge"><i class="fa-solid fa-tags"></i></span>
+                    <h2 class="section-title">Cenník & Balíky EasyBooking (Pitva Skrytých Poplatkov)</h2>
+                </div>
+                <span class="section-route">easybooking.sk/cennik</span>
+            </div>
+
+            <p style="font-size: 0.88rem; color: #cbd5e1; margin-bottom: 20px; line-height: 1.5;">
+                EasyBooking má 4 hlavné balíky. Zdanlivo nízke poplatky však kompenzuje brutálnymi províziami z platieb a predraženými SMS:
+            </p>
+
+            <div class="pricing-grid">
+                <!-- Basic -->
+                <div class="price-card">
+                    <span class="pill pill-green">Plán 01</span>
+                    <h3 style="font-size: 1.2rem; font-weight: 800; color: #fff; margin-top: 8px;">Basic</h3>
+                    <div class="price-amount">0.00 €</div>
+                    <div class="price-period">navždy zadarmo</div>
+                    <div class="price-limits">
+                        <div>Miestnosti: <strong>0 (Iba 1 osoba)</strong></div>
+                        <div>Platobná brána: <strong>Nedostupná</strong></div>
+                    </div>
+                    <ul class="price-features-list">
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Neobmedzené rezervácie</li>
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Neobmedzené služby</li>
+                        <li><i class="fa-solid fa-xmark" style="color: #f43f5e;"></i> Bez darčekových poukážok</li>
+                        <li><i class="fa-solid fa-xmark" style="color: #f43f5e;"></i> Bez štatistík a reportov</li>
+                        <li><i class="fa-solid fa-xmark" style="color: #f43f5e;"></i> Bez online platieb</li>
+                        <li><i class="fa-solid fa-xmark" style="color: #f43f5e;"></i> Bez zamestnancov</li>
+                    </ul>
+                </div>
+
+                <!-- Regular -->
+                <div class="price-card">
+                    <span class="pill pill-amber">Plán 02</span>
+                    <h3 style="font-size: 1.2rem; font-weight: 800; color: #fff; margin-top: 8px;">Regular</h3>
+                    <div class="price-amount">9.90 €</div>
+                    <div class="price-period">mesačne (alebo 6.90 € pri ročnej platbe)</div>
+                    <div class="price-limits">
+                        <div>Miestnosti: <strong>IBA 1 miestnosť</strong></div>
+                        <div>Personál: <strong>IBA 1 zamestnanec</strong></div>
+                    </div>
+                    <ul class="price-features-list">
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Všetko z Basic</li>
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Darčekové poukážky</li>
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Štatistiky a tržby</li>
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Online platby kartou</li>
+                        <li><i class="fa-solid fa-triangle-exclamation" style="color: #f59e0b;"></i> SMS za 0.083 € / ks</li>
+                        <li><i class="fa-solid fa-triangle-exclamation" style="color: #f59e0b;"></i> Provízia 2.5% + 0.35€</li>
+                    </ul>
+                </div>
+
+                <!-- Advanced -->
+                <div class="price-card featured">
+                    <span class="pill pill-blue">Najpredávanejší</span>
+                    <h3 style="font-size: 1.2rem; font-weight: 800; color: #fff; margin-top: 8px;">Advanced</h3>
+                    <div class="price-amount">19.90 €</div>
+                    <div class="price-period">mesačne (alebo 16.90 € pri ročnej platbe)</div>
+                    <div class="price-limits">
+                        <div>Miestnosti: <strong>2 až 3 miestnosti</strong></div>
+                        <div>Personál: <strong>2 až 3 zamestnanci</strong></div>
+                    </div>
+                    <ul class="price-features-list">
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Všetko z Regular</li>
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Kontá pre zamestnancov</li>
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Prístup do kalendárov</li>
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> SMS pre zamestnancov</li>
+                        <li><i class="fa-solid fa-triangle-exclamation" style="color: #f59e0b;"></i> SMS za 0.083 € / ks</li>
+                        <li><i class="fa-solid fa-triangle-exclamation" style="color: #f59e0b;"></i> Provízia 2.5% + 0.35€</li>
+                    </ul>
+                </div>
+
+                <!-- Extra -->
+                <div class="price-card">
+                    <span class="pill pill-rose">Plán 04</span>
+                    <h3 style="font-size: 1.2rem; font-weight: 800; color: #fff; margin-top: 8px;">Extra</h3>
+                    <div class="price-amount">29.90 €</div>
+                    <div class="price-period">mesačne (alebo 26.90 € pri ročnej platbe)</div>
+                    <div class="price-limits">
+                        <div>Miestnosti: <strong>4 a viac miestností</strong></div>
+                        <div>Personál: <strong>Neobmedzený</strong></div>
+                    </div>
+                    <ul class="price-features-list">
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Všetky funkcie systému</li>
+                        <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Podpora pre veľké salóny</li>
+                        <li><i class="fa-solid fa-triangle-exclamation" style="color: #f59e0b;"></i> Stále berú províziu 2.5% + 0.35€ zo všetkých platieb!</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- SKRYTÉ POPLATKY ALERT BOX -->
+            <div style="background: rgba(244, 63, 94, 0.08); border: 1px solid rgba(244, 63, 94, 0.3); border-radius: 16px; padding: 20px; margin-top: 24px;">
+                <h4 style="font-size: 1.05rem; font-weight: 800; color: #fb7185; margin-bottom: 8px;">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Odhalené skryté poplatky EasyBooking:
+                </h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; font-size: 0.84rem; color: #cbd5e1;">
+                    <div style="background: rgba(15, 23, 42, 0.7); padding: 12px; border-radius: 10px; border: 1px solid var(--border);">
+                        <strong style="color: #fff; display: block; margin-bottom: 4px;">1. Online platby vo formulári:</strong>
+                        Poplatok <span style="color: #f43f5e; font-weight: 700;">2,5 % + 0,35 €</span> za každú jednu transakciu.
+                    </div>
+                    <div style="background: rgba(15, 23, 42, 0.7); padding: 12px; border-radius: 10px; border: 1px solid var(--border);">
+                        <strong style="color: #fff; display: block; margin-bottom: 4px;">2. Osobné platby v prevádzke:</strong>
+                        Dokonca aj za platby priamo v salóne si účtujú <span style="color: #f43f5e; font-weight: 700;">2,5 % + 0,35 €</span>!
+                    </div>
+                    <div style="background: rgba(15, 23, 42, 0.7); padding: 12px; border-radius: 10px; border: 1px solid var(--border);">
+                        <strong style="color: #fff; display: block; margin-bottom: 4px;">3. Odstránenie loga (White-label):</strong>
+                        Výpalnícky jednorazový poplatok <span style="color: #f43f5e; font-weight: 700;">29,90 €</span> len za vypnutie ich reklamy.
+                    </div>
+                    <div style="background: rgba(15, 23, 42, 0.7); padding: 12px; border-radius: 10px; border: 1px solid var(--border);">
+                        <strong style="color: #fff; display: block; margin-bottom: 4px;">4. SMS notifikácie:</strong>
+                        <span style="color: #f43f5e; font-weight: 700;">0,083 € za každú SMS</span> (pri diakritike 0,166 € za pripomienku).
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VEĽKÁ POROVNÁVACIA MATRICA -->
+        <section class="audit-section" id="matrix" data-search="porovnanie matrica tabulka funkcie rezervos vs easybooking">
+            <div class="section-headline">
+                <div class="section-headline-title">
+                    <span class="section-num-badge"><i class="fa-solid fa-scale-balanced"></i></span>
+                    <h2 class="section-title">Veľká Porovnávacia Matrica (40+ Parametrov)</h2>
+                </div>
+                <span class="section-route">Rezervos vs EasyBooking.sk</span>
+            </div>
+
+            <div class="table-scroll-wrapper">
+                <table class="comp-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 40%;">Modul / Funkcionalita</th>
+                            <th class="col-competitor" style="width: 30%;">EasyBooking.sk</th>
+                            <th class="col-rezervos" style="width: 30%;">REZERVOS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td colspan="3" style="background: rgba(99, 102, 241, 0.15); font-weight: 800; color: #a5b4fc; text-transform: uppercase;">1. Kalendár & Plánovanie</td></tr>
+                        <tr><td>Plnohodnotný Drag & Drop kalendár</td><td><span style="color: #f43f5e;"><i class="fa-solid fa-xmark"></i> Nie</span></td><td><span style="color: #34d399;"><i class="fa-solid fa-check"></i> Áno (FullCalendar v6)</span></td></tr>
+                        <tr><td>Vizuálne zobrazenie Buffer Time (pauzy)</td><td><span style="color: #f43f5e;"><i class="fa-solid fa-xmark"></i> Nie</span></td><td><span style="color: #34d399;"><i class="fa-solid fa-check"></i> Áno (automatické bloky)</span></td></tr>
+                        <tr><td>Opakované rezervácie</td><td><span style="color: #34d399;"><i class="fa-solid fa-check"></i> Áno</span></td><td><span style="color: #34d399;"><i class="fa-solid fa-check"></i> Áno</span></td></tr>
+                        <tr><td>Synchronizácia s Google & Apple Kalendárom</td><td><span style="color: #34d399;"><i class="fa-solid fa-check"></i> Áno (iCal)</span></td><td><span style="color: #34d399;"><i class="fa-solid fa-check"></i> Áno (obojstranný 2-way sync)</span></td></tr>
+                        <tr><td>Pracovné zmeny (krátky / dlhý týždeň)</td><td><span style="color: #f59e0b;"><i class="fa-solid fa-triangle-exclamation"></i> Komplikované</span></td><td><span style="color: #34d399;"><i class="fa-solid fa-check"></i> Áno (automatické zmeny)</span></td></tr>
+
+                        <tr><td colspan="3" style="background: rgba(99, 102, 241, 0.15); font-weight: 800; color: #a5b4fc; text-transform: uppercase;">2. Financie & Platby</td></tr>
+                        <tr><td>Provízia systému z online platieb</td><td><span style="color: #f43f5e; font-weight: 700;">2,5 % + 0,35 €</span></td><td><span style="color: #34d399; font-weight: 700;">0,00 % (nulová provízia)</span></td></tr>
+                        <tr><td>Provízia za osobné platby na prevádzke</td><td><span style="color: #f43f5e; font-weight: 700;">2,5 % + 0,35 €</span></td><td><span style="color: #34d399; font-weight: 700;">0,00 % (váš vlastný terminál)</span></td></tr>
+                        <tr><td>No-Show ochrana (predautorizácia karty)</td><td><span style="color: #f59e0b;"><i class="fa-solid fa-triangle-exclamation"></i> Iba zálohy</span></td><td><span style="color: #34d399;"><i class="fa-solid fa-check"></i> Inteligentný Stripe Guard</span></td></tr>
+                        <tr><td>Predaj darčekových poukazov bez provízie</td><td><span style="color: #f43f5e;"><i class="fa-solid fa-xmark"></i> Nie (berú províziu)</span></td><td><span style="color: #34d399;"><i class="fa-solid fa-check"></i> Áno (100% zisk pre salón)</span></td></tr>
+
+                        <tr><td colspan="3" style="background: rgba(99, 102, 241, 0.15); font-weight: 800; color: #a5b4fc; text-transform: uppercase;">3. Notifikácie & Komunikácia</td></tr>
+                        <tr><td>Cena za 1 SMS správu</td><td><span style="color: #f43f5e; font-weight: 700;">0,083 € / SMS</span></td><td><span style="color: #34d399; font-weight: 700;">0,045 € / SMS (alebo v balíku)</span></td></tr>
+                        <tr><td>Apple Wallet & Google Pay karty</td><td><span style="color: #f43f5e;"><i class="fa-solid fa-xmark"></i> Nie</span></td><td><span style="color: #34d399;"><i class="fa-solid fa-check"></i> Áno (Push notifikácie zdarma)</span></td></tr>
+                        <tr><td>Automatický Waitlist Bot pri storne</td><td><span style="color: #f43f5e;"><i class="fa-solid fa-xmark"></i> Iba manuálne dopyty</span></td><td><span style="color: #34d399;"><i class="fa-solid fa-check"></i> Áno (automatická SMS čakateľom)</span></td></tr>
+
+                        <tr><td colspan="3" style="background: rgba(99, 102, 241, 0.15); font-weight: 800; color: #a5b4fc; text-transform: uppercase;">4. Branding & Licenčné Podmienky</td></tr>
+                        <tr><td>Poplatok za odstránenie loga systému</td><td><span style="color: #f43f5e; font-weight: 700;">29,90 € jednorazovo</span></td><td><span style="color: #34d399; font-weight: 700;">0 € (v cene každého balíka)</span></td></tr>
+                        <tr><td>Počet zamestnancov v základnom platenom pláne</td><td><span style="color: #f43f5e;">Iba 1 zamestnanec</span></td><td><span style="color: #34d399;">Flexibilný tím bez penalizácie</span></td></tr>
+                        <tr><td>Podpora prenájmu kresiel (stoličkári na IČO)</td><td><span style="color: #f43f5e;"><i class="fa-solid fa-xmark"></i> Nie</span></td><td><span style="color: #34d399;"><i class="fa-solid fa-check"></i> Dedikovaný Chair-Rental modul</span></td></tr>
+                        <tr><td>Google Review Booster na Google Maps</td><td><span style="color: #f43f5e;"><i class="fa-solid fa-xmark"></i> Nie (iba interné)</span></td><td><span style="color: #34d399;"><i class="fa-solid fa-check"></i> Automatické presmerovanie</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- STRATEGICKÉ ZHODNOTENIE PRE REZERVOS -->
+        <section class="audit-section" id="porovnanie-rezervos" style="background: rgba(13, 148, 136, 0.05); border: 1px solid rgba(13, 148, 136, 0.3); border-radius: 20px; padding: 24px;" data-search="zhodnotenie rezervos vylepsenia roadmap killer features vyhody">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+                <div style="width: 40px; height: 40px; border-radius: 12px; background: #0d9488; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">
+                    <i class="fa-solid fa-rocket"></i>
+                </div>
+                <div>
+                    <h2 style="font-size: clamp(1.3rem, 4vw, 1.8rem); font-weight: 800; color: #fff;">Zhodnotenie pre Rezervos: Čo dorobiť, prerobiť a ako zvíťaziť</h2>
+                    <div style="font-size: 0.8rem; color: #2dd4bf; font-weight: 600;">Presná strategická roadmapa na prebratie zákazníkov EasyBookingu</div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr; gap: 16px;">
+                <div class="glass-card card-inner" style="border-left: 4px solid #10b981;">
+                    <h4 style="font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 6px;">
+                        1. 1-Klikový AI Importér cenníka a kontaktov (Zabijak prechodu)
+                    </h4>
+                    <p style="font-size: 0.84rem; color: #cbd5e1; line-height: 1.5;">
+                        Najväčšia prekážka pri zmene systému je strach z prepisovania služieb a klientov. Ak v Rezervos ponúkneme nástroj, kde majiteľka len nahrá export z EasyBookingu alebo odfotí svoj cenník a systém do 60 sekúnd kompletne nastaví salón, získame desiatky prevádzok bez akejkoľvek námahy.
+                    </p>
+                </div>
+
+                <div class="glass-card card-inner" style="border-left: 4px solid #f59e0b;">
+                    <h4 style="font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 6px;">
+                        2. Kampaň: "Prestaňte platiť provízie z vlastnej práce (0% garancia)"
+                    </h4>
+                    <p style="font-size: 0.84rem; color: #cbd5e1; line-height: 1.5;">
+                        Majitelia salónov často ani netušia, že im EasyBooking berie 2,5 % + 0,35 € z každej platby. Priama porovnávacia kalkulačka na našom webe im ukáže, že prechodom na Rezervos okamžite ušetria 800 € až 2 000 € ročne v čistom zisku.
+                    </p>
+                </div>
+
+                <div class="glass-card card-inner" style="border-left: 4px solid #3b82f6;">
+                    <h4 style="font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 6px;">
+                        3. Automatický Last-Minute & Waitlist Bot namiesto manuálnych dopytov
+                    </h4>
+                    <p style="font-size: 0.84rem; color: #cbd5e1; line-height: 1.5;">
+                        EasyBooking má dopyty, ale personál musí čakateľom volať ručne. V Rezervos urobíme plne automatizovaného bota: akonáhle niekto zruší termín, systém okamžite rozpošle SMS s linkom prvým čakateľom v rade. Kto prvý klikne, termín získa. Salón má nulové prestrely a plnú kasu.
+                    </p>
+                </div>
+
+                <div class="glass-card card-inner" style="border-left: 4px solid #a855f7;">
+                    <h4 style="font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 6px;">
+                        4. 100% White-Label zadarmo (Žiadne výpalné 29,90 €)
+                    </h4>
+                    <p style="font-size: 0.84rem; color: #cbd5e1; line-height: 1.5;">
+                        Salón buduje svoju vlastnú značku, nie značku softvéru. V Rezervos bude formulár bez akéhokoľvek nášho vodoznaku štandardom v každom balíku. Salóny si budú vážiť rešpekt k ich menu.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- LIGHTBOX MODAL -->
+    <div id="lightbox" class="lightbox-modal" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-img" class="lightbox-content" src="" alt="Zoom" onclick="event.stopPropagation()">
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container" style="padding-top: 0; padding-bottom: 0;">
+            <p><strong>REZERVOS Competitive Intelligence</strong> &bull; Hĺbkový Audit EasyBooking.sk (system.easybooking.sk) &bull; Verzia 2.5</p>
+            <p style="margin-top: 6px; font-size: 0.74rem;">Všetky použité screenshoty a dáta pochádzajú z reálneho produkčného testovania v roku 2026 pre účely technologického porovnania.</p>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE SCRIPTS -->
+    <script>
+        // Lightbox
+        function openLightbox(src) {
+            const lb = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-img');
+            img.src = src;
+            lb.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lb = document.getElementById('lightbox');
+            lb.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeLightbox();
+        });
+
+        // Switch images in modules
+        function switchImg(imgId, newSrc, btn) {
+            const img = document.getElementById(imgId);
+            if (img) img.src = newSrc;
+            if (btn && btn.parentElement) {
+                const btns = btn.parentElement.querySelectorAll('.thumb-btn');
+                btns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+        }
+
+        // Live Search Filter
+        function filterModules(query) {
+            const q = query.toLowerCase().trim();
+            const sections = document.querySelectorAll('.audit-section');
+            
+            sections.forEach(sec => {
+                if (!q) {
+                    sec.style.display = 'block';
+                    return;
+                }
+                const dataSearch = (sec.getAttribute('data-search') || '').toLowerCase();
+                const textContent = sec.innerText.toLowerCase();
+                if (dataSearch.includes(q) || textContent.includes(q)) {
+                    sec.style.display = 'block';
+                } else {
+                    sec.style.display = 'none';
+                }
+            });
+        }
+
+        // SMS Templates & Live Simulator
+        const smsTemplates = {
+            pripomienka: "Dobrý deň, pripomíname Váš termín zajtra o 14:30 v KadernickyServis. Tešíme sa!",
+            potvrdenie: "Vaša rezervácia v salóne KadernickyServis dňa 15.09. o 14:30 bola úspešne potvrdená.",
+            storno: "Dobrý deň, Vaša rezervácia dňa 15.09. bola zrušená. V prípade otázok volajte 0905 123 456.",
+            dopyt: "Uvoľnil sa termín na službu Dámsky strih dňa 15.09. Ak máte záujem, odpovedzte na SMS."
+        };
+
+        function applySmsTemplate(key) {
+            const text = smsTemplates[key] || "";
+            document.getElementById('liveSmsInput').value = text;
+            recalcSms();
+        }
+
+        function stripAccentsLive() {
+            const input = document.getElementById('liveSmsInput');
+            input.value = input.value.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            recalcSms();
+        }
+
+        function recalcSms() {
+            const text = document.getElementById('liveSmsInput').value;
+            document.getElementById('phonePreviewText').innerText = text || "Zadajte text SMS správy...";
+
+            const chars = text.length;
+            document.getElementById('valChars').innerText = chars;
+
+            // Check if contains non-GSM characters (diacritics)
+            const isUcs2 = /[^A-Za-z0-9 \r\n@£$¥èéùìòÇØøÅå_ΦΓΛΩΠΨΣΘΞÆæßÉ!"#$%&'()*+,\-./:;<=>?[\]\\^_`{|}~€]/.test(text);
+
+            const encElem = document.getElementById('valEncoding');
+            const partsElem = document.getElementById('valParts');
+            const costElem = document.getElementById('valCost');
+
+            let parts = 1;
+            if (isUcs2) {
+                encElem.innerText = "UCS-2 (Diakritika)";
+                encElem.style.color = "#f43f5e";
+                if (chars <= 70) {
+                    parts = 1;
+                } else {
+                    parts = Math.ceil(chars / 67);
+                }
+            } else {
+                encElem.innerText = "GSM 7-bit";
+                encElem.style.color = "#10b981";
+                if (chars <= 160) {
+                    parts = 1;
+                } else {
+                    parts = Math.ceil(chars / 153);
+                }
+            }
+
+            if (chars === 0) parts = 0;
+
+            partsElem.innerText = parts;
+            // EasyBooking SMS price = 0.083 € per part
+            const cost = parts * 0.083;
+            costElem.innerText = cost.toFixed(3) + " €";
+        }
+
+        // Initialize simulator on load
+        recalcSms();
+    </script>
+</body>
+</html>

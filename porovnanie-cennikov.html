@@ -1,0 +1,2536 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Language" content="sk">
+    <meta name="language" content="Slovak">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Porovnanie cenníkov – Rezervos vs. Konkurencia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f5f0e8;
+            --bg-card: #ffffff;
+            --text: #1a1a2e;
+            --text-muted: #6b7280;
+            --border: #e5e0d5;
+            --accent-green: #16a34a;
+            --accent-red: #dc2626;
+            --accent-blue: #2563eb;
+            --accent-teal: #0d9488;
+            --accent-purple: #7c3aed;
+            --accent-orange: #ea580c;
+            --accent-gold: #d97706;
+            --header-rezervos: #0d9488;
+            --header-konkurencia: #2563eb;
+            --highlight-row: #fefce8;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(13,148,136,0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(37,99,235,0.15) 0%, transparent 50%);
+            animation: heroGlow 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroGlow {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-5%, 5%); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .hero-badges {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 32px;
+            flex-wrap: wrap;
+        }
+
+        .hero-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 100px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .hero-badge.rezervos {
+            background: rgba(13,148,136,0.2);
+            border: 1px solid rgba(13,148,136,0.4);
+            color: #5eead4;
+        }
+
+        .hero-badge.konkurencia {
+            background: rgba(37,99,235,0.2);
+            border: 1px solid rgba(37,99,235,0.4);
+            color: #93c5fd;
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            padding: 24px 40px;
+            background: var(--bg);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-tab {
+            padding: 10px 24px;
+            border-radius: 100px;
+            border: 2px solid var(--border);
+            background: white;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .nav-tab:hover, .nav-tab.active {
+            background: var(--text);
+            color: white;
+            border-color: var(--text);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* Section titles */
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        .section-title .label {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+        }
+
+        .section-title .label.rezervos {
+            background: rgba(13,148,136,0.1);
+            color: var(--header-rezervos);
+        }
+
+        .section-title .label.konkurencia {
+            background: rgba(37,99,235,0.1);
+            color: var(--header-konkurencia);
+        }
+
+        .section-title .label.vs {
+            background: rgba(234,88,12,0.1);
+            color: var(--accent-orange);
+        }
+
+        /* Pricing Cards */
+        .pricing-grid {
+            display: grid;
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .pricing-grid.cols-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .pricing-grid.cols-5 {
+            grid-template-columns: repeat(5, 1fr);
+        }
+
+        .pricing-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 28px 24px;
+            border: 2px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .pricing-card.recommended {
+            border-color: var(--header-rezervos);
+            box-shadow: 0 0 0 1px var(--header-rezervos), var(--shadow-md);
+        }
+
+        .pricing-card.recommended::before {
+            content: '⭐ ODPORÚČANÝ';
+            position: absolute;
+            top: -13px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--header-rezervos);
+            color: white;
+            padding: 4px 16px;
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+        }
+
+        .pricing-card.premium-card {
+            border-color: var(--accent-gold);
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+        }
+
+        .pricing-card.premium-card::before {
+            content: '🏆 MAXIMÁLNY VÝKON';
+            position: absolute;
+            top: -13px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--accent-gold), #b45309);
+            color: white;
+            padding: 4px 16px;
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+        }
+
+        .card-tier {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .card-name {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .card-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .card-price {
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+        }
+
+        .card-price .currency {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .card-price .period {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .card-annual {
+            display: inline-block;
+            margin-top: 6px;
+            padding: 3px 10px;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .card-features {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+            list-style: none;
+        }
+
+        .card-features li {
+            font-size: 0.85rem;
+            padding: 4px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .card-features li::before {
+            content: '✓';
+            color: var(--accent-green);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* Comparison Table */
+        .comparison-section {
+            margin: 60px 0;
+        }
+
+        .table-wrapper {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .comp-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comp-table thead th {
+            padding: 20px 16px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            text-align: center;
+            border-bottom: 3px solid var(--border);
+            position: sticky;
+            top: 62px;
+            z-index: 10;
+            background: white;
+        }
+
+        .comp-table thead th:first-child {
+            text-align: left;
+            width: 320px;
+            min-width: 260px;
+        }
+
+        .comp-table thead th.tier-free { color: #6b7280; }
+        .comp-table thead th.tier-start { color: var(--header-rezervos); }
+        .comp-table thead th.tier-pro { color: var(--accent-green); }
+        .comp-table thead th.tier-business { color: var(--accent-gold); }
+        .comp-table thead th.tier-freemium { color: #6b7280; }
+        .comp-table thead th.tier-easy { color: var(--header-konkurencia); }
+        .comp-table thead th.tier-smart { color: #7c3aed; }
+        .comp-table thead th.tier-standard { color: var(--accent-orange); }
+        .comp-table thead th.tier-premium { color: #b91c1c; }
+
+        .tier-price-sub {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 500;
+            text-transform: none;
+            letter-spacing: 0;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .comp-table tbody tr {
+            transition: background 0.15s ease;
+        }
+
+        .comp-table tbody tr:hover {
+            background: #fafaf5;
+        }
+
+        .comp-table tbody td {
+            padding: 14px 16px;
+            text-align: center;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #f0ebe3;
+        }
+
+        .comp-table tbody td:first-child {
+            text-align: left;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        /* Category row */
+        .comp-table tbody tr.category-row td {
+            background: #f8f5ef;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text);
+            border-bottom: 2px solid var(--border);
+            padding: 16px;
+        }
+
+        .comp-table tbody tr.category-row td:first-child {
+            font-size: 0.9rem;
+        }
+
+        /* Highlight row (advantage) */
+        .comp-table tbody tr.highlight-row {
+            background: #f0fdf4 !important;
+        }
+
+        .comp-table tbody tr.highlight-row td:first-child {
+            font-weight: 700;
+            color: var(--accent-green);
+        }
+
+        /* Unique feature row */
+        .comp-table tbody tr.unique-row {
+            background: #fffbeb !important;
+        }
+
+        .comp-table tbody tr.unique-row td:first-child {
+            font-weight: 700;
+        }
+
+        .unique-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        .unique-badge.ours {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .unique-badge.theirs {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        /* Check / X icons */
+        .check {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #dcfce7;
+            color: var(--accent-green);
+            font-weight: 800;
+            font-size: 0.85rem;
+        }
+
+        .cross {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #fee2e2;
+            color: var(--accent-red);
+            font-weight: 800;
+            font-size: 0.85rem;
+        }
+
+        .value {
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .value.inf {
+            font-size: 1.1rem;
+            color: var(--accent-green);
+        }
+
+        .value.small-text {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        /* Price comparison summary */
+        .price-compare {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin: 40px 0;
+        }
+
+        .price-compare-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 24px;
+            text-align: center;
+            border: 2px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .price-compare-card .tier-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .price-compare-card .prices {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .price-compare-card .old-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-red);
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        .price-compare-card .new-price {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--accent-green);
+        }
+
+        .price-compare-card .saving {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 100px;
+            background: #dcfce7;
+            color: #15803d;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .footer a {
+            color: var(--header-rezervos);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .pricing-grid.cols-5 {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .pricing-grid.cols-4, .pricing-grid.cols-5 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .hero h1 { font-size: 2rem; }
+            .price-compare { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 600px) {
+            .pricing-grid.cols-4, .pricing-grid.cols-5 {
+                grid-template-columns: 1fr;
+            }
+            .price-compare { grid-template-columns: 1fr; }
+            .hero { padding: 40px 20px; }
+            .container { padding: 20px 12px; }
+        }
+
+        /* Table scroll on mobile */
+        .table-scroll {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Print styles */
+        @media print {
+            .hero { padding: 20px; background: #1a1a2e !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .nav-tabs { display: none; }
+            .pricing-card:hover { transform: none; }
+            .comp-table thead th { position: static; }
+            body { background: white; }
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Info tooltip */
+        .info-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #e5e7eb;
+            color: #6b7280;
+            font-size: 0.6rem;
+            font-weight: 700;
+            cursor: help;
+            margin-left: 4px;
+            vertical-align: middle;
+        }
+
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            margin: 60px 0;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Porovnanie balíčkov pre služby</h1>
+        <p>Detailné porovnanie rezervačných systémov Rezervos a Konkurencia — ceny, funkcie a limity na jednom mieste.</p>
+        <div class="hero-badges">
+            <div class="hero-badge rezervos">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                Rezervos (VoľnéKreslo)
+            </div>
+            <div class="hero-badge konkurencia">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="3"/></svg>
+                Konkurencia
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Navigation -->
+<nav class="nav-tabs">
+    <a href="#megamatrica-5" class="nav-tab" style="border-color:#2563eb;color:#2563eb;font-weight:800;background:rgba(37,99,235,0.08)">⭐ 5-Smerná Megamatrica</a>
+    <a href="bookio/index.html" class="nav-tab" target="_blank" style="color:#ea580c;font-weight:700">Audit Bookio</a>
+    <a href="easybooking/index.html" class="nav-tab" target="_blank" style="color:#3b82f6;font-weight:700">Audit EasyBooking</a>
+    <a href="planivo/index.html" class="nav-tab" target="_blank" style="color:#10b981;font-weight:700">Audit Planivo</a>
+    <a href="#preco-rezervos" class="nav-tab active" style="border-color:#0d9488;color:#0d9488;font-weight:800">🚀 Prečo Rezervos?</a>
+    <a href="#rezervos-cennik" class="nav-tab">Rezervos cenník</a>
+    <a href="#konkurencia-cennik" class="nav-tab">Konkurencia cenník</a>
+    <a href="#porovnanie-rezervos" class="nav-tab">Porovnanie Rezervos</a>
+    <a href="#porovnanie-konkurencia" class="nav-tab">Porovnanie Konkurencia</a>
+    <a href="#cenove-porovnanie" class="nav-tab">Ceny vs. Ceny</a>
+    <a href="#funkcie-rezervos-navyse" class="nav-tab" style="border-color:#059669;color:#059669;font-weight:700">⭐ Máme navyše</a>
+    <a href="#na-dopracovanie" class="nav-tab" style="border-color:#ea580c;color:#ea580c">🔧 Na dopracovanie</a>
+    <a href="#biznis-plan" class="nav-tab" style="border-color:#2563eb;color:#2563eb;font-weight:800">📈 Biznis plán (SK & CZ)</a>
+</nav>
+
+<!-- ============================================= -->
+<!-- SECTION: WHY REZERVOS (PROMO - TOP POSITION) -->
+<!-- ============================================= -->
+<section id="preco-rezervos" style="background:linear-gradient(135deg,#0f172a 0%,#1e293b 40%,#0f172a 100%);color:white;padding:70px 0;position:relative;overflow:hidden;margin-bottom:60px">
+    <!-- Background decoration -->
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at 15% 20%,rgba(13,148,136,0.18) 0%,transparent 45%),radial-gradient(circle at 85% 75%,rgba(37,99,235,0.12) 0%,transparent 50%);pointer-events:none"></div>
+
+    <div style="max-width:1200px;margin:0 auto;padding:0 24px;position:relative;z-index:1">
+
+        <!-- Header -->
+        <div style="text-align:center;margin-bottom:50px">
+            <div style="display:inline-block;padding:6px 20px;border-radius:100px;background:rgba(13,148,136,0.2);border:1px solid rgba(13,148,136,0.4);color:#5eead4;font-size:0.8rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:16px">Komplexné porovnanie</div>
+            <h2 style="font-size:2.5rem;font-weight:900;letter-spacing:-0.03em;margin-bottom:12px;background:linear-gradient(135deg,#fff,#94a3b8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Prečo sa jednoznačne oplatí Rezervos namiesto Konkurencia?</h2>
+            <p style="font-size:1.15rem;color:#94a3b8;max-width:820px;margin:0 auto;line-height:1.7">Dostanete viac rezervácií, vyššie limity, vlastné mapovanie e-mailov, bezpečnosť, internú tabuľu úloh a inzerciu – a to všetko za <strong>polovičnú cenu</strong> oproti konkurencii.</p>
+        </div>
+
+        <!-- ===== TOP STATS ROW ===== -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-bottom:40px">
+            <div style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);border-radius:16px;padding:24px;text-align:center;backdrop-filter:blur(8px)">
+                <div style="font-size:2.6rem;font-weight:900;color:#34d399;margin-bottom:4px">až −51%</div>
+                <div style="font-size:0.95rem;font-weight:700;color:white">Nižšia cena každý mesiac</div>
+                <div style="font-size:0.8rem;color:#6ee7b7;margin-top:4px">Úspora až 204 € ročne</div>
+            </div>
+            <div style="background:rgba(37,99,235,0.1);border:1px solid rgba(37,99,235,0.25);border-radius:16px;padding:24px;text-align:center;backdrop-filter:blur(8px)">
+                <div style="font-size:2.6rem;font-weight:900;color:#60a5fa;margin-bottom:4px">+50%</div>
+                <div style="font-size:0.95rem;font-weight:700;color:white">Viac rezervácií v balíku</div>
+                <div style="font-size:0.8rem;color:#93c5fd;margin-top:4px">Nezastavíme váš rast</div>
+            </div>
+            <div style="background:rgba(124,58,237,0.1);border:1px solid rgba(124,58,237,0.25);border-radius:16px;padding:24px;text-align:center;backdrop-filter:blur(8px)">
+                <div style="font-size:2.6rem;font-weight:900;color:#c084fc;margin-bottom:4px">👥</div>
+                <div style="font-size:0.95rem;font-weight:700;color:white">Až 10 zamestnancov</div>
+                <div style="font-size:0.8rem;color:#c4b5fd;margin-top:4px">Vo BUSINESS balíku za 21,90 €</div>
+            </div>
+            <div style="background:rgba(217,119,6,0.1);border:1px solid rgba(217,119,6,0.25);border-radius:16px;padding:24px;text-align:center;backdrop-filter:blur(8px)">
+                <div style="font-size:2.6rem;font-weight:900;color:#fbbf24;margin-bottom:4px">IBA U NÁS</div>
+                <div style="font-size:0.95rem;font-weight:700;color:white">Inzercia & Portál</div>
+                <div style="font-size:0.8rem;color:#fcd34d;margin-top:4px">Noví zákazníci z VoľnéKreslo</div>
+            </div>
+        </div>
+
+        <!-- ===== ADVANTAGE 1: PRICE & REAL YEARLY SAVINGS ===== -->
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:36px;margin-bottom:28px;backdrop-filter:blur(10px)">
+            <div style="display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap">
+                <div style="flex-shrink:0;width:60px;height:60px;border-radius:14px;background:linear-gradient(135deg,#059669,#10b981);display:flex;align-items:center;justify-content:center;font-size:1.8rem">💰</div>
+                <div style="flex:1;min-width:280px">
+                    <h3 style="font-size:1.35rem;font-weight:800;margin-bottom:8px;color:white">1. Extrémna úspora peňazí: Ušetríte 48 € až 204 € ročne</h3>
+                    <p style="color:#94a3b8;margin-bottom:20px;line-height:1.7">Konkurencia si za rezervačný systém pýta výrazne viac peňazí za rovnaké alebo dokonca menšie kapacity. S Rezervos neplatíte predražené licenčné poplatky a ušetrené peniaze môžete investovať priamo do rozvoja vášho podnikania.</p>
+
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px">
+                        <div style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);border-radius:12px;padding:20px;text-align:center">
+                            <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#6ee7b7;margin-bottom:6px">Základný balík (START vs EASY)</div>
+                            <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:4px">
+                                <span style="font-size:1.2rem;color:#f87171;text-decoration:line-through;font-weight:600">8,90 €</span>
+                                <span style="color:#475569">→</span>
+                                <span style="font-size:1.6rem;font-weight:900;color:#34d399">4,90 €</span>
+                            </div>
+                            <div style="font-size:0.85rem;color:#34d399;font-weight:700">Mesačná úspora 4,00 € (−45%)</div>
+                            <div style="margin-top:8px;padding:6px 12px;background:rgba(16,185,129,0.2);border-radius:6px;font-size:0.85rem;color:#6ee7b7;font-weight:800">💚 Úspora 48 € ročne!</div>
+                        </div>
+
+                        <div style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);border-radius:12px;padding:20px;text-align:center">
+                            <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#6ee7b7;margin-bottom:6px">Stredný balík (PRO vs SMART)</div>
+                            <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:4px">
+                                <span style="font-size:1.2rem;color:#f87171;text-decoration:line-through;font-weight:600">18,90 €</span>
+                                <span style="color:#475569">→</span>
+                                <span style="font-size:1.6rem;font-weight:900;color:#34d399">9,90 €</span>
+                            </div>
+                            <div style="font-size:0.85rem;color:#34d399;font-weight:700">Mesačná úspora 9,00 € (−48%)</div>
+                            <div style="margin-top:8px;padding:6px 12px;background:rgba(16,185,129,0.2);border-radius:6px;font-size:0.85rem;color:#6ee7b7;font-weight:800">💚 Úspora 108 € ročne!</div>
+                        </div>
+
+                        <div style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);border-radius:12px;padding:20px;text-align:center">
+                            <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#6ee7b7;margin-bottom:6px">Pokročilý tím (BUSINESS vs STANDARD)</div>
+                            <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:4px">
+                                <span style="font-size:1.2rem;color:#f87171;text-decoration:line-through;font-weight:600">38,90 €</span>
+                                <span style="color:#475569">→</span>
+                                <span style="font-size:1.6rem;font-weight:900;color:#34d399">21,90 €</span>
+                            </div>
+                            <div style="font-size:0.85rem;color:#34d399;font-weight:700">Mesačná úspora 17,00 € (−43%)</div>
+                            <div style="margin-top:8px;padding:6px 12px;background:rgba(16,185,129,0.2);border-radius:6px;font-size:0.85rem;color:#6ee7b7;font-weight:800">💚 Úspora 204 € ročne!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== ADVANTAGE 2: EMAIL MAPPING & CUSTOM SMTP ===== -->
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(14,165,233,0.3);border-radius:16px;padding:36px;margin-bottom:28px">
+            <div style="display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap">
+                <div style="flex-shrink:0;width:60px;height:60px;border-radius:14px;background:linear-gradient(135deg,#0284c7,#38bdf8);display:flex;align-items:center;justify-content:center;font-size:1.8rem">✉️</div>
+                <div style="flex:1;min-width:280px">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+                        <h3 style="font-size:1.35rem;font-weight:800;color:white;margin:0">2. Namapovanie vlastného firemného e-mailu (SMTP / IMAP)</h3>
+                        <span style="background:#0284c7;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:800">IBA V REZERVOS</span>
+                    </div>
+                    <p style="color:#94a3b8;margin-bottom:16px;line-height:1.7">V Rezervos máte sekciu <strong>E-maily</strong>, kde si môžete prepojiť vlastnú e-mailovú schránku (vlastný SMTP server a IMAP). Všetky potvrdenia, pripomienky a komunikácia so zákazníkmi tak odchádzajú <strong>z vašej vlastnej adresy (napr. info@vasasalon.sk)</strong> a nie zo všeobecnej adresy systému. Budujete tak vlastnú dôveryhodnú značku.</p>
+                    <div style="display:flex;gap:16px;flex-wrap:wrap">
+                        <div style="background:rgba(14,165,233,0.1);border-left:3px solid #38bdf8;padding:10px 16px;border-radius:0 8px 8px 0;font-size:0.85rem;color:#bae6fd">
+                            <strong>Rezervos:</strong> Plná podpora vlastného SMTP/IMAP, odosielanie pod vlastnou doménou, história odoslaných správ.
+                        </div>
+                        <div style="background:rgba(239,68,68,0.1);border-left:3px solid #f87171;padding:10px 16px;border-radius:0 8px 8px 0;font-size:0.85rem;color:#fca5a5">
+                            <strong>Konkurencia:</strong> Všetky emaily odchádzajú z domény Konkurencia, zákazník nevidí vašu firemnú identitu.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== ADVANTAGE 3: SECURITY & 2FA ===== -->
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(99,102,241,0.3);border-radius:16px;padding:36px;margin-bottom:28px">
+            <div style="display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap">
+                <div style="flex-shrink:0;width:60px;height:60px;border-radius:14px;background:linear-gradient(135deg,#4f46e5,#818cf8);display:flex;align-items:center;justify-content:center;font-size:1.8rem">🔒</div>
+                <div style="flex:1;min-width:280px">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+                        <h3 style="font-size:1.35rem;font-weight:800;color:white;margin:0">3. Pokročilá bezpečnosť a správa relácií (2FA, IP logy)</h3>
+                        <span style="background:#4f46e5;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:800">MAXIMÁLNA OCHRANA</span>
+                    </div>
+                    <p style="color:#94a3b8;margin-bottom:16px;line-height:1.7">V sekcii <strong>Zabezpečenie</strong> poskytuje Rezervos firemnú úroveň ochrany vašich dát a dát vašich klientov:</p>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+                        <div style="padding:12px 16px;background:rgba(99,102,241,0.1);border-radius:8px">
+                            <div style="font-weight:700;color:#c7d2fe;font-size:0.85rem;margin-bottom:4px">🛡️ Dvojfaktorové overenie (2FA)</div>
+                            <div style="font-size:0.78rem;color:#94a3b8">Ochrana účtu pred neoprávneným vniknutím cez overovaciu aplikáciu</div>
+                        </div>
+                        <div style="padding:12px 16px;background:rgba(99,102,241,0.1);border-radius:8px">
+                            <div style="font-weight:700;color:#c7d2fe;font-size:0.85rem;margin-bottom:4px">💻 Správa aktívnych sedení</div>
+                            <div style="font-size:0.78rem;color:#94a3b8">Prehľad prihlásených zariadení (mobil, notebook) s možnosťou odhlásenia na diaľku</div>
+                        </div>
+                        <div style="padding:12px 16px;background:rgba(99,102,241,0.1);border-radius:8px">
+                            <div style="font-weight:700;color:#c7d2fe;font-size:0.85rem;margin-bottom:4px">📜 História prihlásení a IP adries</div>
+                            <div style="font-size:0.78rem;color:#94a3b8">Kompletný audit bezpečnostných udalostí a prihlásení zamestnancov</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== ADVANTAGE 4: KANBAN BOARD / TABUĽA ÚLOH ===== -->
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(234,88,12,0.3);border-radius:16px;padding:36px;margin-bottom:28px">
+            <div style="display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap">
+                <div style="flex-shrink:0;width:60px;height:60px;border-radius:14px;background:linear-gradient(135deg,#c2410c,#ea580c);display:flex;align-items:center;justify-content:center;font-size:1.8rem">📋</div>
+                <div style="flex:1;min-width:280px">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+                        <h3 style="font-size:1.35rem;font-weight:800;color:white;margin:0">4. Interná tabuľa poznámok a úloh (Kanban)</h3>
+                        <span style="background:#ea580c;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:800">ZADARMO PRE KAŽDÉHO</span>
+                    </div>
+                    <p style="color:#94a3b8;margin-bottom:16px;line-height:1.7">V module <strong>Tabuľa</strong> máte k dispozícii plnohodnotný vizuálny Kanban systém pre tím. Už nepotrebujete externé platené nástroje ako Trello či Asana – poznámky, úlohy k zákazníkom, objednávky materiálu a interné oznamy riešite priamo v rezervačnom systéme. Táto funkcia je dostupná <strong>už v bezplatnom FREE balíku</strong>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== ADVANTAGE 5: MARKETING, UTM & VOUCHERS ===== -->
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(236,72,153,0.3);border-radius:16px;padding:36px;margin-bottom:28px">
+            <div style="display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap">
+                <div style="flex-shrink:0;width:60px;height:60px;border-radius:14px;background:linear-gradient(135deg,#be185d,#ec4899);display:flex;align-items:center;justify-content:center;font-size:1.8rem">📣</div>
+                <div style="flex:1;min-width:280px">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+                        <h3 style="font-size:1.35rem;font-weight:800;color:white;margin:0">5. Marketingový panel: UTM sledovanie kampaní, kupóny a Last Minute</h3>
+                    </div>
+                    <p style="color:#94a3b8;margin-bottom:16px;line-height:1.7">Rezervos vám dáva do rúk kompletný arzenál na získavanie a udržanie zákazníkov:</p>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+                        <div style="padding:12px 16px;background:rgba(236,72,153,0.1);border-radius:8px">
+                            <div style="font-weight:700;color:#fbcfe8;font-size:0.85rem;margin-bottom:4px">📊 UTM Zdroje a sledovanie reklamy</div>
+                            <div style="font-size:0.78rem;color:#94a3b8">Presne viete, či zákazník prišiel z Facebooku, Instagramu, Google alebo letáku</div>
+                        </div>
+                        <div style="padding:12px 16px;background:rgba(236,72,153,0.1);border-radius:8px">
+                            <div style="font-weight:700;color:#fbcfe8;font-size:0.85rem;margin-bottom:4px">🎟️ Zľavové kódy a vouchery</div>
+                            <div style="font-size:0.78rem;color:#94a3b8">Vytvárajte percentuálne alebo fixné zľavy pre marketingové akcie</div>
+                        </div>
+                        <div style="padding:12px 16px;background:rgba(236,72,153,0.1);border-radius:8px">
+                            <div style="font-weight:700;color:#fbcfe8;font-size:0.85rem;margin-bottom:4px">⚡ Last Minute ponuky</div>
+                            <div style="font-size:0.78rem;color:#94a3b8">Bleskovo zaplňte neobsadené termíny na zajtra so špeciálnou zľavou</div>
+                        </div>
+                        <div style="padding:12px 16px;background:rgba(236,72,153,0.1);border-radius:8px">
+                            <div style="font-weight:700;color:#fbcfe8;font-size:0.85rem;margin-bottom:4px">🖼️ Titulný banner a Vernostný program</div>
+                            <div style="font-size:0.78rem;color:#94a3b8">Zvýraznite akcie na profile a odmeňujte stálych klientov</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== ADVANTAGE 6: PORTAL INZERCIA & AI ASISTENT ===== -->
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(234,179,8,0.3);border-radius:16px;padding:36px;margin-bottom:40px">
+            <div style="display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap">
+                <div style="flex-shrink:0;width:60px;height:60px;border-radius:14px;background:linear-gradient(135deg,#d97706,#f59e0b);display:flex;align-items:center;justify-content:center;font-size:1.8rem">⭐</div>
+                <div style="flex:1;min-width:280px">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+                        <h3 style="font-size:1.35rem;font-weight:800;color:white;margin:0">6. Inzercia na portáli VoľnéKreslo & AI asistent pre zákazníkov</h3>
+                        <span style="background:#d97706;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:800">UNIKÁT NA TRHU</span>
+                    </div>
+                    <p style="color:#94a3b8;margin-bottom:16px;line-height:1.7">Rezervos nie je len softvér – je to aj <strong>veľký zákaznícky portál (VoľnéKreslo)</strong> s mapou a vyhľadávaním služieb po celom Slovensku. Navyše portál disponuje <strong>inteligentným AI asistentom</strong>, ktorý pomáha klientom nájsť vhodnú službu a termín. Váš inzerát v portáli vám prinesie nových platiacich klientov priamo do kalendára. Konkurencia nič podobné neponúka.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== SUMMARY CTA BOX ===== -->
+        <div style="background:linear-gradient(135deg,rgba(13,148,136,0.2),rgba(37,99,235,0.15));border:2px solid rgba(13,148,136,0.4);border-radius:20px;padding:40px;text-align:center">
+            <h3 style="font-size:1.8rem;font-weight:900;letter-spacing:-0.02em;margin-bottom:12px;color:white">Záver: Získate viac slobody a ušetríte stovky eur ročne</h3>
+            <p style="color:#94a3b8;font-size:1.05rem;max-width:750px;margin:0 auto 24px;line-height:1.7">Prečo platiť Konkurencia 38,90 € mesačne za 5 zamestnancov, keď v Rezervos máte <strong>až 10 zamestnancov za 21,90 €</strong> s vlastným e-mailom, bezpečnosťou a inzerciou? Vyskúšajte bezplatný balík a presvedčte sa sami.</p>
+            <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+                <a href="#rezervos-cennik" style="display:inline-block;padding:14px 32px;background:linear-gradient(135deg,#0d9488,#14b8a6);color:white;font-size:1rem;font-weight:700;border-radius:100px;text-decoration:none;box-shadow:0 4px 20px rgba(13,148,136,0.4)">Pozrieť balíky Rezervos ↓</a>
+                <a href="#cenove-porovnanie" style="display:inline-block;padding:14px 32px;background:rgba(255,255,255,0.08);color:white;font-size:1rem;font-weight:700;border-radius:100px;text-decoration:none;border:1px solid rgba(255,255,255,0.2)">Presné porovnanie cien ↓</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ============================================= -->
+<!-- SECTION: REZERVOS PRICING CARDS -->
+<!-- ============================================= -->
+<div class="container" id="rezervos-cennik">
+    <div class="section-title">
+        <span class="label rezervos">Rezervos</span>
+        <h2>Cenník balíkov Rezervos</h2>
+        <p>Vyberte si balík služieb na mieru pre vašu prevádzku</p>
+    </div>
+
+    <div class="pricing-grid cols-4">
+        <!-- FREE -->
+        <div class="pricing-card">
+            <div class="card-tier">Základ</div>
+            <div class="card-name">FREE</div>
+            <div class="card-desc">Základná príležitosť a manuálna správa</div>
+            <div class="card-price">0,00 <span class="currency">€</span> <span class="period">/ mesiac</span></div>
+            <div class="card-annual">Trvalo bezplatný prístup</div>
+            <ul class="card-features">
+                <li>150 rezervácií mesačne</li>
+                <li>1 používateľ</li>
+                <li>Kalendár a zoznam rezervácií</li>
+                <li>CRM klientov (plný prístup)</li>
+                <li>Profil prevádzky a cenník</li>
+            </ul>
+        </div>
+
+        <!-- START -->
+        <div class="pricing-card">
+            <div class="card-tier">Basic</div>
+            <div class="card-name">START</div>
+            <div class="card-desc">Ideálny pre menšiu prevádzku a jedného špecialistu</div>
+            <div class="card-price">5,90 <span class="currency">€</span> <span class="period">/ mesiac</span></div>
+            <div class="card-annual">💚 Ročne 4,90 € / mes. (úspora 12 €)</div>
+            <ul class="card-features">
+                <li>300 rezervácií mesačne</li>
+                <li>1 používateľ (1 pobočka)</li>
+                <li>Kalendár, rezervácie, CRM klientov</li>
+                <li>Vlastné logo a sociálne siete</li>
+                <li>Automatické schvaľovanie</li>
+            </ul>
+        </div>
+
+        <!-- PRO -->
+        <div class="pricing-card recommended">
+            <div class="card-tier">Odporúčaný</div>
+            <div class="card-name">PRO</div>
+            <div class="card-desc">Pre rozbehnuté prevádzky s tímom kolegov</div>
+            <div class="card-price">11,90 <span class="currency">€</span> <span class="period">/ mesiac</span></div>
+            <div class="card-annual">💚 Ročne 9,90 € / mes. (úspora 24 €)</div>
+            <ul class="card-features">
+                <li>1 500 rezervácií mesačne</li>
+                <li>1 – 3 zamestnanci</li>
+                <li>Všetko zo START</li>
+                <li>Last Minute ponuky a Titulný banner</li>
+                <li>Marketing – základné nástroje</li>
+            </ul>
+        </div>
+
+        <!-- BUSINESS -->
+        <div class="pricing-card premium-card">
+            <div class="card-tier">Elite</div>
+            <div class="card-name">BUSINESS</div>
+            <div class="card-desc">Neobmedzený výkon a kompletný marketing</div>
+            <div class="card-price">24,90 <span class="currency">€</span> <span class="period">/ mesiac</span></div>
+            <div class="card-annual">💚 Ročne 21,90 € / mes. (úspora 36 €)</div>
+            <ul class="card-features">
+                <li>Neobmedzené rezervácie</li>
+                <li>Až 10 zamestnancov</li>
+                <li>Všetko z PRO</li>
+                <li>Vernostný program pre zákazníkov</li>
+                <li>2 pobočky v cene</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ============================================= -->
+<!-- SECTION: BOOKIO PRICING CARDS -->
+<!-- ============================================= -->
+<div class="container" id="konkurencia-cennik">
+    <div class="section-title">
+        <span class="label konkurencia">Konkurencia</span>
+        <h2>Cenník balíkov Konkurencia (Služby)</h2>
+        <p>Cenník konkurencie pre porovnanie</p>
+    </div>
+
+    <div class="pricing-grid cols-5">
+        <!-- FREEMIUM -->
+        <div class="pricing-card">
+            <div class="card-tier">Zadarmo</div>
+            <div class="card-name">FREEMIUM</div>
+            <div class="card-desc">Navždy zdarma</div>
+            <div class="card-price">0,00 <span class="currency">€</span> <span class="period">/ mesiac</span></div>
+            <ul class="card-features">
+                <li>100 rezervácií mesačne</li>
+                <li>1 užívateľ</li>
+                <li>1 miestnosť</li>
+            </ul>
+        </div>
+
+        <!-- EASY -->
+        <div class="pricing-card">
+            <div class="card-tier">Začínajúci</div>
+            <div class="card-name">EASY</div>
+            <div class="card-desc">Začínajúci podnikateľ</div>
+            <div class="card-price">8,90 <span class="currency">€</span> <span class="period">/ mesiac</span></div>
+            <div class="card-annual">Ročne 6,90 € / mes.</div>
+            <ul class="card-features">
+                <li>200 rezervácií mesačne</li>
+                <li>1 užívateľ</li>
+                <li>1 miestnosť</li>
+            </ul>
+        </div>
+
+        <!-- SMART -->
+        <div class="pricing-card">
+            <div class="card-tier">Malá prevádzka</div>
+            <div class="card-name">SMART</div>
+            <div class="card-desc">Malá prevádzka</div>
+            <div class="card-price">18,90 <span class="currency">€</span> <span class="period">/ mesiac</span></div>
+            <div class="card-annual">Ročne 14,90 € / mes.</div>
+            <ul class="card-features">
+                <li>1 000 rezervácií mesačne</li>
+                <li>2 užívatelia</li>
+                <li>2 miestnosti</li>
+            </ul>
+        </div>
+
+        <!-- STANDARD -->
+        <div class="pricing-card">
+            <div class="card-tier">Menší tím</div>
+            <div class="card-name">STANDARD</div>
+            <div class="card-desc">Menší tím</div>
+            <div class="card-price">38,90 <span class="currency">€</span> <span class="period">/ mesiac</span></div>
+            <div class="card-annual">Ročne 29,90 € / mes.</div>
+            <ul class="card-features">
+                <li>Neobmedzené rezervácie</li>
+                <li>5 užívateľov</li>
+                <li>5 miestností</li>
+            </ul>
+        </div>
+
+        <!-- PREMIUM -->
+        <div class="pricing-card">
+            <div class="card-tier">Veľká firma</div>
+            <div class="card-name">PREMIUM</div>
+            <div class="card-desc">Na mieru</div>
+            <div class="card-price" style="font-size:1.6rem">Na mieru</div>
+            <ul class="card-features">
+                <li>Neobmedzené všetko</li>
+                <li>Neobmedzení užívatelia</li>
+                <li>Neobmedzené miestnosti</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ============================================= -->
+<!-- SECTION: REZERVOS COMPARISON TABLE -->
+<!-- ============================================= -->
+<div class="container" id="porovnanie-rezervos">
+    <div class="section-title">
+        <span class="label rezervos">Rezervos</span>
+        <h2>Porovnanie balíčkov Rezervos</h2>
+        <p>Kompletný prehľad funkcií v každom balíku</p>
+    </div>
+
+    <div class="table-scroll">
+        <div class="table-wrapper">
+            <table class="comp-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th class="tier-free">FREE<span class="tier-price-sub">0 € / mes.</span></th>
+                        <th class="tier-start">START<span class="tier-price-sub">4,90 € / mes.</span></th>
+                        <th class="tier-pro">PRO<span class="tier-price-sub">9,90 € / mes.</span></th>
+                        <th class="tier-business">BUSINESS<span class="tier-price-sub">21,90 € / mes.</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rezervácie a Kapacita -->
+                    <tr class="category-row"><td colspan="5">📋 Rezervácie a Kapacita</td></tr>
+                    <tr><td>Počet rezervácií / mesiac</td><td class="value">150</td><td class="value">300</td><td class="value">1 500</td><td class="value inf"><span style="font-size:1.5rem;line-height:1">∞</span></td></tr>
+                    <tr><td>Počet používateľov / zamestnancov</td><td class="value">1</td><td class="value">1</td><td class="value">1 – 3</td><td class="value" style="color:var(--accent-green);font-weight:800">10</td></tr>
+                    <tr><td>Viac pobočiek</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td></tr>
+
+                    <!-- Správa a Organizácia -->
+                    <tr class="category-row"><td colspan="5">⚙️ Správa a Organizácia</td></tr>
+                    <tr><td>Kalendár a zoznam rezervácií</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>CRM klientov (plný prístup)</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Profil prevádzky a cenník</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Tabuľa úloh</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Automatické schvaľovanie rezervácií</td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+
+                    <!-- Komunikácia a Notifikácie -->
+                    <tr class="category-row"><td colspan="5">📨 Komunikácia a Notifikácie</td></tr>
+                    <tr><td>Potvrdzujúce e-maily</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr class="unique-row">
+                        <td>Vlastné mapovanie e-mailu (SMTP / IMAP) <span class="unique-badge ours">IBA MY</span></td>
+                        <td><span class="cross">✕</span></td>
+                        <td><span class="cross">✕</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr><td>Google Calendar sync</td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Hromadné e-maily zákazníkom</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+
+                    <!-- Marketing a Predaj -->
+                    <tr class="category-row"><td colspan="5">📣 Marketing a Predaj</td></tr>
+                    <tr><td>Vlastné logo a sociálne siete</td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Hodnotenia a recenzie zákazníkov</td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>UTM zdroje a sledovanie kampaní</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Zľavové kódy a kupóny</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Last Minute ponuky a Titulný banner</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Marketing – základné nástroje</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Vernostný program pre zákazníkov</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>QR kód záloha (Pay by Square / SEPA)</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr class="unique-row">
+                        <td>Inzercia na portáli VoľnéKreslo <span class="unique-badge ours">IBA MY</span></td>
+                        <td class="value small-text">0,50 €/ks</td>
+                        <td class="value small-text">0,50 €/ks</td>
+                        <td class="value small-text">3× zadarmo<br>(ďalšie 0,50 €)</td>
+                        <td class="value small-text">6× zadarmo<br>(ďalšie 0,50 €)</td>
+                    </tr>
+                    <tr class="unique-row">
+                        <td>AI asistent pre zákazníkov <span class="unique-badge ours">IBA MY</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+
+                    <!-- Bezpečnosť a Správa -->
+                    <tr class="category-row"><td colspan="5">🔒 Bezpečnosť a Zabezpečenie</td></tr>
+                    <tr><td>Dvojfaktorové overenie (2FA)</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Správa aktívnych sedení a odhlásenie</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>História prihlásení a audit logy</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+
+                    <!-- Štatistiky a Integrácie -->
+                    <tr class="category-row"><td colspan="5">📊 Štatistiky a Integrácie</td></tr>
+                    <tr><td>Pokročilé štatistiky a reporty</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Exporty pre účtovníka</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Rozšírenia a API integrácie</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td></tr>
+
+                    <!-- Zákaznícka podpora -->
+                    <tr class="category-row"><td colspan="5">🎧 Zákaznícka podpora</td></tr>
+                    <tr><td>Prioritná zákaznícka podpora</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ============================================= -->
+<!-- SECTION: BOOKIO COMPARISON TABLE -->
+<!-- ============================================= -->
+<div class="container" id="porovnanie-konkurencia">
+    <div class="section-title">
+        <span class="label konkurencia">Konkurencia</span>
+        <h2>Porovnanie balíčkov Konkurencia (Služby)</h2>
+        <p>Kompletný prehľad funkcií konkurencie</p>
+    </div>
+
+    <div class="table-scroll">
+        <div class="table-wrapper">
+            <table class="comp-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th class="tier-freemium">FREEMIUM<span class="tier-price-sub">0 € / mes.</span></th>
+                        <th class="tier-easy">EASY<span class="tier-price-sub">8,90 € / mes.</span></th>
+                        <th class="tier-smart">SMART<span class="tier-price-sub">18,90 € / mes.</span></th>
+                        <th class="tier-standard">STANDARD<span class="tier-price-sub">38,90 € / mes.</span></th>
+                        <th class="tier-premium">PREMIUM<span class="tier-price-sub">Na mieru</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Základné limity -->
+                    <tr class="category-row"><td colspan="6">📋 Základné limity</td></tr>
+                    <tr><td>Počet rezervácií / mesiac</td><td class="value">100</td><td class="value">200</td><td class="value">1 000</td><td class="value inf"><span style="font-size:1.5rem;line-height:1">∞</span></td><td class="value inf"><span style="font-size:1.5rem;line-height:1">∞</span></td></tr>
+                    <tr><td>Max. počet užívateľov</td><td class="value">1</td><td class="value">1</td><td class="value">2</td><td class="value">5</td><td class="value inf"><span style="font-size:1.5rem;line-height:1">∞</span></td></tr>
+                    <tr><td>Max. počet prenájmov</td><td class="value">1</td><td class="value">1</td><td class="value">2</td><td class="value">5</td><td class="value inf"><span style="font-size:1.5rem;line-height:1">∞</span></td></tr>
+                    <tr><td>Max. počet miestností</td><td class="value">1</td><td class="value">1</td><td class="value">2</td><td class="value">5</td><td class="value inf"><span style="font-size:1.5rem;line-height:1">∞</span></td></tr>
+
+                    <!-- Správa rezervácií -->
+                    <tr class="category-row"><td colspan="6">⚙️ Správa rezervácií</td></tr>
+                    <tr><td>Automatické potvrdzovanie rezervácií</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Časová rezerva na službu (pred a po)</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Skupinové rezervácie</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Filtrovanie v zoznamoch</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Poznámka k rezervácii</td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Manuálne potvrdzovanie rezervácií</td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Žiadosti o rezerváciu</td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Databáza a história termínov</td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Opakované rezervácie</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Opakované blokácie časov</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Dostupnosť služby iba v určitých časoch</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Miestnosti – vzájomné blokovanie</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Čakacia listina (náhradníci)</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+
+                    <!-- Zasielanie správ -->
+                    <tr class="category-row"><td colspan="6">📨 Zasielanie správ</td></tr>
+                    <tr><td>Emailové potvrdenie pre zákazníka</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr class="unique-row"><td>Vlastné mapovanie e-mailu (SMTP / IMAP) <span class="unique-badge ours">BOOKIO NEMÁ</span></td><td colspan="5" style="color: var(--text-muted); font-style: italic;">Konkurencia túto funkciu neponúka (všetko odchádza z ich adresy)</td></tr>
+                    <tr><td>SMS potvrdenia / pripomienky (platené)</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>SMS oznámenia zamestnancom</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Vlastný text SMS upozornení</td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Emailové pripomienky klientom</td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Emailové oznámenia zamestnancom</td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Notifikácie z aplikácie zamestnancom</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+
+                    <!-- Správa a Úlohy -->
+                    <tr class="category-row"><td colspan="6">⚙️ Správa a Organizácia</td></tr>
+                    <tr class="unique-row"><td>Interná tabuľa úloh a poznámok (Kanban) <span class="unique-badge ours">BOOKIO NEMÁ</span></td><td colspan="5" style="color: var(--text-muted); font-style: italic;">Konkurencia nemá internú tabuľu úloh</td></tr>
+
+                    <!-- Rezervačná stránka a dizajn -->
+                    <tr class="category-row"><td colspan="6">🎨 Rezervačná stránka a dizajn</td></tr>
+                    <tr><td>Online rezervácie cez web a Facebook</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>iFrame kód do vlastného webu</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Pridanie do Google / iPhone kalendára</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Dohľadateľnosť v Google</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Kalendár pre kurzy</td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Unikátny odkaz na konkrétnu službu</td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Vlastný dizajn rezervačného formuláru</td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Vlastné logo</td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Stránka vo viacerých jazykoch</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Úvodné informácie</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Fotografie pracovníkov</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Odstránenie loga Konkurencia</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td></tr>
+
+                    <!-- Ponuka na rezervačnej stránke -->
+                    <tr class="category-row"><td colspan="6">🛒 Ponuka na rezervačnej stránke</td></tr>
+                    <tr><td>Doplnkové služby</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Fotografie služieb</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Otvorené / výberové otázky vo formulári</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Kategórie a podkategórie</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Určenie priority kategórie / služby</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+
+                    <!-- Tím a personál -->
+                    <tr class="category-row"><td colspan="6">👥 Tím a personál</td></tr>
+                    <tr><td>Prepojenie s Google kalendárom</td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Právomoci a oprávnenia pre zamestnancov</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Pracovné zmeny zamestnancov</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+
+                    <!-- Platby a iné ponuky -->
+                    <tr class="category-row"><td colspan="6">💳 Platby a iné ponuky</td></tr>
+                    <tr><td>QR platby – na prevádzke</td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Online platby a zálohy (provízia)</td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Darčekové poukážky a permanentky</td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Poukážky – predané na prevádzke</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td></tr>
+                    <tr class="unique-row"><td>Inzercia na zákazníckom portáli <span class="unique-badge ours">BOOKIO NEMÁ</span></td><td colspan="5" style="color: var(--text-muted); font-style: italic;">Konkurencia túto funkciu neponúka</td></tr>
+                    <tr class="unique-row"><td>AI asistent pre zákazníkov na webe <span class="unique-badge ours">BOOKIO NEMÁ</span></td><td colspan="5" style="color: var(--text-muted); font-style: italic;">Konkurencia nemá AI asistenta pre rezervácie</td></tr>
+                    <tr class="unique-row"><td>Vernostný program pre zákazníkov <span class="unique-badge ours">BOOKIO NEMÁ</span></td><td colspan="5" style="color: var(--text-muted); font-style: italic;">Konkurencia neponúka vernostný program</td></tr>
+
+                    <!-- Bezpečnosť -->
+                    <tr class="category-row"><td colspan="6">🔒 Bezpečnosť a Zabezpečenie</td></tr>
+                    <tr class="unique-row"><td>Dvojfaktorové overenie (2FA) & správa sedení <span class="unique-badge ours">BOOKIO NEMÁ</span></td><td colspan="5" style="color: var(--text-muted); font-style: italic;">Konkurencia nemá 2FA ani správu aktívnych prihlásení</td></tr>
+
+                    <!-- Zákazníci a dáta -->
+                    <tr class="category-row"><td colspan="6">📁 Zákazníci a dáta</td></tr>
+                    <tr><td>Databáza a história klientov</td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Import zákazníkov</td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Štatistiky</td><td><span class="cross">✕</span></td><td class="value small-text">Základné</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Export a tlač rezervácií a zákazníkov</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Blacklist</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Kategorizácia klientov (štítky)</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+
+                    <!-- Recenzie a marketing -->
+                    <tr class="category-row"><td colspan="6">⭐ Recenzie a marketing</td></tr>
+                    <tr><td>Hodnotenia do Konkurencia</td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Hodnotenia na iné portály (napr. Google)</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Zobrazenie hodnotení na rez. stránke</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Zľavové kódy</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>Trackovanie reklám (GTM kód)</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td>API prístup (integrácia systémov)</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ============================================= -->
+<!-- SECTION: PRICE vs PRICE -->
+<!-- ============================================= -->
+
+<!-- 5-SMERNA MEGAMATRICA SLOVENSKYCH REZERVAČNÝCH SYSTÉMOV -->
+<div class="container" id="megamatrica-5" style="margin: 40px auto; max-width: 1200px; padding: 0 20px;">
+    <div class="section-title" style="text-align: center; margin-bottom: 24px;">
+        <span class="label" style="background:#2563eb; color:#fff; padding:6px 14px; border-radius:999px; font-weight:700; font-size:12px; text-transform:uppercase; letter-spacing:0.5px;">KOMPLETNÁ PÄTICA SLOVENSKÉHO TRHU</span>
+        <h2 style="font-size:32px; margin-top:10px; font-weight:800; color:#0f172a;">5-Smerná Porovnávacia Megamatrica</h2>
+        <p style="color:#64748b; max-width:800px; margin:10px auto 0; font-size:15px;">Forenzné a cenové porovnanie: <strong>Bookio Services</strong> vs. <strong>EasyBooking.sk</strong> vs. <strong>Booqme.app</strong> vs. <strong>Planivo.sk</strong> vs. <strong style="color:#0d9488;">REZERVOS</strong>.</p>
+        <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:16px;">
+            <a href="bookio/index.html" target="_blank" style="padding:8px 16px; border-radius:8px; background:#fff7ed; border:1px solid #fdba74; color:#c2410c; font-size:13px; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">📄 Otvoriť Audit Bookio (26 modulov) &rarr;</a>
+            <a href="easybooking/index.html" target="_blank" style="padding:8px 16px; border-radius:8px; background:#eff6ff; border:1px solid #bfdbfe; color:#1d4ed8; font-size:13px; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">📄 Otvoriť Audit EasyBooking (24 modulov) &rarr;</a>
+            <a href="planivo/index.html" target="_blank" style="padding:8px 16px; border-radius:8px; background:#f0fdf4; border:1px solid #bbf7d0; color:#15803d; font-size:13px; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">📄 Otvoriť Audit Planivo (18 modulov) &rarr;</a>
+        </div>
+    </div>
+
+    <div style="overflow-x: auto; background: #fff; border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 10px 30px rgba(0,0,0,0.06); margin-bottom: 40px;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left;">
+            <thead>
+                <tr style="background: #f8fafc; border-bottom: 2px solid #cbd5e1;">
+                    <th style="padding: 16px 18px; font-weight: 700; color: #475569;">Kritérium / Funkcia</th>
+                    <th style="padding: 16px 18px; font-weight: 700; color: #ea580c;">Bookio Services</th>
+                    <th style="padding: 16px 18px; font-weight: 700; color: #2563eb;">EasyBooking.sk</th>
+                    <th style="padding: 16px 18px; font-weight: 700; color: #7c3aed;">Booqme.app</th>
+                    <th style="padding: 16px 18px; font-weight: 700; color: #059669;">Planivo.sk</th>
+                    <th style="padding: 16px 18px; font-weight: 800; color: #0f766e; background: #f0fdfa; border-left: 2px solid #0d9488;">REZERVOS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid #e2e8f0;">
+                    <td style="padding: 12px 18px; font-weight: 700;">Mesačný paušál (Základ)</td>
+                    <td style="padding: 12px 18px;">0 € (Freemium do 100 t.)</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">24,90 € / mes.</td>
+                    <td style="padding: 12px 18px;">0 € (Freemium)</td>
+                    <td style="padding: 12px 18px;">0 € (do 30 t.) / 5,90 €</td>
+                    <td style="padding: 12px 18px; font-weight:800; color:#0f766e; background:#f0fdfa; border-left:2px solid #0d9488;">0,00 € / mes. ZADARMO</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e2e8f0;">
+                    <td style="padding: 12px 18px; font-weight: 700;">Strop počtu rezervácií</td>
+                    <td style="padding: 12px 18px; color:#dc2626; font-weight:600;">❌ 100 / 150 / 300 termínov</td>
+                    <td style="padding: 12px 18px; color:#16a34a; font-weight:600;">✅ Neobmedzene</td>
+                    <td style="padding: 12px 18px; color:#dc2626; font-weight:600;">❌ 100 termínov</td>
+                    <td style="padding: 12px 18px; color:#dc2626; font-weight:600;">❌ 30 (FREE) / 150 (STARTER)</td>
+                    <td style="padding: 12px 18px; font-weight:800; color:#16a34a; background:#f0fdfa; border-left:2px solid #0d9488;">✅ NEOBMEDZENE</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e2e8f0;">
+                    <td style="padding: 12px 18px; font-weight: 700;">Strop personálu</td>
+                    <td style="padding: 12px 18px; color:#dc2626; font-weight:600;">❌ 1 až 5 osôb</td>
+                    <td style="padding: 12px 18px; color:#16a34a; font-weight:600;">✅ Neobmedzene</td>
+                    <td style="padding: 12px 18px; color:#dc2626; font-weight:600;">❌ 1 až 3 osoby</td>
+                    <td style="padding: 12px 18px; color:#dc2626; font-weight:600;">❌ 1 (FREE) / 2 (STARTER) / 5 (PRO)</td>
+                    <td style="padding: 12px 18px; font-weight:800; color:#16a34a; background:#f0fdfa; border-left:2px solid #0d9488;">✅ NEOBMEDZENE</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e2e8f0;">
+                    <td style="padding: 12px 18px; font-weight: 700;">Limit počtu služieb</td>
+                    <td style="padding: 12px 18px; color:#16a34a;">✅ Neobmedzene</td>
+                    <td style="padding: 12px 18px; color:#16a34a;">✅ Neobmedzene</td>
+                    <td style="padding: 12px 18px; color:#16a34a;">✅ Neobmedzene</td>
+                    <td style="padding: 12px 18px; color:#dc2626; font-weight:600;">❌ Max 3 (FREE) / Max 5 (STARTER)</td>
+                    <td style="padding: 12px 18px; font-weight:800; color:#16a34a; background:#f0fdfa; border-left:2px solid #0d9488;">✅ NEOBMEDZENE</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e2e8f0;">
+                    <td style="padding: 12px 18px; font-weight: 700;">Cena SMS pripomienky</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">~0,075 € / ks</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">0,083 € / ks</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">~0,070 € / ks</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">0,070 € / ks</td>
+                    <td style="padding: 12px 18px; font-weight:800; color:#16a34a; background:#f0fdfa; border-left:2px solid #0d9488;">✅ 0 € PUSH / 0,049 € SMS</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e2e8f0;">
+                    <td style="padding: 12px 18px; font-weight: 700;">Smart orez diakritiky (160 zn.)</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ NIE (predražuje na 2 SMS)</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ NIE (0,166 €)</td>
+                    <td style="padding: 12px 18px; color:#f59e0b;">⚠️ Čiastočne</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ NIE (diakritika = 70 zn. = 0,14 €)</td>
+                    <td style="padding: 12px 18px; font-weight:800; color:#16a34a; background:#f0fdfa; border-left:2px solid #0d9488;">✅ ÁNO (Vždy 1 SMS = 160 zn.)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e2e8f0;">
+                    <td style="padding: 12px 18px; font-weight: 700;">Bezplatné PWA Push Notifikácie</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ NIE</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ NIE</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ NIE</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ NIE</td>
+                    <td style="padding: 12px 18px; font-weight:800; color:#16a34a; background:#f0fdfa; border-left:2px solid #0d9488;">✅ ÁNO (100% Zadarmo)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e2e8f0;">
+                    <td style="padding: 12px 18px; font-weight: 700;">Stoličkári (Viac IČO na prevádzke)</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ NIE (jedno spoločné konto)</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ NIE</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ NIE</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ NIE</td>
+                    <td style="padding: 12px 18px; font-weight:800; color:#16a34a; background:#f0fdfa; border-left:2px solid #0d9488;">✅ ÁNO (Nezávislé IČO sub-účty)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e2e8f0;">
+                    <td style="padding: 12px 18px; font-weight: 700;">Vlastné platobné brány na pracovníka</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ NIE</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ NIE (len ich brána)</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ NIE</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ NIE</td>
+                    <td style="padding: 12px 18px; font-weight:800; color:#16a34a; background:#f0fdfa; border-left:2px solid #0d9488;">✅ ÁNO (Každé IČO má svoj Stripe)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e2e8f0;">
+                    <td style="padding: 12px 18px; font-weight: 700;">Provízia zo salónnych platieb</td>
+                    <td style="padding: 12px 18px; color:#16a34a;">✅ 0 %</td>
+                    <td style="padding: 12px 18px; color:#dc2626; font-weight:600;">❌ 2,5 % + 0,35 € / platba</td>
+                    <td style="padding: 12px 18px; color:#16a34a;">✅ 0 %</td>
+                    <td style="padding: 12px 18px; color:#16a34a;">✅ 0 %</td>
+                    <td style="padding: 12px 18px; font-weight:800; color:#16a34a; background:#f0fdfa; border-left:2px solid #0d9488;">✅ 0 % ŽIADNA PROVÍZIA</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e2e8f0;">
+                    <td style="padding: 12px 18px; font-weight: 700;">Apple Wallet & Google Wallet Karty</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ NIE</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ NIE</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ NIE</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ NIE</td>
+                    <td style="padding: 12px 18px; font-weight:800; color:#16a34a; background:#f0fdfa; border-left:2px solid #0d9488;">✅ ÁNO (Natívne Passy v mobile)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e2e8f0;">
+                    <td style="padding: 12px 18px; font-weight: 700;">Klientsky Widget bez iframu</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ Iframe (pomalší 1,88 MB)</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ Iframe</td>
+                    <td style="padding: 12px 18px; color:#16a34a;">✅ PWA Widget</td>
+                    <td style="padding: 12px 18px; color:#f59e0b;">⚠️ Embed / iFrame</td>
+                    <td style="padding: 12px 18px; font-weight:800; color:#16a34a; background:#f0fdfa; border-left:2px solid #0d9488;">✅ Bleskový PWA Widget (&lt;60 kB)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e2e8f0;">
+                    <td style="padding: 12px 18px; font-weight: 700;">White-label (Úplné odstránenie loga)</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ Len vo vysokom balíku</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ Príplatok 29,90 €</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ Príplatok</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ Iba v balíku BUSINESS (24,90 €)</td>
+                    <td style="padding: 12px 18px; font-weight:800; color:#16a34a; background:#f0fdfa; border-left:2px solid #0d9488;">✅ V CENE (Vlastný Brand)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e2e8f0;">
+                    <td style="padding: 12px 18px; font-weight: 700;">Vouchery a Darčekové poukážky</td>
+                    <td style="padding: 12px 18px; color:#f59e0b;">⚠️ Len vyšší balík</td>
+                    <td style="padding: 12px 18px; color:#16a34a;">✅ V balíku</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ Nie</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ VÔBEC NEPONÚKA</td>
+                    <td style="padding: 12px 18px; font-weight:800; color:#16a34a; background:#f0fdfa; border-left:2px solid #0d9488;">✅ ÁNO (Verejný eshop s QR platbou)</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px 18px; font-weight: 700;">Radar voľných kresiel (Kreslo Hunter)</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ Iba pasívny waitlist</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ Nie</td>
+                    <td style="padding: 12px 18px; color:#dc2626;">❌ Nie</td>
+                    <td style="padding: 12px 18px; color:#f59e0b;">⚠️ Čakacia listina (iba v PRO)</td>
+                    <td style="padding: 12px 18px; font-weight:800; color:#16a34a; background:#f0fdfa; border-left:2px solid #0d9488;">✅ ÁNO (Aktívny SMS/Push radar)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="container" id="cenove-porovnanie">
+    <div class="section-title">
+        <span class="label vs">VS</span>
+        <h2>Cenové porovnanie Rezervos vs. Konkurencia</h2>
+        <p>Koľko ušetríte s Rezervos oproti Konkurencia (mesačná platba)</p>
+    </div>
+
+    <div class="price-compare">
+        <div class="price-compare-card" style="border: 2px solid var(--border); background: white; border-radius: 16px; padding: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center;">
+            <div class="tier-label" style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: #64748b; margin-bottom: 12px; letter-spacing: 0.05em;">Zadarmo</div>
+            <div class="prices" style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 12px;">
+                <span class="old-price" style="font-size: 1.3rem; color: #94a3b8; font-weight: 600;">0 €</span>
+                <span style="color:#cbd5e1; font-size: 1.2rem;">→</span>
+                <span class="new-price" style="font-size: 1.8rem; font-weight: 900; color: #0d9488;">0 €</span>
+            </div>
+            <div class="saving" style="font-size: 0.85rem; font-weight: 700; color: #0d9488; background: rgba(13,148,136,0.1); padding: 4px 12px; border-radius: 20px; display: inline-block; margin-bottom: 10px;">Oba balíky zadarmo</div>
+            <div style="font-size: 0.82rem; color: #059669; font-weight: 700; background: #ecfdf5; border: 1px dashed #10b981; padding: 8px 12px; border-radius: 8px;">
+                🎁 <strong>+50 rezervácií navyše</strong> každý mesiac
+            </div>
+        </div>
+
+        <div class="price-compare-card" style="border: 2px solid #a7f3d0; background: white; border-radius: 16px; padding: 24px; box-shadow: 0 4px 15px rgba(16,185,129,0.08); text-align: center;">
+            <div class="tier-label" style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: #047857; margin-bottom: 12px; letter-spacing: 0.05em;">Základný balík (START vs EASY)</div>
+            <div class="prices" style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 12px;">
+                <span class="old-price" style="font-size: 1.3rem; color: #f87171; text-decoration: line-through; font-weight: 600;">8,90 €</span>
+                <span style="color:#94a3b8; font-size: 1.2rem;">→</span>
+                <span class="new-price" style="font-size: 1.8rem; font-weight: 900; color: #059669;">4,90 €</span>
+            </div>
+            <div class="saving" style="font-size: 0.85rem; font-weight: 700; color: #059669; background: #d1fae5; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-bottom: 10px;">Úspora 4,00 € / mes. (−45%)</div>
+            <div style="font-size: 0.95rem; color: #065f46; font-weight: 800; background: linear-gradient(135deg,#d1fae5,#a7f3d0); border: 1px solid #34d399; padding: 10px 14px; border-radius: 10px; box-shadow: 0 2px 8px rgba(16,185,129,0.15);">
+                💚 UŠETRÍTE 48 € ROČNE
+            </div>
+        </div>
+
+        <div class="price-compare-card" style="border: 2px solid #a7f3d0; background: white; border-radius: 16px; padding: 24px; box-shadow: 0 4px 15px rgba(16,185,129,0.08); text-align: center;">
+            <div class="tier-label" style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: #047857; margin-bottom: 12px; letter-spacing: 0.05em;">Stredný balík (PRO vs SMART)</div>
+            <div class="prices" style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 12px;">
+                <span class="old-price" style="font-size: 1.3rem; color: #f87171; text-decoration: line-through; font-weight: 600;">18,90 €</span>
+                <span style="color:#94a3b8; font-size: 1.2rem;">→</span>
+                <span class="new-price" style="font-size: 1.8rem; font-weight: 900; color: #059669;">9,90 €</span>
+            </div>
+            <div class="saving" style="font-size: 0.85rem; font-weight: 700; color: #059669; background: #d1fae5; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-bottom: 10px;">Úspora 9,00 € / mes. (−48%)</div>
+            <div style="font-size: 0.95rem; color: #065f46; font-weight: 800; background: linear-gradient(135deg,#d1fae5,#a7f3d0); border: 1px solid #34d399; padding: 10px 14px; border-radius: 10px; box-shadow: 0 2px 8px rgba(16,185,129,0.15);">
+                💚 UŠETRÍTE 108 € ROČNE
+            </div>
+        </div>
+
+        <div class="price-compare-card" style="border: 2px solid #a7f3d0; background: white; border-radius: 16px; padding: 24px; box-shadow: 0 4px 15px rgba(16,185,129,0.08); text-align: center;">
+            <div class="tier-label" style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: #047857; margin-bottom: 12px; letter-spacing: 0.05em;">Pokročilý balík (BUSINESS vs STANDARD)</div>
+            <div class="prices" style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 12px;">
+                <span class="old-price" style="font-size: 1.3rem; color: #f87171; text-decoration: line-through; font-weight: 600;">38,90 €</span>
+                <span style="color:#94a3b8; font-size: 1.2rem;">→</span>
+                <span class="new-price" style="font-size: 1.8rem; font-weight: 900; color: #059669;">21,90 €</span>
+            </div>
+            <div class="saving" style="font-size: 0.85rem; font-weight: 700; color: #059669; background: #d1fae5; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-bottom: 10px;">Úspora 17,00 € / mes. (−51%)</div>
+            <div style="font-size: 0.95rem; color: #065f46; font-weight: 800; background: linear-gradient(135deg,#d1fae5,#a7f3d0); border: 1px solid #34d399; padding: 10px 14px; border-radius: 10px; box-shadow: 0 2px 8px rgba(16,185,129,0.15);">
+                💚 UŠETRÍTE 204 € ROČNE
+            </div>
+        </div>
+    </div>
+
+    <!-- Key limits comparison -->
+    <div class="table-scroll" style="margin-top: 40px;">
+        <div class="table-wrapper">
+            <table class="comp-table">
+                <thead>
+                    <tr>
+                        <th>Kľúčové limity</th>
+                        <th style="color:var(--header-rezervos)">Rezervos FREE<span class="tier-price-sub">0 €</span></th>
+                        <th style="color:#6b7280">Konkurencia FREEMIUM<span class="tier-price-sub">0 €</span></th>
+                        <th style="color:var(--header-rezervos)">Rezervos START<span class="tier-price-sub">4,90 €</span></th>
+                        <th style="color:#6b7280">Konkurencia EASY<span class="tier-price-sub">8,90 €</span></th>
+                        <th style="color:var(--header-rezervos)">Rezervos PRO<span class="tier-price-sub">9,90 €</span></th>
+                        <th style="color:#6b7280">Konkurencia SMART<span class="tier-price-sub">18,90 €</span></th>
+                        <th style="color:var(--header-rezervos)">Rezervos BUSINESS<span class="tier-price-sub">21,90 €</span></th>
+                        <th style="color:#6b7280">Konkurencia STANDARD<span class="tier-price-sub">38,90 €</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="highlight-row">
+                        <td>Rezervácie / mesiac</td>
+                        <td class="value" style="color:var(--accent-green);font-weight:800">150</td>
+                        <td class="value">100</td>
+                        <td class="value" style="color:var(--accent-green);font-weight:800">300</td>
+                        <td class="value">200</td>
+                        <td class="value" style="color:var(--accent-green);font-weight:800">1 500</td>
+                        <td class="value">1 000</td>
+                        <td class="value inf"><span style="font-size:1.5rem;line-height:1">∞</span></td>
+                        <td class="value inf"><span style="font-size:1.5rem;line-height:1">∞</span></td>
+                    </tr>
+                    <tr>
+                        <td>Používatelia</td>
+                        <td class="value">1</td>
+                        <td class="value">1</td>
+                        <td class="value">1</td>
+                        <td class="value">1</td>
+                        <td class="value" style="color:var(--accent-green);font-weight:800">1–3</td>
+                        <td class="value">2</td>
+                        <td class="value" style="color:var(--accent-green);font-weight:800">10</td>
+                        <td class="value">5</td>
+                    </tr>
+                    <tr>
+                        <td>Inzercia na portáli</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="cross">✕</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="cross">✕</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="cross">✕</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="cross">✕</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ============================================= -->
+<!-- SECTION: FEATURES TO ADD -->
+<!-- ============================================= -->
+<div class="container" id="na-dopracovanie">
+    <div class="section-title">
+        <span class="label" style="background:rgba(234,88,12,0.1);color:#ea580c">ROADMAP</span>
+        <h2>Funkcie Konkurencia, ktoré Rezervos zatiaľ nemá</h2>
+        <p>Zoznam funkcií na dopracovanie – inšpirácia z Konkurencia pre ďalší vývoj</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:24px">
+
+        <!-- 1. Správa rezervácií -->
+        <div class="table-wrapper" style="overflow:visible">
+            <div style="padding:20px 24px;border-bottom:2px solid var(--border)">
+                <div style="display:flex;align-items:center;gap:10px">
+                    <span style="font-size:1.4rem">⚙️</span>
+                    <div>
+                        <h3 style="font-size:1.05rem;font-weight:800;margin:0">Správa rezervácií</h3>
+                        <span style="font-size:0.75rem;color:var(--text-muted)">9 funkcií na doplnenie</span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding:16px 24px">
+                <div style="display:flex;flex-direction:column;gap:12px">
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#fef3c7;border-radius:8px;border-left:3px solid #d97706">
+                        <span style="background:#fbbf24;color:#78350f;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">VYSOKÁ</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Opakované rezervácie</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Automatické vytvorenie pravidelných termínov (napr. každý utorok o 10:00)</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#fef3c7;border-radius:8px;border-left:3px solid #d97706">
+                        <span style="background:#fbbf24;color:#78350f;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">VYSOKÁ</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Manuálne potvrdzovanie rezervácií</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Rezervácia čaká na manuálne schválenie prevádzkou pred potvrdením zákazníkovi</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#eff6ff;border-radius:8px;border-left:3px solid #2563eb">
+                        <span style="background:#3b82f6;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">STREDNÁ</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Poznámka k rezervácii</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Interná poznámka pre zamestnancov alebo poznámka od zákazníka pri rezervácii</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#eff6ff;border-radius:8px;border-left:3px solid #2563eb">
+                        <span style="background:#3b82f6;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">STREDNÁ</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Žiadosti o rezerváciu</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Zákazník posiela žiadosť, prevádzka ju akceptuje alebo odmietne</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#eff6ff;border-radius:8px;border-left:3px solid #2563eb">
+                        <span style="background:#3b82f6;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">STREDNÁ</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Časová rezerva na službu (čas pred a po)</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Nastavenie prestávky pred/po službe na prípravu alebo upratovanie</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#eff6ff;border-radius:8px;border-left:3px solid #2563eb">
+                        <span style="background:#3b82f6;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">STREDNÁ</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Skupinové rezervácie</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Viac ľudí na jednu rezerváciu (kurzy, workshopy, skupinové aktivity)</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#eff6ff;border-radius:8px;border-left:3px solid #2563eb">
+                        <span style="background:#3b82f6;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">STREDNÁ</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Opakované blokácie časov</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Pravidelné blokovanie termínov (napr. obedná pauza, meetingy)</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#f3f4f6;border-radius:8px;border-left:3px solid #6b7280">
+                        <span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">NÍZKA</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Čakacia listina (náhradníci)</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Zákazník sa zaradí na čakaciu listinu a dostane notifikáciu keď sa termín uvoľní</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#f3f4f6;border-radius:8px;border-left:3px solid #6b7280">
+                        <span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">NÍZKA</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Miestnosti – vzájomné blokovanie služieb</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Správa miestností s automatickým blokovaním keď je miestnosť obsadená</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Zasielanie správ -->
+        <div class="table-wrapper" style="overflow:visible">
+            <div style="padding:20px 24px;border-bottom:2px solid var(--border)">
+                <div style="display:flex;align-items:center;gap:10px">
+                    <span style="font-size:1.4rem">📨</span>
+                    <div>
+                        <h3 style="font-size:1.05rem;font-weight:800;margin:0">Zasielanie správ a Notifikácie</h3>
+                        <span style="font-size:0.75rem;color:var(--text-muted)">6 funkcií na doplnenie</span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding:16px 24px">
+                <div style="display:flex;flex-direction:column;gap:12px">
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#fef3c7;border-radius:8px;border-left:3px solid #d97706">
+                        <span style="background:#fbbf24;color:#78350f;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">VYSOKÁ</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">SMS potvrdenia a pripomienky</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Automatické SMS zákazníkom s potvrdením a pripomenutím termínu (platené per SMS)</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#fef3c7;border-radius:8px;border-left:3px solid #d97706">
+                        <span style="background:#fbbf24;color:#78350f;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">VYSOKÁ</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Emailové pripomienky klientom</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Automatický email 24h/1h pred termínom na zníženie no-show rate</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#eff6ff;border-radius:8px;border-left:3px solid #2563eb">
+                        <span style="background:#3b82f6;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">STREDNÁ</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Emailové oznámenia zamestnancom</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Email zamestnancovi pri novej/zrušenej rezervácii na ich službu</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#eff6ff;border-radius:8px;border-left:3px solid #2563eb">
+                        <span style="background:#3b82f6;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">STREDNÁ</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">SMS oznámenia zamestnancom</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">SMS notifikácia zamestnancom o nových rezerváciách</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#f3f4f6;border-radius:8px;border-left:3px solid #6b7280">
+                        <span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">NÍZKA</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Vlastný text SMS upozornení</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Možnosť prispôsobiť text SMS správ podľa potreby prevádzky</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#f3f4f6;border-radius:8px;border-left:3px solid #6b7280">
+                        <span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">NÍZKA</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Push notifikácie z aplikácie zamestnancom</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Push notifikácie priamo do mobilnej aplikácie zamestnancov</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Rezervačná stránka a dizajn -->
+        <div class="table-wrapper" style="overflow:visible">
+            <div style="padding:20px 24px;border-bottom:2px solid var(--border)">
+                <div style="display:flex;align-items:center;gap:10px">
+                    <span style="font-size:1.4rem">🎨</span>
+                    <div>
+                        <h3 style="font-size:1.05rem;font-weight:800;margin:0">Rezervačná stránka a dizajn</h3>
+                        <span style="font-size:0.75rem;color:var(--text-muted)">8 funkcií na doplnenie</span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding:16px 24px">
+                <div style="display:flex;flex-direction:column;gap:12px">
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#fef3c7;border-radius:8px;border-left:3px solid #d97706">
+                        <span style="background:#fbbf24;color:#78350f;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">VYSOKÁ</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">iFrame kód do vlastného webu</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Vloženie rezervačného widgetu priamo na existujúcu webstránku zákazníka</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#fef3c7;border-radius:8px;border-left:3px solid #d97706">
+                        <span style="background:#fbbf24;color:#78350f;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">VYSOKÁ</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Online rezervácie cez Facebook</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Rezervačný widget priamo na Facebook stránke prevádzky</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#eff6ff;border-radius:8px;border-left:3px solid #2563eb">
+                        <span style="background:#3b82f6;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">STREDNÁ</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Vlastný dizajn rezervačného formuláru</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Prispôsobenie farieb, fontov a layoutu rezervačnej stránky</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#eff6ff;border-radius:8px;border-left:3px solid #2563eb">
+                        <span style="background:#3b82f6;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">STREDNÁ</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Kalendár pre kurzy</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Špeciálny kalendárový pohľad pre skupinové kurzy a aktivity</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#eff6ff;border-radius:8px;border-left:3px solid #2563eb">
+                        <span style="background:#3b82f6;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">STREDNÁ</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Unikátny odkaz na konkrétnu službu</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Priamy link na rezerváciu konkrétnej služby pre marketing a reklamy</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#f3f4f6;border-radius:8px;border-left:3px solid #6b7280">
+                        <span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">NÍZKA</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Stránka vo viacerých jazykoch</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Viacjazyčná rezervačná stránka (SK, CZ, EN, HU, DE...)</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#f3f4f6;border-radius:8px;border-left:3px solid #6b7280">
+                        <span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">NÍZKA</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Fotografie pracovníkov</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Zobrazenie fotografií zamestnancov na rezervačnej stránke</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#f3f4f6;border-radius:8px;border-left:3px solid #6b7280">
+                        <span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">NÍZKA</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Whitelabel (odstránenie loga)</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Možnosť úplne odstrániť logo Rezervos pre prémiových zákazníkov</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Ponuka na stránke -->
+        <div class="table-wrapper" style="overflow:visible">
+            <div style="padding:20px 24px;border-bottom:2px solid var(--border)">
+                <div style="display:flex;align-items:center;gap:10px">
+                    <span style="font-size:1.4rem">🛒</span>
+                    <div>
+                        <h3 style="font-size:1.05rem;font-weight:800;margin:0">Ponuka na rezervačnej stránke</h3>
+                        <span style="font-size:0.75rem;color:var(--text-muted)">5 funkcií na doplnenie</span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding:16px 24px">
+                <div style="display:flex;flex-direction:column;gap:12px">
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#fef3c7;border-radius:8px;border-left:3px solid #d97706">
+                        <span style="background:#fbbf24;color:#78350f;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">VYSOKÁ</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Doplnkové služby (upsell)</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Ponúknuť zákazníkovi ďalšie služby pri rezervácii (napr. masáž + aroma)</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#eff6ff;border-radius:8px;border-left:3px solid #2563eb">
+                        <span style="background:#3b82f6;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">STREDNÁ</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Fotografie služieb</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Obrázky pri jednotlivých službách pre lepšiu prezentáciu</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#eff6ff;border-radius:8px;border-left:3px solid #2563eb">
+                        <span style="background:#3b82f6;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">STREDNÁ</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Kategórie a podkategórie služieb</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Organizácia služieb do kategórií pre lepšiu prehľadnosť</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#f3f4f6;border-radius:8px;border-left:3px solid #6b7280">
+                        <span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">NÍZKA</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Otvorené / výberové otázky vo formulári</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Vlastné otázky v rezervačnom formulári (napr. alergie, preferencie)</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#f3f4f6;border-radius:8px;border-left:3px solid #6b7280">
+                        <span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">NÍZKA</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Určenie priority kategórie / služby</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Nastavenie poradia zobrazovania služieb a kategórií</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. Platby -->
+        <div class="table-wrapper" style="overflow:visible">
+            <div style="padding:20px 24px;border-bottom:2px solid var(--border)">
+                <div style="display:flex;align-items:center;gap:10px">
+                    <span style="font-size:1.4rem">💳</span>
+                    <div>
+                        <h3 style="font-size:1.05rem;font-weight:800;margin:0">Platby a Poukážky</h3>
+                        <span style="font-size:0.75rem;color:var(--text-muted)">3 funkcie na doplnenie</span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding:16px 24px">
+                <div style="display:flex;flex-direction:column;gap:12px">
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#fef3c7;border-radius:8px;border-left:3px solid #d97706">
+                        <span style="background:#fbbf24;color:#78350f;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">VYSOKÁ</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Online platby a zálohy</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Zákazník zaplatí online pri rezervácii (Stripe, GoPay) – znižuje no-show</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#eff6ff;border-radius:8px;border-left:3px solid #2563eb">
+                        <span style="background:#3b82f6;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">STREDNÁ</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Darčekové poukážky a permanentky</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Online predaj darčekových poukážok a permanentiek (5/10 vstupov)</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#f3f4f6;border-radius:8px;border-left:3px solid #6b7280">
+                        <span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">NÍZKA</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Poukážky predané na prevádzke</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Správa poukážok predaných priamo na prevádzke (nie len online)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. Zákazníci a dáta -->
+        <div class="table-wrapper" style="overflow:visible">
+            <div style="padding:20px 24px;border-bottom:2px solid var(--border)">
+                <div style="display:flex;align-items:center;gap:10px">
+                    <span style="font-size:1.4rem">📁</span>
+                    <div>
+                        <h3 style="font-size:1.05rem;font-weight:800;margin:0">Zákazníci a dáta</h3>
+                        <span style="font-size:0.75rem;color:var(--text-muted)">5 funkcií na doplnenie</span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding:16px 24px">
+                <div style="display:flex;flex-direction:column;gap:12px">
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#fef3c7;border-radius:8px;border-left:3px solid #d97706">
+                        <span style="background:#fbbf24;color:#78350f;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">VYSOKÁ</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Databáza a história termínov</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Kompletná história všetkých minulých termínov a návštev zákazníkov</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#eff6ff;border-radius:8px;border-left:3px solid #2563eb">
+                        <span style="background:#3b82f6;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">STREDNÁ</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Import zákazníkov (CSV)</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Hromadný import zákazníkov z CSV/Excel súboru pri prechode zo systému</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#eff6ff;border-radius:8px;border-left:3px solid #2563eb">
+                        <span style="background:#3b82f6;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">STREDNÁ</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Blacklist zákazníkov</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Blokovanie problémových zákazníkov od rezervovania</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#eff6ff;border-radius:8px;border-left:3px solid #2563eb">
+                        <span style="background:#3b82f6;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">STREDNÁ</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Export a tlač rezervácií a zákazníkov</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Export dát do PDF/Excel pre tlač alebo ďalšie spracovanie</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#f3f4f6;border-radius:8px;border-left:3px solid #6b7280">
+                        <span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">NÍZKA</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Kategorizácia klientov (štítky)</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Tagovanie zákazníkov (BUSINESS, stály, nový...) pre lepší CRM</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. Tím -->
+        <div class="table-wrapper" style="overflow:visible">
+            <div style="padding:20px 24px;border-bottom:2px solid var(--border)">
+                <div style="display:flex;align-items:center;gap:10px">
+                    <span style="font-size:1.4rem">👥</span>
+                    <div>
+                        <h3 style="font-size:1.05rem;font-weight:800;margin:0">Tím a personál</h3>
+                        <span style="font-size:0.75rem;color:var(--text-muted)">2 funkcie na doplnenie</span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding:16px 24px">
+                <div style="display:flex;flex-direction:column;gap:12px">
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#eff6ff;border-radius:8px;border-left:3px solid #2563eb">
+                        <span style="background:#3b82f6;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">STREDNÁ</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Právomoci a oprávnenia pre zamestnancov</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Nastavenie rolí – kto čo vidí a čo môže upravovať v systéme</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#f3f4f6;border-radius:8px;border-left:3px solid #6b7280">
+                        <span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">NÍZKA</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Pracovné zmeny zamestnancov</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Plánovanie zmien a pracovného času pre jednotlivých zamestnancov</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. Marketing -->
+        <div class="table-wrapper" style="overflow:visible">
+            <div style="padding:20px 24px;border-bottom:2px solid var(--border)">
+                <div style="display:flex;align-items:center;gap:10px">
+                    <span style="font-size:1.4rem">⭐</span>
+                    <div>
+                        <h3 style="font-size:1.05rem;font-weight:800;margin:0">Recenzie a marketing</h3>
+                        <span style="font-size:0.75rem;color:var(--text-muted)">4 funkcie na doplnenie</span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding:16px 24px">
+                <div style="display:flex;flex-direction:column;gap:12px">
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#fef3c7;border-radius:8px;border-left:3px solid #d97706">
+                        <span style="background:#fbbf24;color:#78350f;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">VYSOKÁ</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Zľavové kódy</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Vytváranie zľavových kódov pre kampaňe a verných zákazníkov</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#eff6ff;border-radius:8px;border-left:3px solid #2563eb">
+                        <span style="background:#3b82f6;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">STREDNÁ</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Hodnotenia na Google a iné portály</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Automatická žiadosť o hodnotenie na Google po návšteve</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#eff6ff;border-radius:8px;border-left:3px solid #2563eb">
+                        <span style="background:#3b82f6;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">STREDNÁ</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Zobrazenie hodnotení na rezervačnej stránke</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Prezentácia recenzií priamo na stránke pre budovanie dôvery</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#f3f4f6;border-radius:8px;border-left:3px solid #6b7280">
+                        <span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;white-space:nowrap;margin-top:2px">NÍZKA</span>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">Trackovanie reklám (GTM kód)</div>
+                            <div style="font-size:0.78rem;color:var(--text-muted)">Google Tag Manager pre sledovanie konverzií z reklám</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Summary -->
+    <div style="margin-top:40px;padding:28px 32px;background:white;border-radius:var(--radius);border:2px solid var(--border);box-shadow:var(--shadow-sm)">
+        <h3 style="font-size:1.1rem;font-weight:800;margin-bottom:16px">📊 Súhrn podľa priority</h3>
+        <div style="display:flex;gap:24px;flex-wrap:wrap">
+            <div style="display:flex;align-items:center;gap:8px">
+                <span style="background:#fbbf24;color:#78350f;padding:4px 12px;border-radius:4px;font-size:0.75rem;font-weight:700">VYSOKÁ</span>
+                <span style="font-size:0.9rem;font-weight:600">11 funkcií</span>
+                <span style="font-size:0.78rem;color:var(--text-muted)">– najväčší dopad na konkurencieschopnosť</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+                <span style="background:#3b82f6;color:white;padding:4px 12px;border-radius:4px;font-size:0.75rem;font-weight:700">STREDNÁ</span>
+                <span style="font-size:0.9rem;font-weight:600">17 funkcií</span>
+                <span style="font-size:0.78rem;color:var(--text-muted)">– dôležité pre rozšírenie ponuky</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+                <span style="background:#6b7280;color:white;padding:4px 12px;border-radius:4px;font-size:0.75rem;font-weight:700">NÍZKA</span>
+                <span style="font-size:0.9rem;font-weight:600">14 funkcií</span>
+                <span style="font-size:0.78rem;color:var(--text-muted)">– nice-to-have, prémiové funkcie</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ============================================= -->
+<!-- SECTION: REZERVOS EXTRA FEATURES (MÁME NAVYŠE) -->
+<!-- ============================================= -->
+<div class="container" id="funkcie-rezervos-navyse">
+    <div class="section-title">
+        <span class="label" style="background:rgba(5,150,105,0.1);color:#059669">NAŠA VÝHODA</span>
+        <h2>Funkcie Rezervos, ktoré Konkurencia vôbec nemá</h2>
+        <p>Prehľad unikátnych nástrojov a konkurenčných výhod, ktoré získate iba v systéme Rezervos</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:24px">
+
+        <!-- 1. E-maily & Vlastná identita -->
+        <div class="table-wrapper" style="overflow:visible;border:2px solid #a7f3d0;box-shadow:0 4px 15px rgba(5,150,105,0.05)">
+            <div style="padding:20px 24px;border-bottom:2px solid var(--border);background:#f0fdf4">
+                <div style="display:flex;align-items:center;gap:10px">
+                    <span style="font-size:1.4rem">✉️</span>
+                    <div>
+                        <h3 style="font-size:1.05rem;font-weight:800;margin:0;color:#065f46">Vlastná identita & E-mailové mapovanie</h3>
+                        <span style="font-size:0.75rem;color:#059669;font-weight:600">2 unikátne funkcie</span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding:16px 24px">
+                <div style="display:flex;flex-direction:column;gap:12px">
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:#ecfdf5;border-radius:8px;border-left:3px solid #059669">
+                        <span style="background:#059669;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:800;white-space:nowrap;margin-top:2px">IBA U NÁS</span>
+                        <div>
+                            <div style="font-weight:700;font-size:0.9rem;color:#065f46">Vlastné mapovanie SMTP servera</div>
+                            <div style="font-size:0.8rem;color:#475569;margin-top:2px">Potvrdenia a správy odchádzajú z vašej vlastnej adresy (napr. <code>info@salon.sk</code>). Konkurencia posiela iba zo svojej všeobecnej adresy.</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:#ecfdf5;border-radius:8px;border-left:3px solid #059669">
+                        <span style="background:#059669;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:800;white-space:nowrap;margin-top:2px">IBA U NÁS</span>
+                        <div>
+                            <div style="font-weight:700;font-size:0.9rem;color:#065f46">IMAP prepojenie firemnej schránky</div>
+                            <div style="font-size:0.8rem;color:#475569;margin-top:2px">Kompletný prehľad a evidencia odoslaných a doručených správ k rezerváciám priamo v rozhraní.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Bezpečnosť a Zabezpečenie -->
+        <div class="table-wrapper" style="overflow:visible;border:2px solid #a7f3d0;box-shadow:0 4px 15px rgba(5,150,105,0.05)">
+            <div style="padding:20px 24px;border-bottom:2px solid var(--border);background:#f0fdf4">
+                <div style="display:flex;align-items:center;gap:10px">
+                    <span style="font-size:1.4rem">🔒</span>
+                    <div>
+                        <h3 style="font-size:1.05rem;font-weight:800;margin:0;color:#065f46">Bezpečnosť a ochrana účtu (2FA)</h3>
+                        <span style="font-size:0.75rem;color:#059669;font-weight:600">3 unikátne funkcie</span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding:16px 24px">
+                <div style="display:flex;flex-direction:column;gap:12px">
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:#ecfdf5;border-radius:8px;border-left:3px solid #059669">
+                        <span style="background:#059669;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:800;white-space:nowrap;margin-top:2px">IBA U NÁS</span>
+                        <div>
+                            <div style="font-weight:700;font-size:0.9rem;color:#065f46">Dvojfaktorové overenie (2FA)</div>
+                            <div style="font-size:0.8rem;color:#475569;margin-top:2px">Prihlasovanie chránené 6-miestnym kódom z aplikácie (Google Authenticator). Maximálne zabezpečenie klientskych dát.</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:#ecfdf5;border-radius:8px;border-left:3px solid #059669">
+                        <span style="background:#059669;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:800;white-space:nowrap;margin-top:2px">IBA U NÁS</span>
+                        <div>
+                            <div style="font-weight:700;font-size:0.9rem;color:#065f46">Správa aktívnych sedení (Session Management)</div>
+                            <div style="font-size:0.8rem;color:#475569;margin-top:2px">Prehľad prihlásených zariadení (mobil, tablet, PC) s možnosťou jedným klikom odhlásiť cudzie relácie.</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:#ecfdf5;border-radius:8px;border-left:3px solid #059669">
+                        <span style="background:#059669;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:800;white-space:nowrap;margin-top:2px">IBA U NÁS</span>
+                        <div>
+                            <div style="font-weight:700;font-size:0.9rem;color:#065f46">História prihlásení a audit IP adries</div>
+                            <div style="font-size:0.8rem;color:#475569;margin-top:2px">Presný záznam časov, prehliadačov a IP adries každého prihlásenia personálu.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Interná organizácia & Tabuľa úloh -->
+        <div class="table-wrapper" style="overflow:visible;border:2px solid #a7f3d0;box-shadow:0 4px 15px rgba(5,150,105,0.05)">
+            <div style="padding:20px 24px;border-bottom:2px solid var(--border);background:#f0fdf4">
+                <div style="display:flex;align-items:center;gap:10px">
+                    <span style="font-size:1.4rem">📋</span>
+                    <div>
+                        <h3 style="font-size:1.05rem;font-weight:800;margin:0;color:#065f46">Interná tímová organizácia</h3>
+                        <span style="font-size:0.75rem;color:#059669;font-weight:600">2 unikátne funkcie</span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding:16px 24px">
+                <div style="display:flex;flex-direction:column;gap:12px">
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:#ecfdf5;border-radius:8px;border-left:3px solid #059669">
+                        <span style="background:#059669;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:800;white-space:nowrap;margin-top:2px">IBA U NÁS</span>
+                        <div>
+                            <div style="font-weight:700;font-size:0.9rem;color:#065f46">Vizuálna Kanban tabuľa úloh (Tabuľa)</div>
+                            <div style="font-size:0.8rem;color:#475569;margin-top:2px">Zabudovaná správa úloh a poznámok pre tím priamo v systéme. Nahrádza externé platené nástroje (Trello, Asana).</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:#ecfdf5;border-radius:8px;border-left:3px solid #059669">
+                        <span style="background:#059669;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:800;white-space:nowrap;margin-top:2px">ZADARMO (FREE)</span>
+                        <div>
+                            <div style="font-weight:700;font-size:0.9rem;color:#065f46">Plný CRM prístup od prvého dňa</div>
+                            <div style="font-size:0.8rem;color:#475569;margin-top:2px">Kompletná databáza klientov, kontakty a história sú dostupné už v bezplatnom FREE balíku (Konkurencia vyžaduje platený balík).</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Marketing, UTM & Zľavy -->
+        <div class="table-wrapper" style="overflow:visible;border:2px solid #a7f3d0;box-shadow:0 4px 15px rgba(5,150,105,0.05)">
+            <div style="padding:20px 24px;border-bottom:2px solid var(--border);background:#f0fdf4">
+                <div style="display:flex;align-items:center;gap:10px">
+                    <span style="font-size:1.4rem">📣</span>
+                    <div>
+                        <h3 style="font-size:1.05rem;font-weight:800;margin:0;color:#065f46">Marketing & Získavanie klientov</h3>
+                        <span style="font-size:0.75rem;color:#059669;font-weight:600">4 unikátne funkcie</span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding:16px 24px">
+                <div style="display:flex;flex-direction:column;gap:12px">
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:#ecfdf5;border-radius:8px;border-left:3px solid #059669">
+                        <span style="background:#059669;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:800;white-space:nowrap;margin-top:2px">IBA U NÁS</span>
+                        <div>
+                            <div style="font-weight:700;font-size:0.9rem;color:#065f46">UTM sledovanie marketingových kampaní</div>
+                            <div style="font-size:0.8rem;color:#475569;margin-top:2px">Presná analytika v paneli – viete, či zákazník prišiel z Facebooku, Instagramu, Google Ads alebo letáku.</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:#ecfdf5;border-radius:8px;border-left:3px solid #059669">
+                        <span style="background:#059669;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:800;white-space:nowrap;margin-top:2px">IBA U NÁS</span>
+                        <div>
+                            <div style="font-weight:700;font-size:0.9rem;color:#065f46">Last Minute ponuky na voľné termíny</div>
+                            <div style="font-size:0.8rem;color:#475569;margin-top:2px">Bleskové zaplnenie neobsadených termínov na zajtra so špeciálnou zľavou zobrazenou na portáli.</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:#ecfdf5;border-radius:8px;border-left:3px solid #059669">
+                        <span style="background:#059669;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:800;white-space:nowrap;margin-top:2px">IBA U NÁS</span>
+                        <div>
+                            <div style="font-weight:700;font-size:0.9rem;color:#065f46">Vernostný program pre zákazníkov</div>
+                            <div style="font-size:0.8rem;color:#475569;margin-top:2px">Automatické odmeňovanie stálych klientov za opakované návštevy (Konkurencia vernostný program vôbec nemá).</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:#ecfdf5;border-radius:8px;border-left:3px solid #059669">
+                        <span style="background:#059669;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:800;white-space:nowrap;margin-top:2px">IBA U NÁS</span>
+                        <div>
+                            <div style="font-weight:700;font-size:0.9rem;color:#065f46">Titulný banner na profile</div>
+                            <div style="font-size:0.8rem;color:#475569;margin-top:2px">Vizuálna prezentácia vašich špeciálnych akcií a noviniek priamo na vrchu vášho verejného profilu.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. Inzertný portál & AI Asistent -->
+        <div class="table-wrapper" style="overflow:visible;border:2px solid #a7f3d0;box-shadow:0 4px 15px rgba(5,150,105,0.05)">
+            <div style="padding:20px 24px;border-bottom:2px solid var(--border);background:#f0fdf4">
+                <div style="display:flex;align-items:center;gap:10px">
+                    <span style="font-size:1.4rem">⭐</span>
+                    <div>
+                        <h3 style="font-size:1.05rem;font-weight:800;margin:0;color:#065f46">Portál VoľnéKreslo & AI asistent</h3>
+                        <span style="font-size:0.75rem;color:#059669;font-weight:600">2 unikátne funkcie</span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding:16px 24px">
+                <div style="display:flex;flex-direction:column;gap:12px">
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:#ecfdf5;border-radius:8px;border-left:3px solid #059669">
+                        <span style="background:#059669;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:800;white-space:nowrap;margin-top:2px">IBA U NÁS</span>
+                        <div>
+                            <div style="font-weight:700;font-size:0.9rem;color:#065f46">Inzercia na portáli VoľnéKreslo</div>
+                            <div style="font-size:0.8rem;color:#475569;margin-top:2px">Priame získavanie nových zákazníkov z katalógu a mapy služieb po celom Slovensku (Konkurencia je iba uzavretý softvér).</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:#ecfdf5;border-radius:8px;border-left:3px solid #059669">
+                        <span style="background:#059669;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:800;white-space:nowrap;margin-top:2px">IBA U NÁS</span>
+                        <div>
+                            <div style="font-weight:700;font-size:0.9rem;color:#065f46">Inteligentný AI asistent pre zákazníkov</div>
+                            <div style="font-size:0.8rem;color:#475569;margin-top:2px">Chat asistent priamo na webe, ktorý pomáha klientom nájsť vhodnú službu, salón a voľný termín 24/7.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. Kapacity, Ceny & Platby -->
+        <div class="table-wrapper" style="overflow:visible;border:2px solid #a7f3d0;box-shadow:0 4px 15px rgba(5,150,105,0.05)">
+            <div style="padding:20px 24px;border-bottom:2px solid var(--border);background:#f0fdf4">
+                <div style="display:flex;align-items:center;gap:10px">
+                    <span style="font-size:1.4rem">💳</span>
+                    <div>
+                        <h3 style="font-size:1.05rem;font-weight:800;margin:0;color:#065f46">Kapacity, Ceny & Bezpoplatkové platby</h3>
+                        <span style="font-size:0.75rem;color:#059669;font-weight:600">4 kľúčové výhody</span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding:16px 24px">
+                <div style="display:flex;flex-direction:column;gap:12px">
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:#ecfdf5;border-radius:8px;border-left:3px solid #059669">
+                        <span style="background:#059669;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:800;white-space:nowrap;margin-top:2px">IBA U NÁS</span>
+                        <div>
+                            <div style="font-weight:700;font-size:0.9rem;color:#065f46">Až 10 zamestnancov za 21,90 €</div>
+                            <div style="font-size:0.8rem;color:#475569;margin-top:2px">Vo BUSINESS balíku až 10 zamestnancov. Konkurencia má za 18,90 € max 2 užívateľov a za 38,90 € iba 5.</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:#ecfdf5;border-radius:8px;border-left:3px solid #059669">
+                        <span style="background:#059669;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:800;white-space:nowrap;margin-top:2px">+50% VIAC</span>
+                        <div>
+                            <div style="font-weight:700;font-size:0.9rem;color:#065f46">O 50% viac rezervácií vo všetkých balíkoch</div>
+                            <div style="font-size:0.8rem;color:#475569;margin-top:2px">150 vs 100 (FREE), 300 vs 200 (START), 1500 vs 1000 (PRO). Viac priestoru pre rast biznisu.</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:#ecfdf5;border-radius:8px;border-left:3px solid #059669">
+                        <span style="background:#059669;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:800;white-space:nowrap;margin-top:2px">IBA U NÁS</span>
+                        <div>
+                            <div style="font-weight:700;font-size:0.9rem;color:#065f46">Pay by Square (SEPA QR zálohy bez provízie)</div>
+                            <div style="font-size:0.8rem;color:#475569;margin-top:2px">Generovanie štandardného slovenského platobného QR kódu priamo na váš IBAN bez percentuálnych zrážok brány.</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:#ecfdf5;border-radius:8px;border-left:3px solid #059669">
+                        <span style="background:#059669;color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:800;white-space:nowrap;margin-top:2px">IBA U NÁS</span>
+                        <div>
+                            <div style="font-weight:700;font-size:0.9rem;color:#065f46">Viac pobočiek v balíku BUSINESS</div>
+                            <div style="font-size:0.8rem;color:#475569;margin-top:2px">Správa viacerých prevádzok bez nutnosti individuálnych drahých zmlúv ako u Konkurencia.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Summary -->
+    <div style="margin-top:40px;padding:28px 32px;background:#f0fdf4;border-radius:var(--radius);border:2px solid #a7f3d0;box-shadow:var(--shadow-sm)">
+        <h3 style="font-size:1.1rem;font-weight:800;margin-bottom:16px;color:#065f46">⭐ Súhrn: 17 unikátnych funkcií a výhod Rezervos</h3>
+        <div style="display:flex;gap:24px;flex-wrap:wrap">
+            <div style="display:flex;align-items:center;gap:8px">
+                <span style="background:#059669;color:white;padding:4px 12px;border-radius:4px;font-size:0.75rem;font-weight:700">IBA U NÁS</span>
+                <span style="font-size:0.9rem;font-weight:600;color:#065f46">12 unikátnych funkcií</span>
+                <span style="font-size:0.78rem;color:#047857">– funkcie, ktoré Konkurencia vôbec neponúka</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+                <span style="background:#10b981;color:white;padding:4px 12px;border-radius:4px;font-size:0.75rem;font-weight:700">LEPŠIE PARAMETRE</span>
+                <span style="font-size:0.9rem;font-weight:600;color:#065f46">5 kľúčových výhod</span>
+                <span style="font-size:0.78rem;color:#047857">– vyššie limity, až 10 zamestnancov a polovičná cena</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<div class="divider"></div>
+
+<!-- ============================================= -->
+<!-- SECTION: BUSINESS PLAN (SK & CZ TRH) -->
+<!-- ============================================= -->
+<div class="container" id="biznis-plan" style="margin-bottom:80px">
+    <div class="section-title">
+        <span class="label" style="background:rgba(37,99,235,0.1);color:#2563eb">FINANČNÝ MODEL & RAST</span>
+        <h2>Biznis plán a finančné projekcie: Rezervos (SK & CZ trh)</h2>
+        <p>Analýza trhu, pomer B2B firiem vs. B2C zákazníkov, monetizácia Kreslo Hunter / Inzercia a výhľad tržieb pri 100 až 5 000 salónoch</p>
+    </div>
+
+    <!-- 1. MARKET SIZE CARDS -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;margin-bottom:36px">
+        <!-- SK MARKET -->
+        <div style="background:white;border:2px solid #93c5fd;border-radius:16px;padding:28px;box-shadow:0 4px 15px rgba(37,99,235,0.06)">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+                <span style="font-size:2rem">🇸🇰</span>
+                <div>
+                    <h3 style="font-size:1.2rem;font-weight:900;color:#1e3a8a;margin:0">Slovenský trh (SK)</h3>
+                    <span style="font-size:0.8rem;color:#64748b">Základňa pre expanziu</span>
+                </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;justify-content:space-between;padding:8px 12px;background:#f8fafc;border-radius:8px">
+                    <span style="font-size:0.85rem;color:#64748b">Celkový počet prevádzok (TAM):</span>
+                    <strong style="font-size:0.95rem;color:#0f172a">~42 000</strong>
+                </div>
+                <div style="display:flex;justify-content:space-between;padding:8px 12px;background:#eff6ff;border-radius:8px">
+                    <span style="font-size:0.85rem;color:#1e40af">Dostupný digitálny trh (SAM):</span>
+                    <strong style="font-size:0.95rem;color:#1d4ed8">~18 000</strong>
+                </div>
+                <div style="display:flex;justify-content:space-between;padding:8px 12px;background:#dbeafe;border-radius:8px">
+                    <span style="font-size:0.85rem;color:#1e3a8a;font-weight:700">Reálny cieľ (SOM - 3 roky):</span>
+                    <strong style="font-size:1.05rem;color:#1e40af">1 500 firiem (8,3 %)</strong>
+                </div>
+            </div>
+            <div style="margin-top:14px;font-size:0.8rem;color:#64748b;line-height:1.5">
+                💡 Viac ako 55% salónov na SK stále funguje na papierovom diári. Nízka cena START (4,90 €) je ideálna na ich masové získanie.
+            </div>
+        </div>
+
+        <!-- CZ MARKET -->
+        <div style="background:white;border:2px solid #c4b5fd;border-radius:16px;padding:28px;box-shadow:0 4px 15px rgba(124,58,237,0.06)">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+                <span style="font-size:2rem">🇨🇿</span>
+                <div>
+                    <h3 style="font-size:1.2rem;font-weight:900;color:#5b21b6;margin:0">Český trh (CZ)</h3>
+                    <span style="font-size:0.8rem;color:#64748b">2,4× väčší trh s vyššou kúpyschopnosťou</span>
+                </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;justify-content:space-between;padding:8px 12px;background:#f8fafc;border-radius:8px">
+                    <span style="font-size:0.85rem;color:#64748b">Celkový počet prevádzok (TAM):</span>
+                    <strong style="font-size:0.95rem;color:#0f172a">~98 000</strong>
+                </div>
+                <div style="display:flex;justify-content:space-between;padding:8px 12px;background:#f5f3ff;border-radius:8px">
+                    <span style="font-size:0.85rem;color:#6d28d9">Dostupný digitálny trh (SAM):</span>
+                    <strong style="font-size:0.95rem;color:#7c3aed">~45 000</strong>
+                </div>
+                <div style="display:flex;justify-content:space-between;padding:8px 12px;background:#ede9fe;border-radius:8px">
+                    <span style="font-size:0.85rem;color:#5b21b6;font-weight:700">Reálny cieľ (SOM - 3 roky):</span>
+                    <strong style="font-size:1.05rem;color:#6d28d9">3 500 firiem (7,8 %)</strong>
+                </div>
+            </div>
+            <div style="margin-top:14px;font-size:0.8rem;color:#64748b;line-height:1.5">
+                💡 Praha a Brno majú o 30% vyššie ceny služieb. Predplatné za 9,90 € (cca 250 Kč) bude pre CZ trh extrémne atraktívne.
+            </div>
+        </div>
+
+        <!-- B2B vs B2C MULTIPLIER -->
+        <div style="background:linear-gradient(135deg,#065f46,#047857);color:white;border-radius:16px;padding:28px;box-shadow:0 4px 15px rgba(5,150,105,0.15)">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+                <span style="font-size:2rem">⚡</span>
+                <div>
+                    <h3 style="font-size:1.2rem;font-weight:900;color:white;margin:0">Sieťový efekt (B2B ➔ B2C)</h3>
+                    <span style="font-size:0.8rem;color:#a7f3d0">Multiplikátor koncových zákazníkov</span>
+                </div>
+            </div>
+            <div style="font-size:2.2rem;font-weight:900;color:#6ee7b7;margin-bottom:4px">1 : 180</div>
+            <p style="font-size:0.85rem;color:#d1fae5;line-height:1.6;margin-bottom:14px">
+                Každá jedna zapojená prevádzka prinesie do databázy portálu <strong>priemerne 180 unikátnych zákazníkov</strong>, ktorí sa objednávajú cez systém.
+            </p>
+            <div style="background:rgba(0,0,0,0.2);padding:10px 14px;border-radius:8px;font-size:0.8rem;color:#ecfdf5">
+                👥 <strong>1 000 firiem</strong> = báza <strong>180 000 používateľov</strong> na portáli VoľnéKreslo!
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. MONETIZATION PILLARS -->
+    <div style="background:white;border:2px solid var(--border);border-radius:16px;padding:32px;box-shadow:var(--shadow-sm);margin-bottom:36px">
+        <h3 style="font-size:1.3rem;font-weight:900;color:#0f172a;margin-bottom:20px">💰 5 kľúčových zdrojov príjmov Rezervos</h3>
+        
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
+            <div style="padding:18px;border-radius:12px;background:#f8fafc;border:1px solid #e2e8f0">
+                <div style="font-size:1.5rem;margin-bottom:6px">🏢</div>
+                <div style="font-weight:800;font-size:0.95rem;color:#0f172a;margin-bottom:4px">1. B2B Predplatné</div>
+                <div style="font-size:0.8rem;color:#64748b">Mesačné a ročné licencie START (4,90 €), PRO (9,90 €) a BUSINESS (21,90 €).</div>
+                <div style="font-size:0.85rem;font-weight:800;color:#2563eb;margin-top:8px">Priemerný ARPU: ~8,10 € / firmu</div>
+            </div>
+
+            <div style="padding:18px;border-radius:12px;background:#fdf4ff;border:1px solid #f0abfc">
+                <div style="font-size:1.5rem;margin-bottom:6px">🎯</div>
+                <div style="font-weight:800;font-size:0.95rem;color:#86198f;margin-bottom:4px">2. Kreslo Hunter (B2C BUSINESS)</div>
+                <div style="font-size:0.8rem;color:#701a75">Členstvo pre zákazníkov na bleskové chytanie uvoľnených termínov (SMS/Push).</div>
+                <div style="font-size:0.85rem;font-weight:800;color:#c026d3;margin-top:8px">Cena: 2,90 € / mes. (~1,5% bázy)</div>
+            </div>
+
+            <div style="padding:18px;border-radius:12px;background:#fefce8;border:1px solid #fef08a">
+                <div style="font-size:1.5rem;margin-bottom:6px">📢</div>
+                <div style="font-weight:800;font-size:0.95rem;color:#854d0e;margin-bottom:4px">3. Inzercia VoľnéKreslo</div>
+                <div style="font-size:0.8rem;color:#713f12">Platená inzercia služieb, prenájmu kresiel a vybavenia salónov na portáli.</div>
+                <div style="font-size:0.85rem;font-weight:800;color:#ca8a04;margin-top:8px">Cena: 0,50 € / inzerát + balíky</div>
+            </div>
+
+            <div style="padding:18px;border-radius:12px;background:#eff6ff;border:1px solid #bfdbfe">
+                <div style="font-size:1.5rem;margin-bottom:6px">⭐</div>
+                <div style="font-weight:800;font-size:0.95rem;color:#1e40af;margin-bottom:4px">4. Topovanie inzerátov</div>
+                <div style="font-size:0.8rem;color:#1e3a8a">Zvýraznenie salónu a inzerátov na popredných pozíciách a na titulnej stránke.</div>
+                <div style="font-size:0.85rem;font-weight:800;color:#2563eb;margin-top:8px">Cena: 2,90 € / týždeň (9,90 € / mes.)</div>
+            </div>
+
+            <div style="padding:18px;border-radius:12px;background:#f0fdf4;border:1px solid #bbf7d0">
+                <div style="font-size:1.5rem;margin-bottom:6px">💬</div>
+                <div style="font-weight:800;font-size:0.95rem;color:#166534;margin-bottom:4px">5. Marža z SMS balíčkov</div>
+                <div style="font-size:0.8rem;color:#14532d">Predaj SMS pripomienok salónom. Nákup za 0,035 €, predaj za 0,065 €.</div>
+                <div style="font-size:0.85rem;font-weight:800;color:#16a34a;margin-top:8px">Čistá marža: ~45 % (~2,50 € / salón)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. DETAILED PROJECTIONS TABLE -->
+    <div class="table-scroll" style="margin-bottom:36px">
+        <div class="table-wrapper">
+            <table class="comp-table">
+                <thead>
+                    <tr>
+                        <th style="font-size:1rem;font-weight:900">Projekcia rastu tržieb</th>
+                        <th style="color:#059669">🌱 100 firiem<span class="tier-price-sub">Počiatočná fáza SK</span></th>
+                        <th style="color:#2563eb">🚀 500 firiem<span class="tier-price-sub">Etablovaný rast SK</span></th>
+                        <th style="color:#7c3aed">🏆 1 000 firiem<span class="tier-price-sub">SK líder + vstup CZ</span></th>
+                        <th style="color:#d97706">👑 5 000 firiem<span class="tier-price-sub">Dominancia SK & CZ</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="category-row"><td colspan="5">👥 Zákaznícka sieť a používatelia</td></tr>
+                    <tr><td>Aktívne B2B prevádzky (salóny)</td><td class="value">100</td><td class="value">500</td><td class="value">1 000</td><td class="value">5 000</td></tr>
+                    <tr><td>Koncoví zákazníci v systéme (B2C)</td><td class="value">~18 000</td><td class="value">~90 000</td><td class="value">~180 000</td><td class="value">~900 000</td></tr>
+                    <tr><td>Platiaci členovia Kreslo Hunter (BUSINESS)</td><td class="value">180 (1,0 %)</td><td class="value">1 080 (1,2 %)</td><td class="value">2 700 (1,5 %)</td><td class="value">13 500 (1,5 %)</td></tr>
+
+                    <tr class="category-row"><td colspan="5">💵 Mesačné tržby podľa zdrojov (MRR)</td></tr>
+                    <tr><td>1. B2B Predplatné balíkov</td><td class="value">810 €</td><td class="value">4 050 €</td><td class="value">8 100 €</td><td class="value">40 500 €</td></tr>
+                    <tr><td>2. Kreslo Hunter BUSINESS členstvo (B2C)</td><td class="value" style="color:#c026d3;font-weight:700">522 €</td><td class="value" style="color:#c026d3;font-weight:700">3 132 €</td><td class="value" style="color:#c026d3;font-weight:700">7 830 €</td><td class="value" style="color:#c026d3;font-weight:700">39 150 €</td></tr>
+                    <tr><td>3. SMS marža (čistý zisk)</td><td class="value">125 €</td><td class="value">625 €</td><td class="value">1 250 €</td><td class="value">6 250 €</td></tr>
+                    <tr><td>4. Inzercia a Topovanie</td><td class="value">95 €</td><td class="value">520 €</td><td class="value">1 200 €</td><td class="value">6 500 €</td></tr>
+
+                    <tr class="highlight-row" style="background:#eff6ff">
+                        <td style="font-weight:900;font-size:1rem">CELKOVÝ MESAČNÝ OBRAT (MRR)</td>
+                        <td class="value" style="font-size:1.15rem;font-weight:900;color:#059669">1 552 € / mes.</td>
+                        <td class="value" style="font-size:1.15rem;font-weight:900;color:#2563eb">8 327 € / mes.</td>
+                        <td class="value" style="font-size:1.15rem;font-weight:900;color:#7c3aed">18 380 € / mes.</td>
+                        <td class="value" style="font-size:1.25rem;font-weight:900;color:#d97706">92 400 € / mes.</td>
+                    </tr>
+                    <tr class="highlight-row" style="background:#dbeafe">
+                        <td style="font-weight:900;font-size:1rem">ROČNÝ OBRAT (ARR)</td>
+                        <td class="value" style="font-weight:800;color:#059669">18 624 € / rok</td>
+                        <td class="value" style="font-weight:800;color:#2563eb">99 924 € / rok</td>
+                        <td class="value" style="font-weight:800;color:#7c3aed">220 560 € / rok</td>
+                        <td class="value" style="font-size:1.15rem;font-weight:900;color:#d97706">~1 108 800 € / rok</td>
+                    </tr>
+
+                    <tr class="category-row"><td colspan="5">📉 Náklady, Ziskovosť a Marža</td></tr>
+                    <tr><td>Odhadované mesačné náklady (servery, marketing, podpora)</td><td class="value">805 €</td><td class="value">2 480 €</td><td class="value">4 580 €</td><td class="value">18 850 €</td></tr>
+                    <tr style="background:#ecfdf5">
+                        <td style="font-weight:900;color:#065f46">ČISTÝ MESAČNÝ ZISK (EBITDA)</td>
+                        <td class="value" style="font-weight:900;color:#059669">+747 € / mes.</td>
+                        <td class="value" style="font-weight:900;color:#059669">+5 847 € / mes.</td>
+                        <td class="value" style="font-weight:900;color:#059669">+13 800 € / mes.</td>
+                        <td class="value" style="font-weight:900;color:#059669">+73 550 € / mes.</td>
+                    </tr>
+                    <tr style="background:#d1fae5">
+                        <td style="font-weight:900;color:#065f46">ČISTÝ ROČNÝ ZISK</td>
+                        <td class="value" style="font-weight:900;color:#065f46">+8 964 € / rok</td>
+                        <td class="value" style="font-weight:900;color:#065f46">+70 164 € / rok</td>
+                        <td class="value" style="font-weight:900;color:#065f46">+165 600 € / rok</td>
+                        <td class="value" style="font-size:1.15rem;font-weight:900;color:#065f46">+882 600 € / rok</td>
+                    </tr>
+                    <tr><td>Zisková marža</td><td class="value">48 %</td><td class="value">70 %</td><td class="value">75 %</td><td class="value">80 %</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 4. KEY STRATEGY BOXES -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px">
+        <div style="background:white;border:1px solid var(--border);border-radius:12px;padding:22px">
+            <h4 style="font-size:1rem;font-weight:800;color:#0f172a;margin-bottom:8px">🎯 Bod zvratu (Break-Even): Už pri ~65 platiacich firmách</h4>
+            <p style="font-size:0.85rem;color:#64748b;line-height:1.6;margin:0">
+                Vďaka nízkym fixným nákladom na softvér a servery je systém v zisku už pri desiatkach platiacich salónov. Každá ďalšia prevádzka generuje takmer 80% čistú maržu.
+            </p>
+        </div>
+
+        <div style="background:white;border:1px solid var(--border);border-radius:12px;padding:22px">
+            <h4 style="font-size:1rem;font-weight:800;color:#0f172a;margin-bottom:8px">🚀 Kreslo Hunter ako „Tajná zbraň“ (B2C)</h4>
+            <p style="font-size:0.85rem;color:#64748b;line-height:1.6;margin:0">
+                Kým konkurencia (Konkurencia) zarába len na mesačných poplatkoch od firiem, Rezervos monetizuje aj státisíce koncových zákazníkov, čím zdvojnásobuje celkový zisk.
+            </p>
+        </div>
+
+        <div style="background:white;border:1px solid var(--border);border-radius:12px;padding:22px">
+            <h4 style="font-size:1rem;font-weight:800;color:#0f172a;margin-bottom:8px">🇨🇿 Expanzia do Čiech (Potenciál 1 mil. € ARR)</h4>
+            <p style="font-size:0.85rem;color:#64748b;line-height:1.6;margin:0">
+                Český trh je jazykovo aj kultúrne blízky, no má 2,4× väčšiu kúpyschopnosť. Pri dosiahnutí 5 000 prevádzok na SK+CZ platforma generuje ročný obrat takmer 1 milión eur.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    <p>Vytvorené pre internú analýzu · <a href="https://rezervos.eu">Rezervos.eu</a> · Ceny bez DPH · Aktualizované 27. 8. 2026</p>
+</div>
+
+</body>
+</html>

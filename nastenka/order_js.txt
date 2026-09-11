@@ -1,0 +1,301 @@
+﻿>                 Objednáv    <script>
+          // ==========================================
+          // 1. GLOBÁLNE FUNKCIE (Dostupné odvšadiaľ)
+          // ==========================================
+          window.showQuickAddModal = function() { 
+              const m = document.getElementById('quickAddModal');
+              if(m) m.classList.add('open'); 
+          };
+          window.closeQuickAddModal = function() { 
+              const m = document.getElementById('quickAddModal');
+              if(m) m.classList.remove('open'); 
+          };
+          window.showShareModal = function(url, msg = null) {
+              const modal = document.getElementById('shareModal');
+              if (!modal) return;
+              const linkGroup = document.getElementById('shareInputGroup');
+              if (url) {
+                  document.getElementById('share_url_input').value = url;
+                  document.getElementById('open_link_btn').href = url;
+                  if (linkGroup) linkGroup.style.display = 'flex';
+                  document.getElementById('shareModalTitle').innerText = "Dokument uložený";
+              } else {
+                  if (linkGroup) linkGroup.style.display = 'none';
+                  document.getElementById('shareModalTitle').innerText = "Oznámenie";
+              }
+              if (msg) document.getElementById('shareModalMsg').innerText = msg;
+              modal.classList.add('open');
+          };
+          window.closeShareModal = function() { document.getElementById('shareModal').classList.remove('open'); };
+          
+          window.switchTab = function(tabName) {
+              document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+              document.querySelectorAll('.tab-pane').forEach(p => p.style.display = 'none');
+              const btns = document.querySelectorAll('.tab-btn');
+              btns.forEach(b => {
+                  const click = b.getAttribute('onclick');
+                  if(click && click.includes(tabName)) b.classList.add('active');
+              });
+              const pane = document.getElementById('pane-' + tabName);
+              if(pane) pane.style.display = 'block';
+          };
+  
+          window.searchLeads = function(query) {
+              const results = document.getElementById('searchResults');
+              if (query.length < 2) {
+                  results.innerHTML = '<div style="text-align:center; color:var(--text-muted); padding:20px; font-size:0.9rem;">Začnite písať...</div>';
+                  return;
+              }
+              fetch('ajax_search_leads.php?q=' + encodeURIComponent(query))
+                  .then(r => r.json())
+                  .then(data => {
+                      results.innerHTML = '';
+                      if (data.length === 0) {
+                          results.innerHTML = '<div style="text-align:center; color:var(--text-muted); padding:20px;">Nenašli sa žiadne výsledky.</div>';
+                          return;
+                      }
+                      data.forEach(lead => {
+                          const div = document.createElement('div');
+                          div.className = 'search-result-item';
+                          div.style.padding = '12px'; div.style.cursor = 'pointer'; div.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+                          div.innerHTML = `<strong>${lead.full_name}</strong><br><small style="color:var(--text-muted)">${lead.email || ''} | ${lead.city || ''}</small>`;
+                          div.onclick = () => selectLead(lead.id);
+                          results.appendChild(div);
+                      });
+                  });
+          };
+  
+          window.selectLead = function(id) {
+              const url = new URL(window.location.href);
+              url.searchParams.set('lead_id', id);
+              window.location.href = url.toString();
+          };
+  
+          window.submitQuickAddLead = function() {
+              const btn = document.getElementById('qSubmitBtn');
+              const original = btn.innerHTML;
+              btn.disabled = true;
+              btn.innerHTML = '<i class="ti ti-loader-2 rotate"></i> Ukladám...';
+  
+              const formData = new FormData();
+              formData.append('full_name', document.getElementById('qName').value);
+              formData.append('email', document.getElementById('qEmail').value);
+              formData.append('phone', document.getElementById('qPhone').value);
+              formData.append('address', document.getElementById('qAddress').value);
+              formData.append('city', document.getElementById('qCity').value);
+  
+              fetch('ajax_quick_add_lead.php', { method: 'POST', body: formData })
+                  .then(r => r.json())
+                  .then(res => {
+                      if (res.success) selectLead(res.lead_id);
+                      else {
+                          alert('Chyba: ' + res.error);
+                          btn.disabled = false; btn.innerHTML = original;
+                      }
+                  });
+          };
+  
+          window.copyShareUrl = function() {
+              const el = document.getElementById('share_url_input');
+              el.select();
+              document.execCommand('copy');
+              const btn = document.querySelector('#shareInputGroup .btn-success');
+              const orig = btn.innerHTML;
+              btn.innerHTML = '<i class="ti ti-check"></i> Skopírované!';
+              setTimeout(() => btn.innerHTML = orig, 2000);
+          };
+  
+          // ==========================================
+          // 2. LOGIKA DOKUMENTU (Po načítaní DOM)
+          // ==========================================
+          document.addEventListener('DOMContentLoaded', function() {
+              const items_body = document.getElementById('items_body');
+              const add_item_btn = document.getElementById('add_item_btn');
+              const leadId = '<?= $lead_id ?>';
+              let editToken = '<?= $edit_token ?>';
+              const draftData = <?= json_encode($draft_data) ?>;
+  
+              function addRow(data = null) {
+                  const tr = document.createElement('tr');
+                  tr.className = 'item-row';
+                  tr.style.borderBottom = '1px solid #f1f5f9';
+                  tr.innerHTML = `
+                      <td style="padding: 12px; position:relative;">
+                          <div class="item-desc" contenteditable="true" style="outline: none; font-size: 0.9rem;">${data ? data.description : 'Nová položka'}</div>
+                          <button class="remove-row" style="position:absolute; left:-35px; top:12px; border:none; background:none; color:#f87171; cursor:pointer; font-size: 1.2rem; opacity:0.3;">×</button>
+                      </td>
+                      <td style="padding: 12px; text-align: center;"><div class="qty" contenteditable="true" style="outline: none; font-size: 0.9rem; font-weight: 700;">${data ? data.qty : '1'}</div></td>
+                      <td style="padding: 12px; text-align: center;"><div contenteditable="true" style="outline: none; font-size: 0.9rem;">${data ? data.unit : 'ks'}</div></td>
+                  `;
+                  items_body.appendChild(tr);
+              }
+  
+              if(add_item_btn) add_item_btn.addEventListener('click', () => addRow());
+              items_body.addEventListener('click', e => { if (e.target.classList.contains('remove-row')) e.target.closest('tr').remove(); });
+  
+              function setupSignature(canvasId) {
+                  const canvas = document.getElementById(canvasId);
+                  if (!canvas) return;
+                  const ctx = canvas.getContext('2d');
+                  const clearBtn = document.querySelector(`.clear-sig[data-target="${canvasId}"]`);
+                  let drawing = false;
+  
+                  function resize() {
+                      const r = Math.max(window.devicePixelRatio || 1, 1);
+                      canvas.width = canvas.offsetWidth * r;
+                      canvas.height = canvas.offsetHeight * r;
+                      ctx.scale(r, r);
+                      ctx.strokeStyle = "#1d4ed8"; ctx.lineWidth = 2; ctx.lineJoin = ctx.lineCap = "round";
+                  }
+                  window.addEventListener('resize', resize); resize();
+  
+                  const getPos = (e) => {
+                      const rect = canvas.getBoundingClientRect();
+                      const cx = e.touches ? e.touches[0].clientX : e.clientX;
+                      const cy = e.touches ? e.touches[0].clientY : e.clientY;
+                      return { x: cx - rect.left, y: cy - rect.top };
+                  };
+  
+                  const start = (e) => { drawing = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); if(e.touches) e.preventDefault(); };
+                  const draw = (e) => { if(!drawing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); if(e.touches) e.preventDefault(); };
+                  const stop = () => { drawing = false; ctx.closePath(); };
+  
+                  canvas.addEventListener('mousedown', start); canvas.addEventListener('mousemove', draw); window.addEventListener('mouseup', stop);
+                  canvas.addEventListener('touchstart', start, {passive: false}); canvas.addEventListener('touchmove', draw, {passive: false}); canvas.addEventListener('touchend', stop);
+                  if(clearBtn) clearBtn.addEventListener('click', () => ctx.clearRect(0, 0, canvas.width, canvas.height));
+              }
+  
+              setupSignature('sig_receiver');
+  
+              if (draftData) {
+                  if (draftData.number) document.getElementById('order_number').innerText = draftData.number;
+                  if (draftData.date) document.getElementById('order_date').value = draftData.date;
+                  if (draftData.items) {
+                      items_body.innerHTML = '';
+                      draftData.items.forEach(item => addRow(item));
+                  }
+              }
+  
+              // Ukladanie dokumentu
+              window.saveDocument = function(showUrl = false, status = 'sent') {
+                  if (!leadId || leadId === '0') {
+                      showShareModal(null, "Vyberte klienta pred uložením.");
+                      return;
+                  }
+  
+                  const btn = showUrl ? document.getElementById('share_document_btn') : 
+                              (status === 'draft' ? document.getElementById('save_draft_btn') : document.getElementById('email_document_btn'));
+                  const originalContent = btn.innerHTML;
+                  
+                  try {
+                      btn.disabled = true;
+                      btn.innerHTML = '<i class="ti ti-loader-2 rotate"></i> Ukladám...';
+  
+                      const editorData = {
+                          number: document.getElementById('order_number').innerText,
+                          date: document.getElementById('order_date').value,
+                          items: []
+                      };
+  
+                      document.querySelectorAll('.item-row').forEach(tr => {
+                          editorData.items.push({
+                              description: tr.querySelector('.item-desc').innerText,
+                              qty: tr.querySelector('.qty').innerText,
+                              unit: tr.querySelector('td:nth-child(3) [contenteditable]').innerText
+                          });
+                      });
+  
+                      const docClone = document.getElementById('order_document').cloneNode(true);
+                      docClone.querySelectorAll('.remove-row, .clear-sig, .btn').forEach(el => el.remove());
+                      docClone.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+                      docClone.querySelectorAll('input').forEach(el => {
+                          const span = document.createElement('span');
+                          span.innerText = el.value;
+                          el.parentNode.replaceChild(span, el);
+                      });
+  
+                      const data = new FormData();
+                      data.append('lead_id', leadId);
+                      data.append('type', 'order');
+                      data.append('status', status);
+                      data.append('doc_number', editorData.number);
+                      data.append('title', 'Objednávka ' + editorData.number);
+                      if (editToken) data.append('token', editToken);
+                      data.append('content', JSON.stringify({ 
+                          html: docClone.innerHTML,
+                          editor_data: editorData 
+                      }));
+  
+                      fetch('save_document.php', { method: 'POST', body: data })
+                      .then(res => res.json())
+                      .then(res => {
+                          if (res.success) {
+                              if (!editToken) editToken = res.token;
+                              if (showUrl) showShareModal(res.url);
+                              else if (status === 'draft') showShareModal(null, "Koncept bol úspešne uložený.");
+                              else showShareModal(null, "Dokument bol uložený a odoslaný klientovi.");
+                          } else {
+                              alert('Chyba: ' + res.error);
+                          }
+                      })
+                      .finally(() => {
+                          btn.disabled = false;
+                          btn.innerHTML = originalContent;
+                      });
+                  } catch (e) {
+                      btn.disabled = false; btn.innerHTML = originalContent;
+                  }
+              };
+  
+              // Číslovanie pri štarte
+              if (leadId && !editToken) {
+                  fetch(`ajax_get_doc_info.php?lead_id=${leadId}&type=order`)
+                      .then(res => res.json())
+                      .then(data => {
+                          if (data.success) {
+                              const numEl = document.getElementById('order_number');
+                              if (numEl) numEl.innerText = data.next_number;
+                              if (data.already_exists) {
+                                  document.getElementById('duplicateWarningMsg').innerHTML = 
+                                      `Pozor, tomuto klientovi už bola dňa ${new Date(data.existing_docs[0].created_at).toLocaleDateString('sk-SK')} odoslaná <strong>Objednávka (${data.existing_docs[0].doc_number})</strong>.`;
+                                  document.getElementById('duplicateWarning').style.display = 'block';
+                              }
+                          }
+                      });
+              }
+          });
+      </script>
+  
+      <!-- Modály -->
+      <div id="quickAddModal" class="modal-overlay">
+          <div class="modal-box" style="width: 500px; max-width: 95%;">
+              <div class="modal-header">
+                  <div class="modal-title" style="display: flex; align-items: center; gap: 8px;"><i class="ti ti-users"></i> Vybrať alebo pridať klienta</div>
+                  <button class="modal-close" onclick="closeQuickAddModal()">✕</button>
+              </div>
+              <div class="tabs" style="margin-bottom: 20px; display: flex; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">
+                  <button class="tab-btn active" onclick="switchTab('search')" style="background: none; border: none; color: white; padding: 8px 15px; cursor: pointer; border-radius: 8px; font-weight: 600;">Hľadať v CRM</button>
+                  <button class="tab-btn" onclick="switchTab('add')" style="background: none; border: none; color: white; padding: 8px 15px; cursor: pointer; border-radius: 8px; font-weight: 600;">Rýchlo pridať</button>
+              </div>
+              <div id="pane-search" class="tab-pane">
+                  <div style="position:relative; margin-bottom:15px;">
+                      <i class="ti ti-search" style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-muted);"></i>
+                      <input type="text" class="form-control" placeholder="Meno, firma alebo email..." style="padding-left: 40px;" onkeyup="searchLeads(this.value)">
+                  </div>
+                  <div id="searchResults" style="max-height:280px; overflow-y:auto; padding-right:5px;">
+                      <div style="text-align:center; color:var(--text-muted); padding:20px; font-size:0.9rem;">Začnite písať...</div>
+                  </div>
+              </div>
+              <div class="tab-pane" id="pane-add" style="display:none;">
+                  <div class="form-group"><label class="form-label">Meno</label><input type="text" id="qName" class="form-control"></div>
+                  <div class="form-group"><label class="form-label">E-mail</label><input type="email" id="qEmail" class="form-control"></div>
+                  <div class="form-group"><label class="form-label">Telefón</label><input type="text" id="qPhone" class="form-control"></div>
+                  <div class="grid-2">
+                      <div class="form-group"><label class="form-label">Ulica</label><input type="text" id="qAddress" class="form-control"></div>
+                      <div class="form-group"><label class="form-label">Mesto</label><input type="text" id="qCity" class="form-control"></div>
+                  </div>
+                  <button id="qSubmitBtn" onclick="submitQuickAddLead()" class="btn btn-primary w-full mt-4" style="justify-content:center;"><i class="ti ti-user-plus"></i> Vytvoriť a vybrať</button>
+              </div>
+          </div>
+      </div>
+  

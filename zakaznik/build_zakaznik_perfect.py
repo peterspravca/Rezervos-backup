@@ -1,0 +1,1456 @@
+# -*- coding: utf-8 -*-
+"""
+Perfect generator for c:/VolneKreslo/zakaznik/index.html
+Identical styling, architecture, and markup structure as c:/VolneKreslo/prevadzka/index.html.
+Strictly ZERO emojis.
+All 16 customer modules (00 to 15).
+"""
+
+import os
+import re
+
+html_content = """<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manuál Rezervos Zákazník | Používateľský sprievodca a funkcie klientskeho portálu</title>
+  <meta name="description" content="Kompletný používateľský manuál a vizuálny sprievodca pre klientsky portál Rezervos.eu. Ako spravovať rezervácie, permanentky, vernostné body, Kreslo Hunter a peňaženku.">
+  
+  <!-- Fonts & Material Symbols from Rezervos.eu -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Progress Bar -->
+  <div id="progress-bar"></div>
+
+  <!-- Mobile Sidebar Backdrop -->
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+  <!-- Main Header -->
+  <header class="top-header">
+    <div class="brand-wrapper">
+      <button class="mobile-nav-toggle" id="mobile-toggle" title="Otvoriť menu">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+      <div class="brand-logo-icon">R</div>
+      <div class="brand-info">
+        <h1>Rezervos Zákazník</h1>
+        <span class="brand-sub">Vizuálny sprievodca klientskym portálom</span>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <a href="https://rezervos.eu/moj_profil.php" target="_blank" rel="noopener noreferrer" class="btn-header btn-primary" title="Prihlásiť sa na Rezervos.eu">
+        <span class="btn-header-text">Klientsky portál</span>
+        <span class="material-symbols-outlined" style="font-size: 18px;">open_in_new</span>
+      </a>
+      <button class="theme-toggle-btn" id="theme-toggle" title="Prepnúť tmavý/svetlý režim">
+        <span class="material-symbols-outlined">dark_mode</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Layout Container -->
+  <div class="layout-container">
+    
+    <!-- Left Sticky Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-mobile-header">
+        <div class="sidebar-mobile-brand">
+          <div class="brand-logo-icon" style="width: 32px; height: 32px; font-size: 15px;">R</div>
+          <span style="font-weight: 700; font-size: 15px;">Zákaznícke Menu</span>
+        </div>
+        <button class="sidebar-mobile-close" id="sidebar-close" title="Zavrieť menu">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <div class="sidebar-search-box">
+        <span class="material-symbols-outlined search-icon">search</span>
+        <input type="text" id="search-input" placeholder="Hľadať funkciu, nastavenie..." autocomplete="off">
+      </div>
+
+      <div class="sidebar-nav-group">
+        <div class="nav-section-title">
+          <span class="material-symbols-outlined">menu_open</span>
+          <span>Bočné Menu &amp; Navigácia</span>
+        </div>
+        <ul class="sidebar-nav-list">
+          <li class="sidebar-nav-item active">
+            <a href="#sec-00">
+              <span class="material-symbols-outlined nav-icon">menu_open</span>
+              <span>Roztiahnuté Bočné Menu</span>
+              <span class="nav-badge-num">00</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-nav-group">
+        <div class="nav-section-title">
+          <span class="material-symbols-outlined">calendar_month</span>
+          <span>Termíny &amp; Rezervácie</span>
+        </div>
+        <ul class="sidebar-nav-list">
+          <li class="sidebar-nav-item">
+            <a href="#sec-01">
+              <span class="material-symbols-outlined nav-icon">dashboard</span>
+              <span>Prehľad zákazníka (Dashboard)</span>
+              <span class="nav-badge-num">01</span>
+            </a>
+          </li>
+          <li class="sidebar-nav-item">
+            <a href="#sec-02">
+              <span class="material-symbols-outlined nav-icon">event_available</span>
+              <span>Moje termíny a história</span>
+              <span class="nav-badge-num">02</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-nav-group">
+        <div class="nav-section-title">
+          <span class="material-symbols-outlined">card_membership</span>
+          <span>Permanentky &amp; Poukazy</span>
+        </div>
+        <ul class="sidebar-nav-list">
+          <li class="sidebar-nav-item">
+            <a href="#sec-03">
+              <span class="material-symbols-outlined nav-icon">loyalty</span>
+              <span>Moje permanentky a členstvá</span>
+              <span class="nav-badge-num">03</span>
+            </a>
+          </li>
+          <li class="sidebar-nav-item">
+            <a href="#sec-04">
+              <span class="material-symbols-outlined nav-icon">featured_seasonal_and_gifts</span>
+              <span>Darčekové poukazy &amp; Vouchery</span>
+              <span class="nav-badge-num">04</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-nav-group">
+        <div class="nav-section-title">
+          <span class="material-symbols-outlined">military_tech</span>
+          <span>Vernostný program &amp; Zľavy</span>
+        </div>
+        <ul class="sidebar-nav-list">
+          <li class="sidebar-nav-item">
+            <a href="#sec-05">
+              <span class="material-symbols-outlined nav-icon">stars</span>
+              <span>Vernostný program &amp; Body</span>
+              <span class="nav-badge-num">05</span>
+            </a>
+          </li>
+          <li class="sidebar-nav-item">
+            <a href="#sec-06">
+              <span class="material-symbols-outlined nav-icon">campaign</span>
+              <span>Novinky od prevádzok</span>
+              <span class="nav-badge-num">06</span>
+            </a>
+          </li>
+          <li class="sidebar-nav-item">
+            <a href="#sec-07">
+              <span class="material-symbols-outlined nav-icon">notifications_active</span>
+              <span>Kreslo Hunter (Lovec termínov)</span>
+              <span class="nav-badge-num">07</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-nav-group">
+        <div class="nav-section-title">
+          <span class="material-symbols-outlined">storefront</span>
+          <span>Salóny &amp; Recenzie</span>
+        </div>
+        <ul class="sidebar-nav-list">
+          <li class="sidebar-nav-item">
+            <a href="#sec-08">
+              <span class="material-symbols-outlined nav-icon">favorite</span>
+              <span>Obľúbené salóny</span>
+              <span class="nav-badge-num">08</span>
+            </a>
+          </li>
+          <li class="sidebar-nav-item">
+            <a href="#sec-09">
+              <span class="material-symbols-outlined nav-icon">rate_review</span>
+              <span>Moje recenzie &amp; Hodnotenia</span>
+              <span class="nav-badge-num">09</span>
+            </a>
+          </li>
+          <li class="sidebar-nav-item">
+            <a href="#sec-15">
+              <span class="material-symbols-outlined nav-icon">travel_explore</span>
+              <span>Ako nájsť salón &amp; rezervovať</span>
+              <span class="nav-badge-num">15</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-nav-group">
+        <div class="nav-section-title">
+          <span class="material-symbols-outlined">payments</span>
+          <span>Financie, Inzercia &amp; Provízie</span>
+        </div>
+        <ul class="sidebar-nav-list">
+          <li class="sidebar-nav-item">
+            <a href="#sec-10">
+              <span class="material-symbols-outlined nav-icon">store</span>
+              <span>Moje inzeráty (B2C / C2C)</span>
+              <span class="nav-badge-num">10</span>
+            </a>
+          </li>
+          <li class="sidebar-nav-item">
+            <a href="#sec-11">
+              <span class="material-symbols-outlined nav-icon">account_balance_wallet</span>
+              <span>Klientska Peňaženka &amp; Kredit</span>
+              <span class="nav-badge-num">11</span>
+            </a>
+          </li>
+          <li class="sidebar-nav-item">
+            <a href="#sec-12">
+              <span class="material-symbols-outlined nav-icon">group_add</span>
+              <span>Affiliate odporúčací program</span>
+              <span class="nav-badge-num">12</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-nav-group">
+        <div class="nav-section-title">
+          <span class="material-symbols-outlined">manage_accounts</span>
+          <span>Profil &amp; Bezpečnosť</span>
+        </div>
+        <ul class="sidebar-nav-list">
+          <li class="sidebar-nav-item">
+            <a href="#sec-13">
+              <span class="material-symbols-outlined nav-icon">badge</span>
+              <span>Nastavenia profilu &amp; VIP</span>
+              <span class="nav-badge-num">13</span>
+            </a>
+          </li>
+          <li class="sidebar-nav-item">
+            <a href="#sec-14">
+              <span class="material-symbols-outlined nav-icon">security</span>
+              <span>Zabezpečenie účtu &amp; 2FA</span>
+              <span class="nav-badge-num">14</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+
+      <!-- Hero Banner -->
+      <section class="hero-banner">
+        <div class="hero-badge-tag">
+          <span class="material-symbols-outlined">verified</span>
+          <span>Oficiálny Sprievodca Klientskym Portálom</span>
+        </div>
+        <h1 class="hero-title">Ako efektívne používať zákaznícky účet Rezervos</h1>
+        <p class="hero-subtitle">
+          Detailný manuál a vizuálny sprievodca pre zákazníkov. V tomto návode nájdete presný popis všetkých 16 klientskych modulov, HD screenshoty rozhrania vo vysokom rozlíšení a postupy krok za krokom pre rezervácie, permanentky, vouchery a Kreslo Hunter.
+        </p>
+
+        <div class="hero-stats-bar">
+          <div class="stat-box">
+            <span class="stat-value">16</span>
+            <span class="stat-label">Modulov a kapitol</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-value">18</span>
+            <span class="stat-label">HD Screenshotov systému</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-value">100%</span>
+            <span class="stat-label">Overené v reálnom účte</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-value">&lt; 60 s</span>
+            <span class="stat-label">Priemerný čas rezervácie</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Category Filter Pills -->
+      <div class="filter-pills-bar">
+        <button class="filter-pill active" data-category="all">
+          <span class="material-symbols-outlined">apps</span>
+          <span>Všetky funkcie</span>
+        </button>
+        <button class="filter-pill" data-category="menu">
+          <span class="material-symbols-outlined">menu_open</span>
+          <span>Menu &amp; Navigácia</span>
+        </button>
+        <button class="filter-pill" data-category="terminy">
+          <span class="material-symbols-outlined">calendar_month</span>
+          <span>Termíny &amp; Rezervácie</span>
+        </button>
+        <button class="filter-pill" data-category="clenske">
+          <span class="material-symbols-outlined">card_membership</span>
+          <span>Permanentky &amp; Poukazy</span>
+        </button>
+        <button class="filter-pill" data-category="benefity">
+          <span class="material-symbols-outlined">military_tech</span>
+          <span>Vernostný program &amp; Zľavy</span>
+        </button>
+        <button class="filter-pill" data-category="oblubene">
+          <span class="material-symbols-outlined">storefront</span>
+          <span>Salóny &amp; Recenzie</span>
+        </button>
+        <button class="filter-pill" data-category="financie">
+          <span class="material-symbols-outlined">payments</span>
+          <span>Financie &amp; Inzercia</span>
+        </button>
+        <button class="filter-pill" data-category="profil">
+          <span class="material-symbols-outlined">manage_accounts</span>
+          <span>Profil &amp; Bezpečnosť</span>
+        </button>
+      </div>
+
+      <!-- ===================================================================
+           00. BOČNÉ MENU ZÁKAZNÍKA
+           =================================================================== -->
+      <article class="guide-section" id="sec-00" data-category="menu">
+        <div class="guide-section-header">
+          <div class="section-title-wrap">
+            <div class="section-number">00</div>
+            <div>
+              <h2>Bočné Navigačné Menu Zákazníka</h2>
+              <span class="section-url-badge">moj_profil.php</span>
+            </div>
+          </div>
+          <span class="section-category-tag">
+            <span class="material-symbols-outlined">menu_open</span>
+            <span>Bočné Menu &amp; Navigácia</span>
+          </span>
+        </div>
+
+        <p class="guide-lead-text">
+          Klientske rozhranie Rezervos využíva moderné dynamické bočné menu. Na obrazovkách zostáva v kompaktnej šírke 64 pixelov s ikonami pre maximálny priestor na obsah. <strong>Akonáhle na lištu prejdete kurzorom myši (hover) alebo kliknete, menu sa plynule roztiahne na plnú šírku 250 pixelov</strong> a odhalí slovenské názvy a štruktúru všetkých klientskych modulov.
+        </p>
+
+        <!-- Menu Comparison View (Exactly like Prevadzka: 2fr left, 1fr right) -->
+        <div class="menu-compare-grid">
+          <div class="menu-card">
+            <div class="menu-card-header">
+              <span>Celkový pohľad na systém s roztiahnutým menu</span>
+              <span class="menu-card-badge">Šírka 250 px</span>
+            </div>
+            <div class="screenshot-container" data-caption="Klientsky portál Rezervos s plne roztiahnutým bočným menu (250 px)">
+              <img loading="eager" src="images/00_menu_expanded.png" alt="Rezervos s roztiahnutým bočným menu">
+              <div class="screenshot-zoom-overlay">
+                <span class="material-symbols-outlined">zoom_in</span>
+                <span>Kliknite pre zväčšenie celkového pohľadu</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card">
+            <div class="menu-card-header">
+              <span>Detail všetkých položiek menu</span>
+              <span class="menu-card-badge">Zákaznícke moduly</span>
+            </div>
+            <div class="screenshot-container" data-caption="Detail roztiahnutého bočného menu zákazníka so všetkými položkami">
+              <img loading="eager" src="images/00_sidebar_detail.png" alt="Detail položiek bočného menu zákazníka">
+              <div class="screenshot-zoom-overlay">
+                <span class="material-symbols-outlined">zoom_in</span>
+                <span>Kliknite pre zväčšenie detailu menu</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">dashboard</span>
+              <span>1. Denný prehľad &amp; Termíny</span>
+            </div>
+            <div class="feature-box-desc">
+              Položky: <strong>Prehľad</strong> (uvítací panel a odpočítavanie najbližšej návštevy) a <strong>Moje termíny</strong> (zoznam nadchádzajúcich aj minulých rezervácií).
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">card_membership</span>
+              <span>2. Predplatné &amp; Benefity</span>
+            </div>
+            <div class="feature-box-desc">
+              Položky: <strong>Moje permanentky</strong> (digitálne karty so zostatkom vstupov), <strong>Darčekové poukazy</strong> a <strong>Vernostný program</strong> (body a pečiatky).
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">storefront</span>
+              <span>3. Objavovanie &amp; Salóny</span>
+            </div>
+            <div class="feature-box-desc">
+              Položky: <strong>Novinky od prevádzok</strong>, unikátny lovec termínov <strong>Kreslo Hunter</strong>, <strong>Obľúbené salóny</strong> a <strong>Moje recenzie</strong>.
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">payments</span>
+              <span>4. Financie &amp; Nástroje</span>
+            </div>
+            <div class="feature-box-desc">
+              Položky: <strong>Moje inzeráty</strong> (bazar a dopyty), <strong>Peňaženka</strong> (dobíjanie kreditu na platby) a <strong>Affiliate program</strong> (odporúčacie provízie).
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">settings</span>
+              <span>5. Účet &amp; Zabezpečenie</span>
+            </div>
+            <div class="feature-box-desc">
+              Položky: <strong>Nastavenia profilu</strong> (kontakty a VIP odznak), <strong>Zabezpečenie</strong> (2FA autentifikácia a heslo) a <strong>Odhlásiť sa</strong>.
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-tip">
+          <span class="material-symbols-outlined">lightbulb</span>
+          <div><strong>Tip pre ovládanie menu:</strong> Na počítači stačí prejsť kurzorom na ľavý okraj a menu sa okamžite vysunie. Na mobiloch a tabletoch použite tlačidlo v ľavom hornom rohu hlavičky – menu sa otvorí ako vysúvací drawer s tmavým backdropom.</div>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           01. PREHĽAD ZÁKAZNÍKA (DASHBOARD)
+           =================================================================== -->
+      <article class="guide-section" id="sec-01" data-category="terminy">
+        <div class="guide-section-header">
+          <div class="section-title-wrap">
+            <div class="section-number">01</div>
+            <div>
+              <h2>Prehľad Zákazníka (Klientsky Dashboard)</h2>
+              <span class="section-url-badge">moj_profil.php#dashboard</span>
+            </div>
+          </div>
+          <span class="section-category-tag">
+            <span class="material-symbols-outlined">dashboard</span>
+            <span>Termíny &amp; Rezervácie</span>
+          </span>
+        </div>
+
+        <p class="guide-lead-text">
+          Po prihlásení do klientskej zóny vás privíta prehľadná uvítacia obrazovka s vaším menom a profilovým statusom. Hlavným prvkom je informačný panel s vaším <strong>najbližším plánovaným termínom</strong>, vďaka čomu presne viete, do akého salónu a v aký čas máte prísť.
+        </p>
+
+        <div class="screenshot-container" data-caption="Klientsky Prehľad - uvítanie, najbližšia rezervácia a rýchle štatistiky">
+          <img loading="eager" src="images/01_prehlad.png" alt="Prehľad zákazníka Rezervos">
+          <div class="screenshot-zoom-overlay">
+            <span class="material-symbols-outlined">zoom_in</span>
+            <span>Kliknite pre zväčšenie</span>
+          </div>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">schedule</span>
+              <span>Najbližší termín</span>
+            </div>
+            <div class="feature-box-desc">
+              Zobrazuje presný dátum, čas, názov salónu, objednanú službu, priradeného pracovníka a odkaz na stiahnutie do kalendára.
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">savings</span>
+              <span>Stav peňaženky &amp; bodov</span>
+            </div>
+            <div class="feature-box-desc">
+              Okamžitý zostatok vášho predplateného kreditu a nazbierané vernostné body z vašich doterajších návštev.
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">touch_app</span>
+              <span>Rýchle odkazy</span>
+            </div>
+            <div class="feature-box-desc">
+              Tlačidlá pre okamžitý skok do katalógu salónov, dobitie kreditu alebo správu osobných údajov a hesla.
+            </div>
+          </div>
+        </div>
+
+        <div class="steps-container">
+          <div class="steps-title">
+            <span class="material-symbols-outlined">checklist</span>
+            <span>Čo nájdete na paneli najbližšieho termínu:</span>
+          </div>
+          <ul class="step-list">
+            <li class="step-item">
+              <span class="step-badge">1</span>
+              <div><strong>Názov a adresa salónu:</strong> Kliknutím na adresu sa otvorí Google Maps s navigáciou priamo pred dvere prevádzky.</div>
+            </li>
+            <li class="step-item">
+              <span class="step-badge">2</span>
+              <div><strong>Objednané procedúry:</strong> Presný zoznam položiek, celková dĺžka trvania v minútach a konečná cena.</div>
+            </li>
+            <li class="step-item">
+              <span class="step-badge">3</span>
+              <div><strong>Možnosť zmeny či zrušenia:</strong> Ak vám termín nevyhovuje, môžete ho zrušiť priamo z dashboardu v súlade so storno podmienkami salónu.</div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           02. MOJE TERMÍNY & HISTÓRIA
+           =================================================================== -->
+      <article class="guide-section" id="sec-02" data-category="terminy">
+        <div class="guide-section-header">
+          <div class="section-title-wrap">
+            <div class="section-number">02</div>
+            <div>
+              <h2>Moje Termíny &amp; História Rezervácií</h2>
+              <span class="section-url-badge">moj_profil.php#bookings</span>
+            </div>
+          </div>
+          <span class="section-category-tag">
+            <span class="material-symbols-outlined">event_available</span>
+            <span>Termíny &amp; Rezervácie</span>
+          </span>
+        </div>
+
+        <p class="guide-lead-text">
+          V sekcii <strong>Moje termíny</strong> máte 100% kontrolu nad svojím harmonogramom návštev. Nemusíte hľadať potvrdzujúce e-maily ani SMS správy — všetky rezervácie sú usporiadané chronologicky s detailnými údajmi o salóne, cene a poskytovateľovi služby.
+        </p>
+
+        <div class="screenshot-container" data-caption="Moje termíny - zoznam nadchádzajúcich návštev a archív absolvovaných procedúr">
+          <img loading="eager" src="images/02_moje_terminy.png" alt="Moje termíny Rezervos">
+          <div class="screenshot-zoom-overlay">
+            <span class="material-symbols-outlined">zoom_in</span>
+            <span>Kliknite pre zväčšenie</span>
+          </div>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">event_upcoming</span>
+              <span>Nadchádzajúce rezervácie</span>
+            </div>
+            <div class="feature-box-desc">
+              Zoznam termínov, ktoré vás ešte len čakajú. Vidíte status (Potvrdená / Čaká na potvrdenie), presný čas a personál. Môžete si termín stiahnuť do kalendára (.ics) alebo požiadať o storno.
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">history_edu</span>
+              <span>História návštev &amp; Preobjednanie</span>
+            </div>
+            <div class="feature-box-desc">
+              Archív všetkých vašich minulých procedúr. Ak ste boli spokojní, tlačidlom <strong>„Objednať znova“</strong> si rezervujete rovnakú službu na 1 kliknutie bez nového vyhľadávania.
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-info">
+          <span class="material-symbols-outlined">info</span>
+          <div><strong>Storno podmienky salónov:</strong> Každá prevádzka si nastavuje vlastnú lehotu bezplatného storna (napríklad najneskôr 24 hodín vopred). Tlačidlo na zrušenie termínu je aktívne v závislosti od pravidiel konkrétneho salónu.</div>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           03. MOJE PERMANENTKY & ČLENSTVÁ
+           =================================================================== -->
+      <article class="guide-section" id="sec-03" data-category="clenske">
+        <div class="guide-section-header">
+          <div class="section-title-wrap">
+            <div class="section-number">03</div>
+            <div>
+              <h2>Moje Permanentky &amp; Členstvá</h2>
+              <span class="section-url-badge">moj_profil.php#memberships</span>
+            </div>
+          </div>
+          <span class="section-category-tag">
+            <span class="material-symbols-outlined">loyalty</span>
+            <span>Permanentky &amp; Poukazy</span>
+          </span>
+        </div>
+
+        <p class="guide-lead-text">
+          Už so sebou nemusíte nosiť papierové kartičky ani pečiatkové preukazy. Všetky zakúpené permanentky (napríklad 10 vstupov na strih, 5 masáží alebo mesačné členstvo) máte bezpečne uložené vo svojom profile s automatickým odpočítavaním čerpania.
+        </p>
+
+        <div class="screenshot-container" data-caption="Permanentky - grafický ukazovateľ vyčerpaných vstupov a platnosť karty">
+          <img loading="eager" src="images/03_permanentky.png" alt="Moje permanentky Rezervos">
+          <div class="screenshot-zoom-overlay">
+            <span class="material-symbols-outlined">zoom_in</span>
+            <span>Kliknite pre zväčšenie</span>
+          </div>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">pin</span>
+              <span>Kód a identifikátor</span>
+            </div>
+            <div class="feature-box-desc">
+              Každá permanentka má jedinečný kód, ktorý stačí nahlásiť personálu, alebo si ho systém automaticky priradí pri online rezervácii.
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">data_usage</span>
+              <span>Zostatok vstupov</span>
+            </div>
+            <div class="feature-box-desc">
+              Vizuálny ukazovateľ (napr. 7 z 10 vstupov voľných). Presne viete, koľko návštev vám ešte zostáva.
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">event_busy</span>
+              <span>Dátum expirácie</span>
+            </div>
+            <div class="feature-box-desc">
+              Zreteľné zobrazenie platnosti permanentky (napr. platná do 31.12.2026), aby vám žiadny predplatený vstup neprepadol.
+            </div>
+          </div>
+        </div>
+
+        <div class="steps-container">
+          <div class="steps-title">
+            <span class="material-symbols-outlined">checklist</span>
+            <span>Ako uplatniť permanentku pri rezervácii:</span>
+          </div>
+          <ul class="step-list">
+            <li class="step-item">
+              <span class="step-badge">1</span>
+              <div><strong>Výber služby:</strong> Pri objednávaní v salóne, kde máte zakúpenú permanentku, si vyberte príslušnú procedúru.</div>
+            </li>
+            <li class="step-item">
+              <span class="step-badge">2</span>
+              <div><strong>Automatické uplatnenie:</strong> Systém v kroku platby automaticky rozpozná vašu aktívnu kartu a cenu nastaví na 0 €.</div>
+            </li>
+            <li class="step-item">
+              <span class="step-badge">3</span>
+              <div><strong>Odpis vstupu:</strong> Po absolvovaní termínu personál odpočíta 1 vstup a zostatok sa ihneď aktualizuje vo vašom profile.</div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           04. DARČEKOVÉ POUKAZY & VOUCHERY
+           =================================================================== -->
+      <article class="guide-section" id="sec-04" data-category="clenske">
+        <div class="guide-section-header">
+          <div class="section-title-wrap">
+            <div class="section-number">04</div>
+            <div>
+              <h2>Darčekové Poukazy &amp; Vouchery</h2>
+              <span class="section-url-badge">moj_profil.php#giftvouchers</span>
+            </div>
+          </div>
+          <span class="section-category-tag">
+            <span class="material-symbols-outlined">featured_seasonal_and_gifts</span>
+            <span>Permanentky &amp; Poukazy</span>
+          </span>
+        </div>
+
+        <p class="guide-lead-text">
+          Dostali ste od blízkych darčekový poukaz na návštevu salónu, alebo ste si sami zakúpili voucher? V tejto sekcii nájdete všetky aktívne poukazy, ich nominálnu hodnotu, aktuálny nevyčerpaný zostatok a dátum platnosti.
+        </p>
+
+        <div class="screenshot-container" data-caption="Darčekové poukazy - zobrazenie kódu, zostatku v eurách a platnosti">
+          <img loading="eager" src="images/04_darcekove_poukazy.png" alt="Darčekové poukazy Rezervos">
+          <div class="screenshot-zoom-overlay">
+            <span class="material-symbols-outlined">zoom_in</span>
+            <span>Kliknite pre zväčšenie</span>
+          </div>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">receipt_long</span>
+              <span>Postupné čerpanie kreditu</span>
+            </div>
+            <div class="feature-box-desc">
+              Pokiaľ máte 100 € poukaz a vaša procedúra stála 40 €, zvyšných 60 € vám zostáva k dispozícii na vašu ďalšiu návštevu.
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">picture_as_pdf</span>
+              <span>Tlač a stiahnutie v PDF</span>
+            </div>
+            <div class="feature-box-desc">
+              Poukazy môžete jedným kliknutím stiahnuť v reprezentatívnom grafickom PDF formáte, vytlačiť alebo poslať obdarovanému e-mailom.
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-tip">
+          <span class="material-symbols-outlined">redeem</span>
+          <div><strong>Ako uplatniť kód poukazu:</strong> Pri dokončovaní online rezervácie na webe Rezervos vložte alfanumerický kód do poľa <em>„Mám darčekový poukaz / zľavový kód“</em>. Hodnota sa okamžite odpočíta z konečnej sumy objednávky.</div>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           05. VERNOSTNÝ PROGRAM & ODMENY
+           =================================================================== -->
+      <article class="guide-section" id="sec-05" data-category="benefity">
+        <div class="guide-section-header">
+          <div class="section-title-wrap">
+            <div class="section-number">05</div>
+            <div>
+              <h2>Vernostný Program &amp; Klientske Odmeny</h2>
+              <span class="section-url-badge">moj_profil.php#loyalty</span>
+            </div>
+          </div>
+          <span class="section-category-tag">
+            <span class="material-symbols-outlined">stars</span>
+            <span>Vernostný program &amp; Zľavy</span>
+          </span>
+        </div>
+
+        <p class="guide-lead-text">
+          Rezervos odmeňuje vašu vernosť. Za každú absolvovanú návštevu zapojených prevádzok automaticky získavate vernostné body alebo digitálne pečiatky, ktoré môžete následne premeniť na zľavy, darčekové procedúry či špeciálne balíčky.
+        </p>
+
+        <div class="screenshot-container" data-caption="Vernostný program - zoznam salónov s vašimi bodmi a ponuka odmien">
+          <img loading="eager" src="images/05_vernostny_program.png" alt="Vernostný program Rezervos">
+          <div class="screenshot-zoom-overlay">
+            <span class="material-symbols-outlined">zoom_in</span>
+            <span>Kliknite pre zväčšenie</span>
+          </div>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">toll</span>
+              <span>Bodové konto podľa salónov</span>
+            </div>
+            <div class="feature-box-desc">
+              Máte prehľadný rozpis bodov pre každú navštevovanú prevádzku zvlášť. Vidíte, koľko bodov máte a koľko chýba k ďalšej odmene.
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">workspace_premium</span>
+              <span>Katalóg dostupných benefitov</span>
+            </div>
+            <div class="feature-box-desc">
+              Zoznam odmien pripravených na výmenu (napríklad: 50 bodov = 10% zľava, 100 bodov = strih zdarma, darčekové vlasové sérum).
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">auto_awesome</span>
+              <span>Automatické pripísanie</span>
+            </div>
+            <div class="feature-box-desc">
+              Nemusíte si pýtať pečiatku na pokladni. Akonáhle salón označí vašu rezerváciu ako vybavenú, body sa na účet pripíšu okamžite.
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           06. NOVINKY OD PREVÁDZOK
+           =================================================================== -->
+      <article class="guide-section" id="sec-06" data-category="benefity">
+        <div class="guide-section-header">
+          <div class="section-title-wrap">
+            <div class="section-number">06</div>
+            <div>
+              <h2>Novinky &amp; Akcie Od Prevádzok</h2>
+              <span class="section-url-badge">moj_profil.php#newsletters</span>
+            </div>
+          </div>
+          <span class="section-category-tag">
+            <span class="material-symbols-outlined">campaign</span>
+            <span>Vernostný program &amp; Zľavy</span>
+          </span>
+        </div>
+
+        <p class="guide-lead-text">
+          V tejto sekcii nájdete personalizovaný informačný kanál od salónov, ktoré ste v minulosti navštívili alebo si ich uložili medzi obľúbené. Majitelia salónov tu publikujú špeciálne novinky, limitované zľavové akcie či informácie o nových členoch tímu.
+        </p>
+
+        <div class="screenshot-container" data-caption="Novinky od prevádzok - časová os oznámení a akčných ponúk">
+          <img loading="eager" src="images/06_novinky.png" alt="Novinky od prevádzok Rezervos">
+          <div class="screenshot-zoom-overlay">
+            <span class="material-symbols-outlined">zoom_in</span>
+            <span>Kliknite pre zväčšenie</span>
+          </div>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">bolt</span>
+              <span>Priama rezervácia z akcie</span>
+            </div>
+            <div class="feature-box-desc">
+              Pokiaľ salón vyhlási sezónnu akciu, pod správou nájdete tlačidlo na priamu rezerváciu s už aplikovanou akčnou cenou.
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">event_busy</span>
+              <span>Dovolenky a sanitárne dni</span>
+            </div>
+            <div class="feature-box-desc">
+              V predstihu viete, kedy má váš obľúbený personál dovolenku, aby ste si stihli rezervovať termín včas pred ich odchodom.
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           07. KRESLO HUNTER (LOVEC TERMÍNOV)
+           =================================================================== -->
+      <article class="guide-section" id="sec-07" data-category="benefity">
+        <div class="guide-section-header">
+          <div class="section-title-wrap">
+            <div class="section-number">07</div>
+            <div>
+              <h2>Kreslo Hunter (Automatický Lovec Termínov)</h2>
+              <span class="section-url-badge">moj_profil.php#hunter</span>
+            </div>
+          </div>
+          <span class="section-category-tag">
+            <span class="material-symbols-outlined">notifications_active</span>
+            <span>Vernostný program &amp; Zľavy</span>
+          </span>
+        </div>
+
+        <p class="guide-lead-text">
+          <strong>Kreslo Hunter</strong> je prémiová unikátna funkcia platformy Rezervos. Ak sú vaše obľúbené salóny plne vybookované na týždne dopredu, Hunter za vás nepretržite stráži kalendáre. Hneď ako niekto iný zruší svoju rezerváciu na poslednú chvíľu, Hunter uvoľnené kreslo zachytí a pošle vám okamžitú ponuku.
+        </p>
+
+        <div class="screenshot-container" data-caption="Kreslo Hunter - nastavenie sledovaných salónov, revíru a last-minute zliav">
+          <img loading="eager" src="images/07_kreslo_hunter.png" alt="Kreslo Hunter Rezervos">
+          <div class="screenshot-zoom-overlay">
+            <span class="material-symbols-outlined">zoom_in</span>
+            <span>Kliknite pre zväčšenie</span>
+          </div>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">my_location</span>
+              <span>Nastavenie revíru</span>
+            </div>
+            <div class="feature-box-desc">
+              Zvoľte si mesto alebo oblasť, preferované služby (napr. Dámsky strih, Barber, Masáže) a maximálnu vzdialenosť.
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">percent</span>
+              <span>Last-minute zľavy</span>
+            </div>
+            <div class="feature-box-desc">
+              Mnoho salónov ponúka uvoľnené termíny v ten istý deň so zľavou 20% až 50%, aby nezostali s prázdnym kreslom.
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">timer</span>
+              <span>Blesková rezervácia</span>
+            </div>
+            <div class="feature-box-desc">
+              Ulovený termín si môžete zarezervovať na 1 kliknutie z notifikácie skôr, ako ho stihne obsadiť niekto iný.
+            </div>
+          </div>
+        </div>
+
+        <div class="steps-container">
+          <div class="steps-title">
+            <span class="material-symbols-outlined">checklist</span>
+            <span>Ako aktivovať svojho Lovca termínov:</span>
+          </div>
+          <ul class="step-list">
+            <li class="step-item">
+              <span class="step-badge">1</span>
+              <div><strong>Zadajte kritériá:</strong> Vyberte kategóriu služby, mesto a dni v týždni, kedy máte voľný čas.</div>
+            </li>
+            <li class="step-item">
+              <span class="step-badge">2</span>
+              <div><strong>Zapnite notifikácie:</strong> Povoľte odosielanie SMS alebo e-mailových upozornení na ulovené termíny.</div>
+            </li>
+            <li class="step-item">
+              <span class="step-badge">3</span>
+              <div><strong>Potvrďte termín:</strong> Po doručení hlásenia o voľnom kresle stačí kliknúť a termín je váš.</div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           08. OBĽÚBENÉ SALÓNY
+           =================================================================== -->
+      <article class="guide-section" id="sec-08" data-category="oblubene">
+        <div class="guide-section-header">
+          <div class="section-title-wrap">
+            <div class="section-number">08</div>
+            <div>
+              <h2>Obľúbené Salóny (Môj Zoznam Prevádzok)</h2>
+              <span class="section-url-badge">moj_profil.php#favorites</span>
+            </div>
+          </div>
+          <span class="section-category-tag">
+            <span class="material-symbols-outlined">favorite</span>
+            <span>Salóny &amp; Recenzie</span>
+          </span>
+        </div>
+
+        <p class="guide-lead-text">
+          Nemusíte si pamätať presný názov kaderníctva, kozmetického štúdia či masážneho salónu. Všetky prevádzky, ktoré si označíte srdiečkom, sa prehľadne zhromažďujú na tejto karte. Jedným kliknutím sa dostanete k ich cenníku, personálu a voľným termínom.
+        </p>
+
+        <div class="screenshot-container" data-caption="Obľúbené salóny - zoznam podnikov s adresami a tlačidlom rýchlej objednávky">
+          <img loading="eager" src="images/08_oblubene.png" alt="Obľúbené salóny Rezervos">
+          <div class="screenshot-zoom-overlay">
+            <span class="material-symbols-outlined">zoom_in</span>
+            <span>Kliknite pre zväčšenie</span>
+          </div>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">bookmark</span>
+              <span>Priamy prístup</span>
+            </div>
+            <div class="feature-box-desc">
+              Preskočte katalógové vyhľadávanie. Otvorte obľúbený salón a ihneď si vyberte svojho overeného majstra a voľný čas.
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">call</span>
+              <span>Kontaktné informácie</span>
+            </div>
+            <div class="feature-box-desc">
+              Okamžitý prístup k telefónnemu číslu salónu, presnej adrese, otváracím hodinám a odkazom na ich sociálne siete.
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">delete_outline</span>
+              <span>Jednoduchá správa</span>
+            </div>
+            <div class="feature-box-desc">
+              Ak už do salónu neplánujete chodiť, opätovným kliknutím na srdiečko ho kedykoľvek zo zoznamu odstránite.
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           09. MOJE RECENZIE & HODNOTENIA
+           =================================================================== -->
+      <article class="guide-section" id="sec-09" data-category="oblubene">
+        <div class="guide-section-header">
+          <div class="section-title-wrap">
+            <div class="section-number">09</div>
+            <div>
+              <h2>Moje Recenzie &amp; Hodnotenia</h2>
+              <span class="section-url-badge">moj_profil.php#reviews</span>
+            </div>
+          </div>
+          <span class="section-category-tag">
+            <span class="material-symbols-outlined">rate_review</span>
+            <span>Salóny &amp; Recenzie</span>
+          </span>
+        </div>
+
+        <p class="guide-lead-text">
+          Na platforme Rezervos môžu recenzie písať výhradne overení zákazníci, ktorí procedúru reálne absolvovali a zaplatili. V tejto sekcii máte pohromade všetky svoje udelené hviezdičkové hodnotenia, slovné komentáre aj oficiálne odpovede salónov.
+        </p>
+
+        <div class="screenshot-container" data-caption="Moje recenzie - hviezdičkové hodnotenie, text recenzie a reakcie prevádzok">
+          <img loading="eager" src="images/09_recenzie.png" alt="Moje recenzie Rezervos">
+          <div class="screenshot-zoom-overlay">
+            <span class="material-symbols-outlined">zoom_in</span>
+            <span>Kliknite pre zväčšenie</span>
+          </div>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">edit_note</span>
+              <span>Úprava spätnej väzby</span>
+            </div>
+            <div class="feature-box-desc">
+              Ak sa po čase rozhodnete svoje hodnotenie spresniť alebo doplniť novú skúsenosť, môžete recenziu kedykoľvek upraviť.
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">reply</span>
+              <span>Odpovede salónov</span>
+            </div>
+            <div class="feature-box-desc">
+              Máte možnosť sledovať oficiálne odpovede a poďakovania od majiteľov prevádzok na vašu zanechanú spätnú väzbu.
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           10. MOJE INZERÁTY (B2C / C2C)
+           =================================================================== -->
+      <article class="guide-section" id="sec-10" data-category="financie">
+        <div class="guide-section-header">
+          <div class="section-title-wrap">
+            <div class="section-number">10</div>
+            <div>
+              <h2>Moje Inzeráty (Klientska Inzercia)</h2>
+              <span class="section-url-badge">moj_profil-inzercia.php</span>
+            </div>
+          </div>
+          <span class="section-category-tag">
+            <span class="material-symbols-outlined">store</span>
+            <span>Financie, Inzercia &amp; Provízie</span>
+          </span>
+        </div>
+
+        <p class="guide-lead-text">
+          Rezervos prepája nielen zákazníkov so salónmi, ale vytvára celú komunitu. V sekcii <strong>Moje inzeráty</strong> môžete pridávať vlastné inzeráty — či už predávate profesionálne kozmetické prístroje, ponúkate prenájom kresla, alebo hľadáte spoľahlivú vizážistku na svadobný termín.
+        </p>
+
+        <div class="screenshot-container" data-caption="Moje inzeráty - formulár na pridanie inzerátu, zoznam aktívnych ponúk a štatistiky">
+          <img loading="eager" src="images/10_inzercia.png" alt="Moje inzeráty Rezervos">
+          <div class="screenshot-zoom-overlay">
+            <span class="material-symbols-outlined">zoom_in</span>
+            <span>Kliknite pre zväčšenie</span>
+          </div>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">add_photo_alternate</span>
+              <span>Fotogaléria &amp; Lokalita</span>
+            </div>
+            <div class="feature-box-desc">
+              K inzerátu môžete nahrať viacero fotografií, detailný popis, predajnú cenu a lokalitu pôsobenia.
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">visibility</span>
+              <span>Počítadlo zobrazení</span>
+            </div>
+            <div class="feature-box-desc">
+              Presná štatistika, koľko návštevníkov portálu Rezervos si váš inzerát prezrelo a prejavilo záujem.
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">toggle_on</span>
+              <span>Aktivácia a archivácia</span>
+            </div>
+            <div class="feature-box-desc">
+              Inzerát môžete kedykoľvek dočasne pozastaviť, označiť za predaný alebo úplne vymazať z databázy.
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           11. KLIENTSKA PEŇAŽENKA & KREDIT
+           =================================================================== -->
+      <article class="guide-section" id="sec-11" data-category="financie">
+        <div class="guide-section-header">
+          <div class="section-title-wrap">
+            <div class="section-number">11</div>
+            <div>
+              <h2>Klientska Peňaženka &amp; Dobíjanie Kreditu</h2>
+              <span class="section-url-badge">moj_profil-penazenka.php</span>
+            </div>
+          </div>
+          <span class="section-category-tag">
+            <span class="material-symbols-outlined">account_balance_wallet</span>
+            <span>Financie, Inzercia &amp; Provízie</span>
+          </span>
+        </div>
+
+        <p class="guide-lead-text">
+          S klientskou peňaženkou Rezervos nemusíte pri návšteve salónu riešiť hotovosť ani vyťahovať platobnú kartu pri pokladni. Dobite si kredit vopred a plaťte za služby bezpečne, rýchlo a bezkontaktne priamo z aplikácie.
+        </p>
+
+        <div class="screenshot-container" data-caption="Klientska Peňaženka - aktuálny zostatok, formulár dobitia a výpis transakcií">
+          <img loading="eager" src="images/11_penazenka.png" alt="Klientska Peňaženka Rezervos">
+          <div class="screenshot-zoom-overlay">
+            <span class="material-symbols-outlined">zoom_in</span>
+            <span>Kliknite pre zväčšenie</span>
+          </div>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">add_card</span>
+              <span>Okamžité dobitie kreditu</span>
+            </div>
+            <div class="feature-box-desc">
+              Zvoľte si sumu (napr. 20 €, 50 €, 100 €) a zaplaťte online. Kredit je pripísaný do niekoľkých sekúnd.
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">receipt</span>
+              <span>História transakcií</span>
+            </div>
+            <div class="feature-box-desc">
+              Prehľadný výpis každého pohybu: dobitia, platby za rezervácie, pripísané bonusy a vrátenia peňazí pri storne.
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">lock</span>
+              <span>Banková bezpečnosť</span>
+            </div>
+            <div class="feature-box-desc">
+              Všetky platobné operácie prebiehajú cez šifrovanú platobnú bránu podľa bankových bezpečnostných štandardov PCI-DSS.
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-tip">
+          <span class="material-symbols-outlined">redeem</span>
+          <div><strong>Kreditné bonusy:</strong> Niektoré salóny ponúkajú bonusový kredit k dobitiu (napríklad dobite 50 € a získajte kredit 55 € na využitie v salóne).</div>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           12. AFFILIATE PROGRAM (ODPORÚČANIA)
+           =================================================================== -->
+      <article class="guide-section" id="sec-12" data-category="financie">
+        <div class="guide-section-header">
+          <div class="section-title-wrap">
+            <div class="section-number">12</div>
+            <div>
+              <h2>Affiliate Program (Odporučte a Získajte Provízie)</h2>
+              <span class="section-url-badge">affiliate.php</span>
+            </div>
+          </div>
+          <span class="section-category-tag">
+            <span class="material-symbols-outlined">group_add</span>
+            <span>Financie, Inzercia &amp; Provízie</span>
+          </span>
+        </div>
+
+        <p class="guide-lead-text">
+          Páči sa vám systém Rezervos a poznáte kaderníčku, barbera, maséra alebo majiteľa kozmetického salónu, ktorý stále používa papierový diár? Zdieľajte s ním svoj osobný odporúčací odkaz. Keď si prevádzka aktivuje balík na Rezervos, vy získate férovú províziu alebo kredit na služby zadarmo.
+        </p>
+
+        <div class="screenshot-container" data-caption="Affiliate program - váš unikátny link, počet preklikov a zarobené provízie">
+          <img loading="eager" src="images/12_affiliate.png" alt="Affiliate program Rezervos">
+          <div class="screenshot-zoom-overlay">
+            <span class="material-symbols-outlined">zoom_in</span>
+            <span>Kliknite pre zväčšenie</span>
+          </div>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">link</span>
+              <span>Váš unikátny link</span>
+            </div>
+            <div class="feature-box-desc">
+              Automaticky vygenerovaný odkaz s vaším ID. Môžete ho skopírovať a poslať cez WhatsApp, Messenger alebo sociálne siete.
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">query_stats</span>
+              <span>Transparentné štatistiky</span>
+            </div>
+            <div class="feature-box-desc">
+              Vidíte presný počet návštevníkov, ktorí cez váš odkaz prišli, koľko prevádzok sa zaregistrovalo a koľko platí.
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">monetization_on</span>
+              <span>Vyplácanie odmien</span>
+            </div>
+            <div class="feature-box-desc">
+              Získané provízie si môžete nechať poslať na bankový účet alebo ich premeniť na kredit do peňaženky pre bezplatné návštevy.
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           13. NASTAVENIA PROFILU & VIP ODZNAK
+           =================================================================== -->
+      <article class="guide-section" id="sec-13" data-category="profil">
+        <div class="guide-section-header">
+          <div class="section-title-wrap">
+            <div class="section-number">13</div>
+            <div>
+              <h2>Nastavenia Profilu &amp; Klientsky VIP Odznak</h2>
+              <span class="section-url-badge">moj_profil.php#settings</span>
+            </div>
+          </div>
+          <span class="section-category-tag">
+            <span class="material-symbols-outlined">badge</span>
+            <span>Profil &amp; Bezpečnosť</span>
+          </span>
+        </div>
+
+        <p class="guide-lead-text">
+          V nastaveniach profilu máte pod kontrolou svoje identifikačné a kontaktné údaje. Správne vyplnené telefónne číslo je kľúčové pre bezplatné SMS pripomienky pred termínom. Zároveň tu vidíte svoj <strong>VIP status</strong> — salóny prioritne schvaľujú rezervácie klientom s vysokým skóre spoľahlivosti.
+        </p>
+
+        <div class="screenshot-container" data-caption="Nastavenia profilu - editácia osobných údajov, telefónu pre SMS a notifikačných preferencií">
+          <img loading="eager" src="images/13_nastavenia_profilu.png" alt="Nastavenia profilu Rezervos">
+          <div class="screenshot-zoom-overlay">
+            <span class="material-symbols-outlined">zoom_in</span>
+            <span>Kliknite pre zväčšenie</span>
+          </div>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">phone_iphone</span>
+              <span>Telefónne číslo &amp; SMS pripomienky</span>
+            </div>
+            <div class="feature-box-desc">
+              Zadajte telefónne číslo v tvare +421..., aby vám 24 hodín a 2 hodiny pred procedúrou prišla bezplatná SMS pripomienka.
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">workspace_premium</span>
+              <span>VIP odznak spoľahlivosti</span>
+            </div>
+            <div class="feature-box-desc">
+              Klienti, ktorí na termíny chodia načas a nerušia ich bez ospravedlnenia, získavajú status VIP s prioritným prístupom.
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">notifications_off</span>
+              <span>Predvoľby komunikácie</span>
+            </div>
+            <div class="feature-box-desc">
+              Môžete si nastaviť, aké typy správ chcete dostávať — potvrdenia, pripomienky, bulletiny salónov či systémové novinky.
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           14. ZABEZPEČENIE & 2FA
+           =================================================================== -->
+      <article class="guide-section" id="sec-14" data-category="profil">
+        <div class="guide-section-header">
+          <div class="section-title-wrap">
+            <div class="section-number">14</div>
+            <div>
+              <h2>Zabezpečenie Účtu &amp; Dvojfaktorové Prihlásenie (2FA)</h2>
+              <span class="section-url-badge">moj_profil.php#security</span>
+            </div>
+          </div>
+          <span class="section-category-tag">
+            <span class="material-symbols-outlined">security</span>
+            <span>Profil &amp; Bezpečnosť</span>
+          </span>
+        </div>
+
+        <p class="guide-lead-text">
+          Bezpečnosť vašich osobných údajov a peňaženky je prvoradá. V sekcii Zabezpečenie si môžete kedykoľvek aktualizovať prihlasovacie heslo a aktivovať <strong>dvojfaktorovú autentifikáciu (2FA)</strong>, ktorá zabráni neoprávnenému prístupu k vášmu účtu aj v prípade prezradenia hesla.
+        </p>
+
+        <div class="screenshot-container" data-caption="Zabezpečenie účtu - zmena hesla, aktivácia 2FA cez Authenticator a audit prihlásení">
+          <img loading="eager" src="images/14_zabezpecenie.png" alt="Zabezpečenie účtu Rezervos">
+          <div class="screenshot-zoom-overlay">
+            <span class="material-symbols-outlined">zoom_in</span>
+            <span>Kliknite pre zväčšenie</span>
+          </div>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">password</span>
+              <span>Zmena prihlasovacieho hesla</span>
+            </div>
+            <div class="feature-box-desc">
+              Formulár s overením aktuálneho hesla a indikátorom sily nového hesla. Odporúčame kombináciu písmen, čísel a symbolov.
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-box-title">
+              <span class="material-symbols-outlined">phonelink_lock</span>
+              <span>Dvojfaktorové overenie (2FA)</span>
+            </div>
+            <div class="feature-box-desc">
+              Prepojte si účet s mobilnou aplikáciou (Google Authenticator / Authy). Pri prihlásení budete vyzvaný na 6-miestny kód.
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-warning">
+          <span class="material-symbols-outlined">warning</span>
+          <div><strong>Záchranné kódy:</strong> Pri aktivácii 2FA si nezabudnite bezpečne uložiť záchranné záložné kódy pre prípad straty alebo výmeny telefónu.</div>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           15. AKO NÁJSŤ SALÓN A REZERVOVAŤ TERMÍN
+           =================================================================== -->
+      <article class="guide-section" id="sec-15" data-category="oblubene">
+        <div class="guide-section-header">
+          <div class="section-title-wrap">
+            <div class="section-number">15</div>
+            <div>
+              <h2>Ako Nájsť Salón &amp; Rezervovať Termín</h2>
+              <span class="section-url-badge">prevadzky.php</span>
+            </div>
+          </div>
+          <span class="section-category-tag">
+            <span class="material-symbols-outlined">travel_explore</span>
+            <span>Salóny &amp; Recenzie</span>
+          </span>
+        </div>
+
+        <p class="guide-lead-text">
+          Objednať sa na strihanie, masáž či nechtový dizajn nebolo nikdy jednoduchšie. Nemusíte čakať na otváracie hodiny salónu ani telefonovať počas pracovného zhonu. Rezervos vám umožňuje prezrieť si voľné termíny v reálnom čase kedykoľvek, hoci aj o polnoci z pohodlia domova.
+        </p>
+
+        <div class="screenshot-container" data-caption="Katalóg prevádzok Rezervos - filtrovanie podľa kategórie, mesta, hodnotenia a voľných termínov">
+          <img loading="eager" src="images/15_hladanie_salonov.png" alt="Hľadanie salónov a rezervácia Rezervos">
+          <div class="screenshot-zoom-overlay">
+            <span class="material-symbols-outlined">zoom_in</span>
+            <span>Kliknite pre zväčšenie</span>
+          </div>
+        </div>
+
+        <div class="steps-container">
+          <div class="steps-title">
+            <span class="material-symbols-outlined">checklist</span>
+            <span>4 jednoduché kroky k vášmu termínu:</span>
+          </div>
+          <ul class="step-list">
+            <li class="step-item">
+              <span class="step-badge">1</span>
+              <div><strong>Vyhľadanie a výber salónu:</strong> Na stránke prevádzok zadajte vaše mesto alebo kategóriu (Kaderníctvo, Barber, Kozmetika, Masáže...). Pozrite si hodnotenia ostatných zákazníkov, fotky interiéru a cenník.</div>
+            </li>
+            <li class="step-item">
+              <span class="step-badge">2</span>
+              <div><strong>Voľba služby a pracovníka:</strong> Kliknite na tlačidlo <em>„Rezervovať“</em>. Zvoľte požadovanú službu a konkrétneho zamestnanca, alebo nechajte možnosť <em>„Ktokoľvek voľný“</em> pre najrýchlejší termín.</div>
+            </li>
+            <li class="step-item">
+              <span class="step-badge">3</span>
+              <div><strong>Výber dňa a času:</strong> V interaktívnom kalendári sa vám rozbalia iba skutočne voľné časové sloty. Vyberte si čas, ktorý vám presne vyhovuje.</div>
+            </li>
+            <li class="step-item">
+              <span class="step-badge">4</span>
+              <div><strong>Potvrdenie rezervácie:</strong> Skontrolujte zhrnutie, zadajte voucher alebo permanentku (ak máte) a kliknite na <em>„Potvrdiť rezerváciu“</em>. Na e-mail a SMS vám okamžite dorazí potvrdenie so všetkými podrobnosťami.</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="callout callout-tip">
+          <span class="material-symbols-outlined">check_circle</span>
+          <div><strong>Automatická synchronizácia s mobilom:</strong> V potvrdzujúcom e-maili aj v klientskom profile máte k dispozícii tlačidlo <em>„Pridať do kalendára“</em>, ktoré termín okamžite vloží do vášho Google Kalendára alebo Apple Kalendára v iPhone s automatickou pripomienkou.</div>
+        </div>
+      </article>
+
+    </main>
+  </div>
+
+  <!-- Lightbox Modal for Zooming Screenshots -->
+  <div class="lightbox-modal" id="lightbox-modal">
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightbox-close" title="Zavrieť">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+      <img id="lightbox-img" src="" alt="Zväčšený náhľad" class="lightbox-img">
+      <div class="lightbox-caption" id="lightbox-caption"></div>
+    </div>
+  </div>
+
+  <!-- Footer (Identical to prevadzka portal-footer) -->
+  <footer class="portal-footer">
+    <p>
+      &copy; 2026 Rezervos Zákazník Manuál &bull; Vytvorené ako komplexná používateľská príručka pre zákazníkov.
+    </p>
+    <p style="margin-top: 6px; font-size: 12px; color: var(--text-light);">
+      Všetky práva a ochranné známky patria ich príslušným vlastníkom. Vytvorené v súlade s platformou Rezervos.eu.
+    </p>
+  </footer>
+
+  <!-- Interactive Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
+"""
+
+# Write to file
+target_path = "c:/VolneKreslo/zakaznik/index.html"
+with open(target_path, "w", encoding="utf-8") as f:
+    f.write(html_content)
+
+print(f"Generated {target_path} successfully. File size: {len(html_content)} bytes.")
+
+# Strict emoji audit
+emojis = re.findall(r'[\U00010000-\U0010ffff\u2600-\u27bf]', html_content)
+print(f"Emoji count: {len(emojis)}")
+if emojis:
+    print(f"Warning emojis found: {emojis}")
+else:
+    print("Zero emojis verified!")
